@@ -1,8 +1,10 @@
 package com.example.fooddeliveryapp.home.presentation.composable
-import android.graphics.Color
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -74,5 +76,10 @@ fun HomePageSearchBar(viewModel: HomePageViewModel,modifier: Modifier){
 
 @Composable
 fun TopBar(modifier: Modifier) {
-    TopAppBar(title = { Text("Welcome", color = androidx.compose.ui.graphics.Color.White)},modifier = modifier, backgroundColor =  androidx.compose.ui.graphics.Color.hsl(254f, 0.44f, 0.32f))
+    TopAppBar(title = { Text("Welcome",
+        color = androidx.compose.ui.graphics.Color.White)},
+        modifier = modifier,
+        backgroundColor =  androidx.compose.ui.graphics.Color.hsl(254f, 0.44f, 0.32f),
+        actions = { Icon(imageVector = Icons.Default.Home, contentDescription = "Address",
+            modifier = Modifier.size(48.dp).padding(5.dp), tint = androidx.compose.ui.graphics.Color.White) })
 }
