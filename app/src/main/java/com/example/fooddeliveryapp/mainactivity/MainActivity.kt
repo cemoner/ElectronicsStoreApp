@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
 import com.example.fooddeliveryapp.authentication.login.presentation.composable.Login
+import com.example.fooddeliveryapp.authentication.register.presentation.composable.Register
 import com.example.fooddeliveryapp.home.presentation.composable.HomePage
 import com.example.fooddeliveryapp.home.presentation.composable.TopBar
 import com.example.fooddeliveryapp.shared.navigation.domain.model.BottomNavItem
@@ -43,7 +44,7 @@ fun App(modifier: Modifier) {
 
     Scaffold(
         floatingActionButtonPosition = FabPosition.End,
-        floatingActionButton = { ShoppingCart() },
+        floatingActionButton = { ShoppingCart(navController) },
         bottomBar = {
             BottomNavigationBar(navController = navController)
         },
@@ -56,14 +57,17 @@ fun App(modifier: Modifier) {
         ) {
             composable(BottomNavItem.Home.route) { HomePage(modifier = modifier, navController = navController )}
             composable(BottomNavItem.Favorites.route) {
+            }
+            composable(BottomNavItem.Profile.route) {
                 if(IsLoggedInSingleton.getIsLoggedIn()){
                     Profile()
                 }
                 else {
-                    Login()
+                    Login(navController)
                 }
             }
-            composable(BottomNavItem.Profile.route) { /* Profile Screen UI */ }
+            composable("Register"){ Register(navController)}
+            composable("Cart"){}
         }
     }
 }

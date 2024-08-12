@@ -60,9 +60,9 @@ fun BottomNavigationBar(navController: NavController) {
 }
 
 @Composable
-fun ShoppingCart() {
+fun ShoppingCart(navController: NavController) {
     FloatingActionButton(
-        onClick = { /* Handle click */ },
+        onClick = { navController.navigate("Cart") },
         shape = CircleShape,
         backgroundColor = Color.hsl(254f, 0.44f, 0.32f),
         elevation = FloatingActionButtonDefaults.elevation(2.dp,3.dp)

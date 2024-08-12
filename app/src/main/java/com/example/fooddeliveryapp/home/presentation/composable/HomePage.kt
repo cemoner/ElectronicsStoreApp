@@ -24,7 +24,7 @@ import com.example.fooddeliveryapp.home.presentation.viewmodel.HomePageViewModel
 fun HomePage(modifier: Modifier,navController: NavController){
     val viewModel = HomePageViewModel()
 
-    ConstraintLayout {
+    ConstraintLayout() {
         val (searchBar,topAppBar) = createRefs()
 
 

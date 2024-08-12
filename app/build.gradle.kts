@@ -83,9 +83,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation (libs.constraintlayout.compose)
-    implementation(libs.hilt)
-    implementation ("com.google.dagger:hilt-android:2.44")
-    kapt ("com.google.dagger:hilt-compiler:2.44")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.work)
+    kapt(libs.androidx.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation( libs.androidx.material.icons.extended)
 }
 kapt {
     correctErrorTypes = true
