@@ -1,14 +1,16 @@
 package com.example.fooddeliveryapp.authentication.login.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
+import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor():ViewModel() {
+class RegisterViewModel @Inject constructor(
+    private val authRepository: FirebaseAuthRepository
+):ViewModel() {
 
     private val _userNameText = MutableStateFlow("")
     val userNameText = _userNameText.asStateFlow()

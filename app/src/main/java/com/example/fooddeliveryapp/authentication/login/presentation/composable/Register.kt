@@ -1,9 +1,9 @@
-package com.example.fooddeliveryapp.authentication.register.presentation.composable
+package com.example.fooddeliveryapp.authentication.login.presentation.composable
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -12,17 +12,12 @@ import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DriveFileRenameOutline
-import androidx.compose.material.icons.filled.Key
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.PointerIcon.Companion.Text
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -32,6 +27,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.fooddeliveryapp.authentication.components.Password
+import com.example.fooddeliveryapp.authentication.components.RegOrLoginDuo
 import com.example.fooddeliveryapp.authentication.components.RegisterButton
 import com.example.fooddeliveryapp.authentication.components.UserName
 import com.example.fooddeliveryapp.authentication.login.presentation.viewmodel.RegisterViewModel
@@ -45,14 +41,14 @@ fun Register(navController: NavController){
     val nameText by viewModel.name.collectAsState()
     val surNameText by viewModel.surName.collectAsState()
 
-    val topBias = 1f / 3.5f // 1x distance to top
+    val topBias = 1f / 3.5f
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-        val (username, password,name,surname, register,loginText,loginButton) = createRefs()
+        val (username, password,name,surname,register,loginRow) = createRefs()
 
         TextField(value = nameText,
             onValueChange = viewModel::onNameChange,
             label = {Text("Name")},
-            placeholder = {Text("Enter your name please")},
+            placeholder = {Text("Enter your name")},
             shape = RoundedCornerShape(32.dp),
             singleLine = true,
             colors = TextFieldDefaults.textFieldColors(
@@ -77,7 +73,7 @@ fun Register(navController: NavController){
         TextField(value = surNameText,
             onValueChange = viewModel::onSurNameChange,
             label = {Text("Surname")},
-            placeholder = {Text("Enter your surname please")},
+            placeholder = {Text("Enter your surname")},
             shape = RoundedCornerShape(32.dp),
             singleLine = true,
             colors = TextFieldDefaults.textFieldColors(
@@ -123,34 +119,13 @@ fun Register(navController: NavController){
             width= Dimension.fillToConstraints
         },"Profile")
 
-        Text("Already have an account?",modifier= Modifier
-            .padding(7.5.dp)
-            .constrainAs(loginText) {
-                top.linkTo(register.bottom, margin = 16.dp)
+        RegOrLoginDuo(modifier = Modifier
+            .constrainAs(loginRow) {
+                bottom.linkTo(parent.bottom, margin = 16.dp)
                 end.linkTo(parent.end, margin = 16.dp)
                 start.linkTo(parent.start, margin = 16.dp)
                 width = Dimension.fillToConstraints
-            }, fontSize = 14.sp, textAlign = TextAlign.Center)
-        Button(
-            onClick ={navController.navigate("Profile")},
-            colors = ButtonDefaults.textButtonColors(
-                backgroundColor = Color.Transparent // Transparent background
-            ),
-            elevation = null, // Remove button shadow
-            modifier = Modifier.padding(2.dp).constrainAs(loginButton){
-                top.linkTo(loginText.bottom, margin = 0.dp)
-                end.linkTo(parent.end, margin = 16.dp)
-                start.linkTo(parent.start, margin = 16.dp)
-                width = Dimension.wrapContent
-            } // Optional padding
-        ) {
-            Text(
-                text = "Log In",
-                color = Color.hsl(0.1f,0.1f,0.5f), // Light gray font color
-                textDecoration = TextDecoration.Underline,
-                fontSize = 16.sp// Underlined text
-            )
-        }
+            }, navController = navController, route = "Login", textString = "Already have an Account?", buttonString = "Log In")
     }
 
 }
