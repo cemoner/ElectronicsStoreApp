@@ -11,9 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.fooddeliveryapp.authentication.login.presentation.viewmodel.RegisterViewModel
 
 
 @Composable
@@ -21,7 +22,9 @@ fun RegOrLoginDuo(modifier:Modifier,navController: NavController,route:String,te
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
         Text(textString, fontSize = 14.sp, textAlign = TextAlign.Center,)
         Button(
-            onClick ={navController.navigate(route)},
+            onClick ={
+                navController.navigate(route)
+                     },
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = Color.Transparent // Transparent background
             ),

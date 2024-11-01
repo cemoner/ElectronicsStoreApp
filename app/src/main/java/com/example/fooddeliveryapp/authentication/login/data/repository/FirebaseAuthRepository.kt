@@ -2,6 +2,7 @@ package com.example.fooddeliveryapp.authentication.login.data.repository
 
 import com.example.fooddeliveryapp.authentication.common.Resource
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -28,6 +29,7 @@ class FirebaseAuthRepository @Inject constructor(
     suspend fun signIn(email:String,password:String): Resource<String>{
         return try {
             val result = auth.signInWithEmailAndPassword(email,password).await()
+            println("HELLOOOOOOOOO " + result.user?.email)
             Resource.Success(
                 arrayListOf(
                     result.user?.displayName.orEmpty(),
@@ -37,9 +39,16 @@ class FirebaseAuthRepository @Inject constructor(
 
                 ))
         }catch (e:Exception){
-            Resource.Error(e)
+            val errorMessage = when (e) {
+                is FirebaseAuthException -> when (e.errorCode) {
+                    "ERROR_INVALID_EMAIL" -> "The email address is badly formatted."
+                    "ERROR_USER_NOT_FOUND" -> "No user record found for this email."
+                    "ERROR_WRONG_PASSWORD" -> "The password is incorrect."
+                    else -> "An unknown error occurred."
+                }
+                else -> e.localizedMessage ?: "An unknown error occurred."
+            }
+            Resource.Error(Exception(errorMessage))
         }
     }
-
-    fun isUserLoggedIn():Boolean = auth.currentUser != null
 }

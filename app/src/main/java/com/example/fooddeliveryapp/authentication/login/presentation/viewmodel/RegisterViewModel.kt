@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.authentication.login.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,8 +38,8 @@ class RegisterViewModel @Inject constructor(
         _surName.value = text
     }
 
-    fun onRegisterClick() {
-
+    suspend fun onRegisterClick(email:String,password:String) {
+        authRepository.signUp(email,password)
     }
 
 }

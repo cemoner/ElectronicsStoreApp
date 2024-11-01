@@ -2,6 +2,7 @@ package com.example.fooddeliveryapp.authentication.login.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.example.fooddeliveryapp.authentication.common.Resource
 import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,7 +27,7 @@ class LoginViewModel @Inject constructor(
         _passwordText.value = text
     }
 
-    fun onLoginClick() {
-
+    suspend fun onLoginClick(email:String,password:String): Resource<String> {
+        return authRepository.signIn(email,password)
     }
 }

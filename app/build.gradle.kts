@@ -89,6 +89,9 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation( libs.androidx.material.icons.extended)
+    implementation(platform(libs.firebase.bom.v3351))
+    implementation(libs.androidx.lifecycle.viewmodel.ktx.v240)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v240)
 }
 kapt {
     correctErrorTypes = true

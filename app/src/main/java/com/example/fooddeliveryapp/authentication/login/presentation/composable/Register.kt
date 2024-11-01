@@ -1,11 +1,7 @@
 package com.example.fooddeliveryapp.authentication.login.presentation.composable
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -15,13 +11,9 @@ import androidx.compose.material.icons.filled.DriveFileRenameOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -117,7 +109,7 @@ fun Register(navController: NavController){
             end.linkTo(parent.end,margin=16.dp)
             start.linkTo(parent.start, margin = 16.dp)
             width= Dimension.fillToConstraints
-        },"Profile")
+        },"Profile",viewModel)
 
         RegOrLoginDuo(modifier = Modifier
             .constrainAs(loginRow) {

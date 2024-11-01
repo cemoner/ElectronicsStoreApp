@@ -1,6 +1,7 @@
 [versions]
 agp = "8.5.2"
 constraintlayoutComposeVersion = "1.0.1"
+firebaseBom = "33.5.1"
 hiltAndroid = "2.52"
 hiltAndroidGradlePlugin = "2.52"
 hiltCompiler = "2.52"
@@ -15,8 +16,10 @@ activityCompose = "1.9.1"
 composeBom = "2024.06.00"
 legacySupportV4 = "1.0.0"
 lifecycleLivedataKtx = "2.8.4"
+lifecycleRuntimeKtxVersion = "2.4.0"
 lifecycleViewmodelKtx = "2.8.4"
 fragmentKtx = "1.8.2"
+lifecycleViewmodelKtxVersion = "2.4.0"
 material = "1.6.8"
 navigationCompose = "2.7.7"
 engageCore = "1.5.4"
@@ -31,11 +34,14 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltVersion" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltVersion" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltVersion" }
+androidx-lifecycle-runtime-ktx-v240 = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
+androidx-lifecycle-viewmodel-ktx-v240 = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtxVersion" }
 androidx-material = { module = "androidx.compose.material:material", version.ref = "material" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutComposeVersion" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "hiltAndroidGradlePlugin" }
+firebase-bom-v3351 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidGradlePlugin" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroidGradlePlugin" }

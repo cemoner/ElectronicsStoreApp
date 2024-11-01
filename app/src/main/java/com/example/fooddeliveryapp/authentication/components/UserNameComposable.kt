@@ -14,15 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.Dimension
 
 @Composable
 fun UserName(userNameText:String,function: (String) -> Unit,modifier:Modifier){
     TextField(
         value = userNameText,
         onValueChange =  function ,
-        label = { Text("Username or E-mail") },
-        placeholder = { Text("Enter your username or e-mail") },
+        label = { Text("E-mail") },
+        placeholder = { Text("Enter your e-mail") },
         modifier = modifier,
         shape = RoundedCornerShape(32.dp),
         singleLine = true,
