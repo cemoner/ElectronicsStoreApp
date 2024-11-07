@@ -1,0 +1,757 @@
+Subject: [PATCH] design login and register screen ui
+---
+Index: .idea/deploymentTargetSelector.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+--- a/.idea/deploymentTargetSelector.xml	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
++++ b/.idea/deploymentTargetSelector.xml	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -4,7 +4,7 @@
+     <selectionStates>
+       <SelectionState runConfigName="app">
+         <option name="selectionMode" value="DROPDOWN" />
+-        <DropdownSelection timestamp="2024-08-11T08:28:19.674020600Z">
++        <DropdownSelection timestamp="2024-08-12T12:40:51.367236700Z">
+           <Target type="DEFAULT_BOOT">
+             <handle>
+               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\cemoner\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd" />
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
++++ b/app/build.gradle.kts	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -83,9 +83,12 @@
+     debugImplementation(libs.androidx.ui.tooling)
+     debugImplementation(libs.androidx.ui.test.manifest)
+     implementation (libs.constraintlayout.compose)
+-    implementation(libs.hilt)
+-    implementation ("com.google.dagger:hilt-android:2.44")
+-    kapt ("com.google.dagger:hilt-compiler:2.44")
++    implementation(libs.hilt.android)
++    kapt(libs.hilt.android.compiler)
++    implementation(libs.androidx.hilt.work)
++    kapt(libs.androidx.hilt.compiler)
++    implementation(libs.androidx.hilt.navigation.compose)
++    implementation( libs.androidx.material.icons.extended)
+ }
+ kapt {
+     correctErrorTypes = true
+Index: app/src/main/java/com/example/fooddeliveryapp/authentication/components/PasswordComposable.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/authentication/components/PasswordComposable.kt b/app/src/main/java/com/example/fooddeliveryapp/authentication/components/PasswordComposable.kt
+new file mode 100644
+--- /dev/null	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
++++ b/app/src/main/java/com/example/fooddeliveryapp/authentication/components/PasswordComposable.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -0,0 +1,47 @@
++package com.example.fooddeliveryapp.authentication.components
++
++import androidx.compose.foundation.shape.RoundedCornerShape
++import androidx.compose.foundation.text.KeyboardOptions
++import androidx.compose.material.Icon
++import androidx.compose.material.Text
++import androidx.compose.material.TextField
++import androidx.compose.material.TextFieldDefaults
++import androidx.compose.material.icons.Icons
++import androidx.compose.material.icons.filled.Key
++import androidx.compose.runtime.Composable
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.graphics.Color
++import androidx.compose.ui.text.input.ImeAction
++import androidx.compose.ui.text.input.KeyboardType
++import androidx.compose.ui.text.input.PasswordVisualTransformation
++import androidx.compose.ui.unit.dp
++import androidx.constraintlayout.compose.Dimension
++
++@Composable
++fun Password(passwordText:String,function:(String) -> Unit,modifier: Modifier){
++    TextField(value = passwordText,
++        onValueChange = function,
++        label = { Text("Password") },
++        placeholder = { Text("Enter your password") },
++        modifier = modifier,
++        shape = RoundedCornerShape(32.dp),
++        singleLine = true,
++        colors = TextFieldDefaults.textFieldColors(
++            focusedIndicatorColor = Color.Transparent, // Removes the underline when focused
++            unfocusedIndicatorColor = Color.Transparent, // Removes the underline when not focused
++            cursorColor = Color.Black
++        ),
++        leadingIcon = {
++            Icon(
++            Icons.Default.Key,
++            contentDescription = "",
++            tint = Color.Gray
++        )
++        },
++        keyboardOptions = KeyboardOptions(
++            imeAction = ImeAction.Done, // Sets the action button on the keyboard to "Done"
++            keyboardType = KeyboardType.Password // Displays a password keyboard, usually with masked input
++        ),
++        visualTransformation = PasswordVisualTransformation()
++    )
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/fooddeliveryapp/authentication/components/RegisterButtonComposable.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/authentication/components/RegisterButtonComposable.kt b/app/src/main/java/com/example/fooddeliveryapp/authentication/components/RegisterButtonComposable.kt
+new file mode 100644
+--- /dev/null	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
++++ b/app/src/main/java/com/example/fooddeliveryapp/authentication/components/RegisterButtonComposable.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -0,0 +1,24 @@
++package com.example.fooddeliveryapp.authentication.components
++
++import androidx.compose.foundation.layout.padding
++import androidx.compose.foundation.shape.RoundedCornerShape
++import androidx.compose.material.Button
++import androidx.compose.material.Text
++import androidx.compose.runtime.Composable
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.unit.dp
++import androidx.compose.ui.unit.sp
++import androidx.constraintlayout.compose.Dimension
++import androidx.navigation.NavController
++
++
++@Composable
++fun RegisterButton(navController: NavController,modifier: Modifier,route:String){
++    Button(onClick = {navController.navigate(route)},
++        modifier = modifier,
++        shape = RoundedCornerShape(32.dp)
++
++    ) {
++        Text("Register",modifier= Modifier.padding(7.5.dp), fontSize = 14.sp)
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/fooddeliveryapp/authentication/components/UserNameComposable.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/authentication/components/UserNameComposable.kt b/app/src/main/java/com/example/fooddeliveryapp/authentication/components/UserNameComposable.kt
+new file mode 100644
+--- /dev/null	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
++++ b/app/src/main/java/com/example/fooddeliveryapp/authentication/components/UserNameComposable.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -0,0 +1,46 @@
++package com.example.fooddeliveryapp.authentication.components
++
++import androidx.compose.foundation.shape.RoundedCornerShape
++import androidx.compose.foundation.text.KeyboardOptions
++import androidx.compose.material.Icon
++import androidx.compose.material.Text
++import androidx.compose.material.TextField
++import androidx.compose.material.TextFieldDefaults
++import androidx.compose.material.icons.Icons
++import androidx.compose.material.icons.filled.Person
++import androidx.compose.runtime.Composable
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.graphics.Color
++import androidx.compose.ui.text.input.ImeAction
++import androidx.compose.ui.text.input.KeyboardType
++import androidx.compose.ui.unit.dp
++import androidx.constraintlayout.compose.Dimension
++
++@Composable
++fun UserName(userNameText:String,function: (String) -> Unit,modifier:Modifier){
++    TextField(
++        value = userNameText,
++        onValueChange =  function ,
++        label = { Text("Username or E-mail") },
++        placeholder = { Text("Enter your username or e-mail") },
++        modifier = modifier,
++        shape = RoundedCornerShape(32.dp),
++        singleLine = true,
++        colors = TextFieldDefaults.textFieldColors(
++            focusedIndicatorColor = Color.Transparent, // Removes the underline when focused
++            unfocusedIndicatorColor = Color.Transparent, // Removes the underline when not focused
++            cursorColor = Color.Black
++        ),
++        leadingIcon = {
++            Icon(
++            Icons.Default.Person,
++            contentDescription = "",
++            tint = Color.Gray
++        )
++        },
++        keyboardOptions = KeyboardOptions(
++            imeAction = ImeAction.Next, // Sets the action button on the keyboard to "Done"
++            keyboardType = KeyboardType.Email // Displays a password keyboard, usually with masked input
++        ),
++    )
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/fooddeliveryapp/authentication/login/presentation/composable/Login.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/authentication/login/presentation/composable/Login.kt b/app/src/main/java/com/example/fooddeliveryapp/authentication/login/presentation/composable/Login.kt
+--- a/app/src/main/java/com/example/fooddeliveryapp/authentication/login/presentation/composable/Login.kt	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
++++ b/app/src/main/java/com/example/fooddeliveryapp/authentication/login/presentation/composable/Login.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -1,8 +1,100 @@
+ package com.example.fooddeliveryapp.authentication.login.presentation.composable
+ 
++import androidx.compose.foundation.layout.fillMaxSize
++import androidx.compose.foundation.layout.padding
++import androidx.compose.foundation.layout.size
++import androidx.compose.foundation.shape.RoundedCornerShape
++import androidx.compose.foundation.text.KeyboardOptions
++import androidx.compose.material.Button
++import androidx.compose.material.Icon
++import androidx.compose.material.Text
++import androidx.compose.material.TextField
++import androidx.compose.material.TextFieldDefaults
++import androidx.compose.material.icons.Icons
++import androidx.compose.material.icons.filled.Key
++import androidx.compose.material.icons.filled.Person
+ import androidx.compose.runtime.Composable
++import androidx.compose.runtime.collectAsState
++import androidx.compose.runtime.getValue
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.graphics.Color
++import androidx.compose.ui.res.painterResource
++import androidx.compose.ui.text.input.ImeAction
++import androidx.compose.ui.text.input.KeyboardType
++import androidx.compose.ui.text.input.PasswordVisualTransformation
++import androidx.compose.ui.text.style.TextAlign
++import androidx.compose.ui.unit.dp
++import androidx.compose.ui.unit.sp
++import androidx.constraintlayout.compose.ConstraintLayout
++import androidx.constraintlayout.compose.Dimension
++import androidx.hilt.navigation.compose.hiltViewModel
++import androidx.navigation.NavController
++import com.example.fooddeliveryapp.R
++import com.example.fooddeliveryapp.authentication.components.Password
++import com.example.fooddeliveryapp.authentication.components.RegisterButton
++import com.example.fooddeliveryapp.authentication.components.UserName
++import com.example.fooddeliveryapp.authentication.login.presentation.viewmodel.LoginViewModel
+ 
+ @Composable
+-fun Login(){
++fun Login(navController: NavController){
++    val viewModel:LoginViewModel = hiltViewModel()
++    val userNameText by viewModel.userNameText.collectAsState()
++    val passwordText by viewModel.passwordText.collectAsState()
++    val topBias = 1f / 3.5f // 1x distance to top
++
++    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
++        val (username,password,normalLogin,googleLogin,register,registerText) = createRefs()
+ 
+-}
+\ No newline at end of file
++        UserName(userNameText = userNameText,
++            function = viewModel::onUserNameChange,
++            modifier = Modifier.constrainAs(username){
++                linkTo(top = parent.top, bottom = parent.bottom, bias = topBias)
++                start.linkTo(parent.start,margin=16.dp)
++                end.linkTo(parent.end,margin=16.dp)
++                width = Dimension.fillToConstraints })
++
++        Password(passwordText,
++            viewModel::onPasswordChange,
++            Modifier.constrainAs(password){
++            top.linkTo(username.bottom,margin=16.dp)
++            start.linkTo(parent.start,margin=16.dp)
++            end.linkTo(parent.end,margin=16.dp)
++            width = Dimension.fillToConstraints
++        })
++        Button(onClick = viewModel::onLoginClick, modifier = Modifier.constrainAs(normalLogin){
++            top.linkTo(googleLogin.bottom, margin = 16.dp)
++            end.linkTo(parent.end,margin=16.dp)
++            start.linkTo(parent.start, margin = 16.dp)
++            width=Dimension.fillToConstraints
++        },
++            shape = RoundedCornerShape(32.dp)
++
++        ) {
++            Text("Log In",modifier=Modifier.padding(7.5.dp), fontSize = 14.sp)
++        }
++        Button(onClick = viewModel::onLoginClick, modifier = Modifier.constrainAs(googleLogin){
++            top.linkTo(password.bottom, margin = 20.dp)
++            start.linkTo(password.start,margin=0.dp)
++        }) {
++            Icon(painter = painterResource(id = R.drawable.ic_google_logo),
++                contentDescription = "",
++                modifier = Modifier.size(32.dp),
++                tint = Color.Unspecified,
++            )
++        }
++        Text("Don't have an account?",modifier= Modifier
++            .padding(7.5.dp)
++            .constrainAs(registerText) {
++                top.linkTo(normalLogin.bottom, margin = 6.dp)
++                end.linkTo(parent.end, margin = 16.dp)
++                start.linkTo(parent.start, margin = 16.dp)
++                width = Dimension.fillToConstraints
++            }, fontSize = 14.sp, textAlign = TextAlign.Center)
++        RegisterButton(navController = navController, modifier = Modifier.constrainAs(register){
++            top.linkTo(registerText.bottom, margin = 6.dp)
++            end.linkTo(parent.end,margin=16.dp)
++            start.linkTo(parent.start, margin = 16.dp)
++            width= Dimension.fillToConstraints
++        },"Register")
++    }
++}
+Index: app/src/main/java/com/example/fooddeliveryapp/authentication/login/presentation/viewmodel/LoginViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/authentication/login/presentation/viewmodel/LoginViewModel.kt b/app/src/main/java/com/example/fooddeliveryapp/authentication/login/presentation/viewmodel/LoginViewModel.kt
+new file mode 100644
+--- /dev/null	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
++++ b/app/src/main/java/com/example/fooddeliveryapp/authentication/login/presentation/viewmodel/LoginViewModel.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -0,0 +1,29 @@
++package com.example.fooddeliveryapp.authentication.login.presentation.viewmodel
++
++import androidx.lifecycle.ViewModel
++import androidx.navigation.NavController
++import dagger.hilt.android.lifecycle.HiltViewModel
++import kotlinx.coroutines.flow.MutableStateFlow
++import kotlinx.coroutines.flow.asStateFlow
++import javax.inject.Inject
++
++@HiltViewModel
++class LoginViewModel @Inject constructor():ViewModel() {
++
++    private val _userNameText = MutableStateFlow("")
++    val userNameText = _userNameText.asStateFlow()
++
++    private val _passwordText = MutableStateFlow("")
++    val passwordText = _passwordText.asStateFlow()
++
++    fun onUserNameChange(text: String) {
++        _userNameText.value = text
++    }
++    fun onPasswordChange(text: String) {
++        _passwordText.value = text
++    }
++
++    fun onLoginClick() {
++
++    }
++}
+Index: app/src/main/java/com/example/fooddeliveryapp/authentication/register/presentation/composable/Register.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/authentication/register/presentation/composable/Register.kt b/app/src/main/java/com/example/fooddeliveryapp/authentication/register/presentation/composable/Register.kt
+new file mode 100644
+--- /dev/null	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
++++ b/app/src/main/java/com/example/fooddeliveryapp/authentication/register/presentation/composable/Register.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -0,0 +1,156 @@
++package com.example.fooddeliveryapp.authentication.register.presentation.composable
++
++import androidx.compose.foundation.layout.fillMaxSize
++import androidx.compose.foundation.layout.padding
++import androidx.compose.foundation.shape.RoundedCornerShape
++import androidx.compose.foundation.text.KeyboardOptions
++import androidx.compose.material.Button
++import androidx.compose.material.ButtonDefaults
++import androidx.compose.material.Icon
++import androidx.compose.material.Text
++import androidx.compose.material.TextField
++import androidx.compose.material.TextFieldDefaults
++import androidx.compose.material.icons.Icons
++import androidx.compose.material.icons.filled.DriveFileRenameOutline
++import androidx.compose.material.icons.filled.Key
++import androidx.compose.material.icons.filled.Person
++import androidx.compose.runtime.Composable
++import androidx.compose.runtime.collectAsState
++import androidx.compose.runtime.getValue
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.graphics.Color
++import androidx.compose.ui.input.pointer.PointerIcon.Companion.Text
++import androidx.compose.ui.text.input.ImeAction
++import androidx.compose.ui.text.input.KeyboardType
++import androidx.compose.ui.text.input.PasswordVisualTransformation
++import androidx.compose.ui.text.style.TextAlign
++import androidx.compose.ui.text.style.TextDecoration
++import androidx.compose.ui.unit.dp
++import androidx.compose.ui.unit.sp
++import androidx.constraintlayout.compose.ConstraintLayout
++import androidx.constraintlayout.compose.Dimension
++import androidx.hilt.navigation.compose.hiltViewModel
++import androidx.navigation.NavController
++import com.example.fooddeliveryapp.authentication.components.Password
++import com.example.fooddeliveryapp.authentication.components.RegisterButton
++import com.example.fooddeliveryapp.authentication.components.UserName
++import com.example.fooddeliveryapp.authentication.login.presentation.viewmodel.RegisterViewModel
++
++
++@Composable
++fun Register(navController: NavController){
++    val viewModel: RegisterViewModel = hiltViewModel()
++    val userNameText by viewModel.userNameText.collectAsState()
++    val passwordText by viewModel.passwordText.collectAsState()
++    val nameText by viewModel.name.collectAsState()
++    val surNameText by viewModel.surName.collectAsState()
++
++    val topBias = 1f / 3.5f // 1x distance to top
++    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
++        val (username, password,name,surname, register,loginText,loginButton) = createRefs()
++
++        TextField(value = nameText,
++            onValueChange = viewModel::onNameChange,
++            label = {Text("Name")},
++            placeholder = {Text("Enter your name please")},
++            shape = RoundedCornerShape(32.dp),
++            singleLine = true,
++            colors = TextFieldDefaults.textFieldColors(
++                focusedIndicatorColor = Color.Transparent, // Removes the underline when focused
++                unfocusedIndicatorColor = Color.Transparent, // Removes the underline when not focused
++                cursorColor = Color.Black
++            ),
++            leadingIcon = {
++                Icon(
++                    Icons.Default.DriveFileRenameOutline,
++                    contentDescription = "",
++                    tint = Color.Gray
++                )}
++            ,
++            modifier = Modifier.constrainAs(name){
++                linkTo(top = parent.top,bottom=parent.bottom,bias = topBias)
++                end.linkTo(parent.end,margin=16.dp)
++                start.linkTo(parent.start, margin = 16.dp)
++                width= Dimension.fillToConstraints
++            }
++            )
++        TextField(value = surNameText,
++            onValueChange = viewModel::onSurNameChange,
++            label = {Text("Surname")},
++            placeholder = {Text("Enter your surname please")},
++            shape = RoundedCornerShape(32.dp),
++            singleLine = true,
++            colors = TextFieldDefaults.textFieldColors(
++                focusedIndicatorColor = Color.Transparent, // Removes the underline when focused
++                unfocusedIndicatorColor = Color.Transparent, // Removes the underline when not focused
++                cursorColor = Color.Black
++            ),
++            leadingIcon = {
++                Icon(
++                Icons.Default.DriveFileRenameOutline,
++                contentDescription = "",
++                tint = Color.Gray
++            )}
++            ,
++            modifier = Modifier.constrainAs(surname){
++                top.linkTo(name.bottom, margin = 16.dp)
++                end.linkTo(parent.end,margin=16.dp)
++                start.linkTo(parent.start, margin = 16.dp)
++                width= Dimension.fillToConstraints
++            }
++        )
++        UserName(userNameText = userNameText,
++            function = viewModel::onUserNameChange,
++            modifier = Modifier.constrainAs(username){
++                top.linkTo(surname.bottom,margin=14.dp)
++                start.linkTo(parent.start,margin=16.dp)
++                end.linkTo(parent.end,margin=16.dp)
++                width = Dimension.fillToConstraints })
++
++        Password(passwordText,
++            viewModel::onPasswordChange,
++            Modifier.constrainAs(password){
++                top.linkTo(username.bottom,margin=16.dp)
++                start.linkTo(parent.start,margin=16.dp)
++                end.linkTo(parent.end,margin=16.dp)
++                width = Dimension.fillToConstraints
++            })
++
++        RegisterButton(navController = navController, modifier = Modifier.constrainAs(register){
++            top.linkTo(password.bottom, margin = 20.dp)
++            end.linkTo(parent.end,margin=16.dp)
++            start.linkTo(parent.start, margin = 16.dp)
++            width= Dimension.fillToConstraints
++        },"Profile")
++
++        Text("Already have an account?",modifier= Modifier
++            .padding(7.5.dp)
++            .constrainAs(loginText) {
++                top.linkTo(register.bottom, margin = 16.dp)
++                end.linkTo(parent.end, margin = 16.dp)
++                start.linkTo(parent.start, margin = 16.dp)
++                width = Dimension.fillToConstraints
++            }, fontSize = 14.sp, textAlign = TextAlign.Center)
++        Button(
++            onClick ={navController.navigate("Profile")},
++            colors = ButtonDefaults.textButtonColors(
++                backgroundColor = Color.Transparent // Transparent background
++            ),
++            elevation = null, // Remove button shadow
++            modifier = Modifier.padding(2.dp).constrainAs(loginButton){
++                top.linkTo(loginText.bottom, margin = 0.dp)
++                end.linkTo(parent.end, margin = 16.dp)
++                start.linkTo(parent.start, margin = 16.dp)
++                width = Dimension.wrapContent
++            } // Optional padding
++        ) {
++            Text(
++                text = "Log In",
++                color = Color.hsl(0.1f,0.1f,0.5f), // Light gray font color
++                textDecoration = TextDecoration.Underline,
++                fontSize = 16.sp// Underlined text
++            )
++        }
++    }
++
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/fooddeliveryapp/authentication/register/presentation/viewmodel/RegisterViewModel.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/authentication/register/presentation/viewmodel/RegisterViewModel.kt b/app/src/main/java/com/example/fooddeliveryapp/authentication/register/presentation/viewmodel/RegisterViewModel.kt
+new file mode 100644
+--- /dev/null	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
++++ b/app/src/main/java/com/example/fooddeliveryapp/authentication/register/presentation/viewmodel/RegisterViewModel.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -0,0 +1,42 @@
++package com.example.fooddeliveryapp.authentication.login.presentation.viewmodel
++
++import androidx.lifecycle.ViewModel
++import androidx.navigation.NavController
++import dagger.hilt.android.lifecycle.HiltViewModel
++import kotlinx.coroutines.flow.MutableStateFlow
++import kotlinx.coroutines.flow.asStateFlow
++import javax.inject.Inject
++
++@HiltViewModel
++class RegisterViewModel @Inject constructor():ViewModel() {
++
++    private val _userNameText = MutableStateFlow("")
++    val userNameText = _userNameText.asStateFlow()
++    private val _passwordText = MutableStateFlow("")
++    val passwordText = _passwordText.asStateFlow()
++    private val _name = MutableStateFlow("")
++    val name = _name.asStateFlow()
++    private val _surName = MutableStateFlow("")
++    val surName = _surName.asStateFlow()
++
++
++    fun onUserNameChange(text: String) {
++        _userNameText.value = text
++    }
++    fun onPasswordChange(text: String) {
++        _passwordText.value = text
++    }
++
++    fun onNameChange(text: String) {
++        _name.value = text
++    }
++
++    fun onSurNameChange(text: String) {
++        _surName.value = text
++    }
++
++    fun onRegisterClick() {
++
++    }
++
++}
+Index: app/src/main/java/com/example/fooddeliveryapp/home/presentation/composable/HomePage.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/home/presentation/composable/HomePage.kt b/app/src/main/java/com/example/fooddeliveryapp/home/presentation/composable/HomePage.kt
+--- a/app/src/main/java/com/example/fooddeliveryapp/home/presentation/composable/HomePage.kt	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
++++ b/app/src/main/java/com/example/fooddeliveryapp/home/presentation/composable/HomePage.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -24,7 +24,7 @@
+ fun HomePage(modifier: Modifier,navController: NavController){
+     val viewModel = HomePageViewModel()
+ 
+-    ConstraintLayout {
++    ConstraintLayout() {
+         val (searchBar,topAppBar) = createRefs()
+ 
+ 
+Index: app/src/main/java/com/example/fooddeliveryapp/mainactivity/MainActivity.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/mainactivity/MainActivity.kt b/app/src/main/java/com/example/fooddeliveryapp/mainactivity/MainActivity.kt
+--- a/app/src/main/java/com/example/fooddeliveryapp/mainactivity/MainActivity.kt	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
++++ b/app/src/main/java/com/example/fooddeliveryapp/mainactivity/MainActivity.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -14,6 +14,7 @@
+ import androidx.navigation.compose.rememberNavController
+ import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
+ import com.example.fooddeliveryapp.authentication.login.presentation.composable.Login
++import com.example.fooddeliveryapp.authentication.register.presentation.composable.Register
+ import com.example.fooddeliveryapp.home.presentation.composable.HomePage
+ import com.example.fooddeliveryapp.home.presentation.composable.TopBar
+ import com.example.fooddeliveryapp.shared.navigation.domain.model.BottomNavItem
+@@ -43,7 +44,7 @@
+ 
+     Scaffold(
+         floatingActionButtonPosition = FabPosition.End,
+-        floatingActionButton = { ShoppingCart() },
++        floatingActionButton = { ShoppingCart(navController) },
+         bottomBar = {
+             BottomNavigationBar(navController = navController)
+         },
+@@ -56,14 +57,17 @@
+         ) {
+             composable(BottomNavItem.Home.route) { HomePage(modifier = modifier, navController = navController )}
+             composable(BottomNavItem.Favorites.route) {
++            }
++            composable(BottomNavItem.Profile.route) {
+                 if(IsLoggedInSingleton.getIsLoggedIn()){
+                     Profile()
+                 }
+                 else {
+-                    Login()
++                    Login(navController)
+                 }
+             }
+-            composable(BottomNavItem.Profile.route) { /* Profile Screen UI */ }
++            composable("Register"){ Register(navController)}
++            composable("Cart"){}
+         }
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/fooddeliveryapp/shared/navigation/domain/model/BottomNavItem.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/shared/navigation/domain/model/BottomNavItem.kt b/app/src/main/java/com/example/fooddeliveryapp/shared/navigation/domain/model/BottomNavItem.kt
+--- a/app/src/main/java/com/example/fooddeliveryapp/shared/navigation/domain/model/BottomNavItem.kt	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
++++ b/app/src/main/java/com/example/fooddeliveryapp/shared/navigation/domain/model/BottomNavItem.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -9,7 +9,7 @@
+ 
+ public sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: String) {
+     object Home : BottomNavItem("home", Icons.Default.Home, "Home")
+-    object Favorites : BottomNavItem("favorite", Icons.Default.Favorite, "Favorites")
++    object Favorites : BottomNavItem("favorites", Icons.Default.Favorite, "Favorites")
+     object Profile : BottomNavItem("profile", Icons.Default.Person, "Profile")
+ 
+     companion object {
+Index: app/src/main/java/com/example/fooddeliveryapp/shared/navigation/presentation/composable/Navigation.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/shared/navigation/presentation/composable/Navigation.kt b/app/src/main/java/com/example/fooddeliveryapp/shared/navigation/presentation/composable/Navigation.kt
+--- a/app/src/main/java/com/example/fooddeliveryapp/shared/navigation/presentation/composable/Navigation.kt	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
++++ b/app/src/main/java/com/example/fooddeliveryapp/shared/navigation/presentation/composable/Navigation.kt	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -60,9 +60,9 @@
+ }
+ 
+ @Composable
+-fun ShoppingCart() {
++fun ShoppingCart(navController: NavController) {
+     FloatingActionButton(
+-        onClick = { /* Handle click */ },
++        onClick = { navController.navigate("Cart") },
+         shape = CircleShape,
+         backgroundColor = Color.hsl(254f, 0.44f, 0.32f),
+         elevation = FloatingActionButtonDefaults.elevation(2.dp,3.dp)
+Index: app/src/main/res/drawable/ic_google_logo.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/ic_google_logo.xml b/app/src/main/res/drawable/ic_google_logo.xml
+new file mode 100644
+--- /dev/null	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
++++ b/app/src/main/res/drawable/ic_google_logo.xml	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -0,0 +1,18 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path
++        android:pathData="M21.7428,12.2242a11.534,11.534 0,0 0,-0.158 -1.883h-9.375v3.742h5.368a4.622,4.622 0,0 1,-1.991 2.97L15.5868,19.5422h3.2A9.734,9.734 0,0 0,21.7428 12.2242Z"
++        android:fillColor="#4285f4"/>
++    <path
++        android:pathData="M12.2098,21.9562A9.483,9.483 0,0 0,18.7888 19.5412l-3.2,-2.489a6.006,6.006 0,0 1,-3.377 0.962,5.946 5.946,0 0,1 -5.583,-4.115h-3.3v2.564A9.941,9.941 0,0 0,12.2098 21.9562Z"
++        android:fillColor="#34a853"/>
++    <path
++        android:pathData="M6.6268,13.9002a5.777,5.777 0,0 1,-0.315 -1.9,6 6,0 0,1 0.315,-1.9L6.6268,7.5372h-3.3a9.84,9.84 0,0 0,-1.07 4.463,9.84 9.84,0 0,0 1.07,4.463Z"
++        android:fillColor="#fbbc05"/>
++    <path
++        android:pathData="M12.2098,5.9862a5.4,5.4 0,0 1,3.816 1.493l2.837,-2.837a9.518,9.518 0,0 0,-6.654 -2.6,9.941 9.941,0 0,0 -8.885,5.492l3.3,2.564A5.946,5.946 0,0 1,12.2098 5.9862Z"
++        android:fillColor="#ea4335"/>
++</vector>
+\ No newline at end of file
+Index: build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle.kts b/build.gradle.kts
+--- a/build.gradle.kts	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
++++ b/build.gradle.kts	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -5,5 +5,5 @@
+     alias(libs.plugins.google.gms.google.services) apply false
+     alias(libs.plugins.ksp) apply false
+     alias(libs.plugins.compose.compiler) apply false
+-    id ("com.google.dagger.hilt.android") version "2.44" apply false
++    id ("com.google.dagger.hilt.android") version "2.52" apply false
+ }
+Index: gradle/libs.versions.toml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gradle/libs.versions.toml b/gradle/libs.versions.toml
+--- a/gradle/libs.versions.toml	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
++++ b/gradle/libs.versions.toml	(revision 568c44278d77f9045be6c49cd31649ed8ad8c503)
+@@ -1,7 +1,10 @@
+ [versions]
+ agp = "8.5.2"
+ constraintlayoutComposeVersion = "1.0.1"
+-hiltAndroidGradlePlugin = "2.44"
++hiltAndroid = "2.52"
++hiltAndroidGradlePlugin = "2.52"
++hiltCompiler = "2.52"
++hiltVersion = "1.2.0-alpha01"
+ kotlin = "2.0.0"
+ coreKtx = "1.13.1"
+ junit = "4.13.2"
+@@ -25,13 +28,20 @@
+ 
+ [libraries]
+ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
++androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltVersion" }
++androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltVersion" }
++androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltVersion" }
+ androidx-material = { module = "androidx.compose.material:material", version.ref = "material" }
++androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material" }
+ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+ constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutComposeVersion" }
+ dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "hiltAndroidGradlePlugin" }
+ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidGradlePlugin" }
++hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
+ hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroidGradlePlugin" }
++hilt-android-v252 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroidGradlePlugin" }
++hilt-compiler-v252 = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
+ junit = { group = "junit", name = "junit", version.ref = "junit" }
+ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+Index: app/src/main/java/com/example/fooddeliveryapp/home/presentation/composable/TopBar.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/fooddeliveryapp/home/presentation/composable/TopBar.kt b/app/src/main/java/com/example/fooddeliveryapp/home/presentation/composable/TopBar.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/example/fooddeliveryapp/home/presentation/composable/TopBar.kt	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
++++ /dev/null	(revision e6817e5c82dbd9b75bad7e03be38addadd60c72b)
+@@ -1,10 +0,0 @@
+-package com.example.fooddeliveryapp.home.presentation.composable
+-
+-import androidx.compose.material.TopAppBar
+-import androidx.compose.runtime.Composable
+-import androidx.navigation.NavController
+-
+-@Composable
+-fun TopBar(navController: NavController){
+-    TopAppBar(title = { /*TODO*/ })
+-}
+\ No newline at end of file

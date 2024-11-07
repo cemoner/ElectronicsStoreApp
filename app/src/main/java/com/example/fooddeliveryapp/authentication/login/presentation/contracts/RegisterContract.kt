@@ -12,4 +12,9 @@ interface RegisterContract {
         object OnRegisterClick : UiAction
 
     }
+
+    sealed interface SideEffect {
+        object RegisterSuccess : SideEffect
+        object LoginFail : SideEffect
+    }
 }

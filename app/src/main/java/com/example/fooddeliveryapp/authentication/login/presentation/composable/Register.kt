@@ -10,7 +10,6 @@ import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DriveFileRenameOutline
-import androidx.compose.material3.ButtonDefaults.shape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -37,7 +36,6 @@ fun Register(navController: NavController){
     val passwordText by viewModel.passwordText.collectAsState()
     val nameText by viewModel.name.collectAsState()
     val surNameText by viewModel.surName.collectAsState()
-
     val navEvent by viewModel.navigationEvent.collectAsState()
 
     LaunchedEffect(navEvent) {

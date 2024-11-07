@@ -6,6 +6,10 @@ interface ProfileContract {
     }
     sealed interface UiAction {
         object OnLogoutButton : UiAction
+    }
 
+    sealed interface SideEffect {
+        object LoginSuccess : SideEffect
+        object LoginFail : SideEffect
     }
 }
