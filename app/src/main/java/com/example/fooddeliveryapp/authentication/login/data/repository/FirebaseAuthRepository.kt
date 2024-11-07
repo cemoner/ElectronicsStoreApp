@@ -29,7 +29,6 @@ class FirebaseAuthRepository @Inject constructor(
     suspend fun signIn(email:String,password:String): Resource<String>{
         return try {
             val result = auth.signInWithEmailAndPassword(email,password).await()
-            println("HELLOOOOOOOOO " + result.user?.email)
             Resource.Success(
                 arrayListOf(
                     result.user?.displayName.orEmpty(),

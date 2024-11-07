@@ -9,6 +9,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -23,13 +24,11 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.fooddeliveryapp.R
-import com.example.fooddeliveryapp.authentication.common.Resource
 import com.example.fooddeliveryapp.authentication.components.Password
 import com.example.fooddeliveryapp.authentication.components.RegOrLoginDuo
 import com.example.fooddeliveryapp.authentication.components.UserName
-import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract
 import com.example.fooddeliveryapp.authentication.login.presentation.viewmodel.LoginViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun Login(navController: NavController){
@@ -37,16 +36,27 @@ fun Login(navController: NavController){
     val userNameText by viewModel.userNameText.collectAsState()
     val passwordText by viewModel.passwordText.collectAsState()
     val topBias = 1.15f / 3.5f // 1x distance to top
-    val currentContext = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
+    val navEvent by viewModel.navigationEvent.collectAsState()
+    val toastMessage by viewModel.toastMessage.collectAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(navEvent) {
+        toastMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+            viewModel.onNavigationHandled()
+        }
+
+        navEvent?.let { destination ->
+            navController.navigate(destination)
+            viewModel.onNavigationHandled()  // Reset the event
+        }
+    }
 
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (username,password,normalLogin,googleLogin,registerRow,orText) = createRefs()
 
         Button(onClick = {
-            coroutineScope.launch{
-                viewModel.onLoginClick(userNameText, passwordText)
-            }
+                viewModel.onAction(LoginContract.UiAction.OnLoginClick)
         }, modifier = Modifier.constrainAs(googleLogin){
             top.linkTo(parent.top)
             bottom.linkTo(username.top)
@@ -67,7 +77,7 @@ fun Login(navController: NavController){
 
         })
         UserName(userNameText = userNameText,
-            function = viewModel::onUserNameChange,
+            function = {viewModel.onAction(LoginContract.UiAction.OnUserNameChange(it))},
             modifier = Modifier.constrainAs(username){
                 linkTo(top = parent.top, bottom = parent.bottom, bias = topBias)
                 start.linkTo(parent.start,margin=16.dp)
@@ -75,27 +85,15 @@ fun Login(navController: NavController){
                 width = Dimension.fillToConstraints })
 
         Password(passwordText,
-            viewModel::onPasswordChange,
+            {viewModel.onAction(LoginContract.UiAction.OnPasswordChange(it))},
             Modifier.constrainAs(password){
             top.linkTo(username.bottom,margin=16.dp)
             start.linkTo(parent.start,margin=16.dp)
             end.linkTo(parent.end,margin=16.dp)
             width = Dimension.fillToConstraints
         })
-        Button(onClick =
-        {
-            coroutineScope.launch{
-                val result = viewModel.onLoginClick(userNameText, passwordText)
-                if (result is Resource.Success) {
-                    Toast.makeText(currentContext, "Welcome ${userNameText},you are now being redirected", Toast.LENGTH_LONG).show()
-                    IsLoggedInSingleton.setIsLoggedIn(true)
-                    navController.navigate("Profile")
-                } else {
-                    Toast.makeText(currentContext, "Wrong E-mail or Password", Toast.LENGTH_LONG).show()
-                }
-
-            }
-        }, modifier = Modifier.constrainAs(normalLogin){
+        Button(onClick = { viewModel.onAction(LoginContract.UiAction.OnLoginClick) },
+            modifier = Modifier.constrainAs(normalLogin){
             top.linkTo(password.bottom, margin = 16.dp)
             end.linkTo(parent.end,margin=16.dp)
             start.linkTo(parent.start, margin = 16.dp)

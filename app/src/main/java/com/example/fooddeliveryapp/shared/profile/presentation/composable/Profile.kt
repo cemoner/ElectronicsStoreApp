@@ -1,13 +1,10 @@
 package com.example.fooddeliveryapp.shared.profile.presentation.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -15,15 +12,33 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.ProfileContract
+import com.example.fooddeliveryapp.shared.profile.presentation.viewmodel.ProfileViewModel
 
 
 @Composable
-fun Profile(){
+fun Profile(navController: NavController){
+    val viewModel: ProfileViewModel = hiltViewModel()
+    val navEvent by viewModel.navigationEvent.collectAsState()
+    LaunchedEffect(navEvent) {
+        navEvent?.let { destination ->
+            navController.navigate(destination)
+            viewModel.onNavigationHandled()
+        }
+    }
+
+
+
+
     Column(
         modifier = Modifier
             .padding(32.dp),
@@ -35,7 +50,7 @@ fun Profile(){
         Favorites()
         ChangePasswordButton()
         DeleteAccount()
-        LogoutButton()
+        LogoutButton(viewModel)
     }
 
 }
@@ -116,9 +131,11 @@ fun DeleteAccount() {
 }
 
 @Composable
-fun LogoutButton() {
+fun LogoutButton(viewModel: ProfileViewModel) {
     Button(
-        onClick = { /* Handle Logout Logic */ },
+        onClick = {
+            viewModel.onAction(ProfileContract.UiAction.OnLogoutButton)
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 16.dp),

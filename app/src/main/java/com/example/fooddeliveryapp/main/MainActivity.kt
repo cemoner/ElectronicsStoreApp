@@ -69,13 +69,12 @@ fun App(modifier: Modifier) {
             }
             composable(BottomNavItem.Profile.route) {
                 if(IsLoggedInSingleton.getIsLoggedIn()){
-                    Profile()
+                    Profile(navController)
                 }
                 else {
                     Login(navController)
                 }
             }
-            composable("Login"){ Login(navController = navController)}
             composable("Register"){ Register(navController) }
             composable("Cart"){}
         }
