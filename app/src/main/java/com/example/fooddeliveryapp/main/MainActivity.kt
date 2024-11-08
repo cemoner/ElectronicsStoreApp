@@ -18,9 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
 import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
-import com.example.fooddeliveryapp.authentication.login.presentation.composable.Login
 import com.example.fooddeliveryapp.authentication.login.presentation.composable.Register
 import com.example.fooddeliveryapp.home.presentation.composable.HomePage
 import com.example.fooddeliveryapp.shared.navigation.domain.model.BottomNavItem
@@ -29,7 +27,6 @@ import com.example.fooddeliveryapp.shared.navigation.presentation.composable.Sho
 import com.example.fooddeliveryapp.shared.profile.presentation.composable.Profile
 import com.example.fooddeliveryapp.ui.theme.FoodDeliveryAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -44,6 +41,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 @Composable
 fun App(modifier: Modifier) {
@@ -92,7 +90,7 @@ fun App(modifier: Modifier) {
             startDestination = BottomNavItem.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(BottomNavItem.Home.route) { HomePage(modifier = modifier, navController = navController )}
+            composable(BottomNavItem.Home.route) { HomePage(navController = navController )}
             composable(BottomNavItem.Favorites.route) {
             }
             composable(BottomNavItem.Profile.route) {
@@ -100,7 +98,7 @@ fun App(modifier: Modifier) {
                     Profile(navController)
                 }
                 else {
-                    Login(navController)
+                    Profile(navController)
                 }
             }
             composable("Register"){ Register(navController) }

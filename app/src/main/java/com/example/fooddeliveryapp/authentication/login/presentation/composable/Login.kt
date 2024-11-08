@@ -24,7 +24,6 @@ import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.authentication.components.Password
 import com.example.fooddeliveryapp.authentication.components.RegOrLoginDuo
 import com.example.fooddeliveryapp.authentication.components.UserName
-import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.UiState
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.UiAction
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.SideEffect

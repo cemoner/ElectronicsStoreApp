@@ -1,6 +1,5 @@
 package com.example.fooddeliveryapp.authentication.login.presentation.contracts
 
-import kotlinx.coroutines.flow.Flow
 
 interface LoginContract {
     data class UiState(val userName: String,val password: String,val errorText:String,val showProgress:Boolean)

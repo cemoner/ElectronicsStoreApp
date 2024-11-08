@@ -1,27 +1,48 @@
 package com.example.fooddeliveryapp.home.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import androidx.lifecycle.viewModelScope
+import com.example.fooddeliveryapp.mvi.MVI
+import com.example.fooddeliveryapp.home.presentation.contracts.HomePageContract.UiState
+import com.example.fooddeliveryapp.home.presentation.contracts.HomePageContract.UiAction
+import com.example.fooddeliveryapp.home.presentation.contracts.HomePageContract.SideEffect
+import com.example.fooddeliveryapp.mvi.mvi
+import kotlinx.coroutines.launch
 
-class HomePageViewModel:ViewModel() {
+class HomePageViewModel:ViewModel(), MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {
 
-    //first state whether the search is happening or not
-    private val _isSearching = MutableStateFlow(false)
-    val isSearching = _isSearching.asStateFlow()
+    override fun onAction(action: UiAction) {
+        when (action) {
 
-    //second state the text typed by the user
-    private val _searchText = MutableStateFlow("")
-    val searchText = _searchText.asStateFlow()
+            is UiAction.SearchTextChange -> {
+                onSearchTextChange(action.searchText)
+            }
 
-    fun onSearchTextChange(text: String) {
-        _searchText.value = text
+            UiAction.SearchClicked -> {
+                onToggleSearch()
+            }
+        }
     }
 
-    fun onToogleSearch() {
-        _isSearching.value = !_isSearching.value
-        if (!_isSearching.value) {
+    fun onIsSearchingChange(boolean: Boolean){
+        updateUiState(newUiState = uiState.value.copy(isSearching = boolean))
+    }
+
+    private fun onNavigateTo(destination:String) {
+        viewModelScope.launch {
+            emitSideEffect(SideEffect.Navigate(destination))
+        }
+    }
+
+    fun onSearchTextChange(text: String) {
+        updateUiState(newUiState = uiState.value.copy(searchText = text))
+    }
+
+    fun onToggleSearch() {
+        onIsSearchingChange(!uiState.value.isSearching)
+        if (!uiState.value.isSearching) {
             onSearchTextChange("")
         }
     }
 }
+private fun initialUiState(): UiState = UiState("",false)
