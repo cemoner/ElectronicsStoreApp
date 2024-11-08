@@ -12,31 +12,41 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.ProfileContract
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.ProfileContract.UiState
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.ProfileContract.UiAction
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.ProfileContract.SideEffect
+import com.example.fooddeliveryapp.mvi.CollectSideEffect
+import com.example.fooddeliveryapp.mvi.unpack
 import com.example.fooddeliveryapp.shared.profile.presentation.viewmodel.ProfileViewModel
-
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun Profile(navController: NavController){
     val viewModel: ProfileViewModel = hiltViewModel()
-    val navEvent by viewModel.navigationEvent.collectAsState()
-    LaunchedEffect(navEvent) {
-        navEvent?.let { destination ->
-            navController.navigate(destination)
-            viewModel.onNavigationHandled()
+
+    val (uiState,uiAction,sideEffect) = viewModel.unpack()
+    Profile(uiState,uiAction,sideEffect,navController)
+}
+
+
+@Composable
+fun Profile(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<SideEffect>, navController: NavController){
+
+    CollectSideEffect(sideEffect) {
+        when (it) {
+            is SideEffect.Navigate -> {
+                navController.navigate(it.route)
+            }
+
+            else -> {}
         }
     }
-
-
 
 
     Column(
@@ -50,7 +60,18 @@ fun Profile(navController: NavController){
         Favorites()
         ChangePasswordButton()
         DeleteAccount()
-        LogoutButton(viewModel)
+
+        Button(
+            onClick = {
+                onAction(UiAction.OnLogoutButton)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
+        ) {
+            Text("Logout",color = Color.LightGray)
+        }
     }
 
 }
@@ -127,20 +148,5 @@ fun DeleteAccount() {
             .padding(vertical = 6.dp)
     ) {
         Text("Delete Your Account")
-    }
-}
-
-@Composable
-fun LogoutButton(viewModel: ProfileViewModel) {
-    Button(
-        onClick = {
-            viewModel.onAction(ProfileContract.UiAction.OnLogoutButton)
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp),
-        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
-    ) {
-        Text("Logout",color = Color.LightGray)
     }
 }

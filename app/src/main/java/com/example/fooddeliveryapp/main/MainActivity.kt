@@ -66,26 +66,26 @@ fun App(modifier: Modifier) {
         NavHost(
             enterTransition = {
                 slideIntoContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
-                    animationSpec = tween(300),
+                    towards = AnimatedContentTransitionScope.SlideDirection.Down,
+                    animationSpec = tween(150),
                 )
             },
             exitTransition = {
                 slideOutOfContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
-                    animationSpec = tween(300),
+                    towards = AnimatedContentTransitionScope.SlideDirection.Down,
+                    animationSpec = tween(150),
                 )
             },
             popEnterTransition = {
                 slideIntoContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
-                    animationSpec = tween(300),
+                    towards = AnimatedContentTransitionScope.SlideDirection.Up,
+                    animationSpec = tween(150),
                 )
             },
             popExitTransition = {
                 slideOutOfContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
-                    animationSpec = tween(300),
+                    towards = AnimatedContentTransitionScope.SlideDirection.Up,
+                    animationSpec = tween(150),
                 )
             },
             navController = navController,

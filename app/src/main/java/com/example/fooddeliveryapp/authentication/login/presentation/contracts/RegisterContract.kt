@@ -1,9 +1,9 @@
 package com.example.fooddeliveryapp.authentication.login.presentation.contracts
 
 interface RegisterContract {
-    sealed interface UiState {
 
-    }
+    data class UiState(val name:String,val surName:String,val userName: String,val password: String,val errorText:String,val showProgress:Boolean)
+
     sealed interface UiAction {
         data class OnUserNameChange(val userName: String) : UiAction
         data class OnPasswordChange(val password: String) : UiAction
@@ -14,7 +14,7 @@ interface RegisterContract {
     }
 
     sealed interface SideEffect {
-        object RegisterSuccess : SideEffect
-        object LoginFail : SideEffect
+        data class ShowToast(val message:String) : SideEffect
+        data class Navigate(val route:String) : SideEffect
     }
 }
