@@ -92,6 +92,9 @@ dependencies {
     implementation(platform(libs.firebase.bom.v3351))
     implementation(libs.androidx.lifecycle.viewmodel.ktx.v240)
     implementation(libs.androidx.lifecycle.runtime.ktx.v240)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
 }
 kapt {
     correctErrorTypes = true

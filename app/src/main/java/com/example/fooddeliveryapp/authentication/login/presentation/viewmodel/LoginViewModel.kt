@@ -3,7 +3,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fooddeliveryapp.authentication.common.Resource
 import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
-import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
+import com.example.fooddeliveryapp.authentication.login.presentation.util.IsLoggedInSingleton
 import com.example.fooddeliveryapp.mvi.MVI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

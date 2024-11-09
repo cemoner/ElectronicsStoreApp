@@ -1,6 +1,6 @@
-package com.example.fooddeliveryapp.authentication.login.domain.model
+package com.example.fooddeliveryapp.authentication.login.presentation.util
 
-class IsLoggedInSingleton {
+class IsLoggedInSingleton private constructor() {
     companion object {
         private var isLoggedIn:Boolean = false
 

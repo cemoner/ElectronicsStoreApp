@@ -1,13 +1,11 @@
 package com.example.fooddeliveryapp.main
 
 import android.os.Bundle
-import android.transition.Slide
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
@@ -18,7 +16,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
+import com.example.fooddeliveryapp.authentication.login.presentation.util.IsLoggedInSingleton
+import com.example.fooddeliveryapp.authentication.login.presentation.composable.Login
 import com.example.fooddeliveryapp.authentication.login.presentation.composable.Register
 import com.example.fooddeliveryapp.home.presentation.composable.HomePage
 import com.example.fooddeliveryapp.shared.navigation.domain.model.BottomNavItem
@@ -98,7 +97,7 @@ fun App(modifier: Modifier) {
                     Profile(navController)
                 }
                 else {
-                    Profile(navController)
+                    Login(navController)
                 }
             }
             composable("Register"){ Register(navController) }

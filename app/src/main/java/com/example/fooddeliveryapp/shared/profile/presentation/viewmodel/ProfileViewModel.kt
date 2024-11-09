@@ -2,7 +2,7 @@ package com.example.fooddeliveryapp.shared.profile.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
+import com.example.fooddeliveryapp.authentication.login.presentation.util.IsLoggedInSingleton
 import com.example.fooddeliveryapp.shared.profile.presentation.contracts.ProfileContract.UiState
 import com.example.fooddeliveryapp.shared.profile.presentation.contracts.ProfileContract.UiAction
 import com.example.fooddeliveryapp.shared.profile.presentation.contracts.ProfileContract.SideEffect

@@ -4,12 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fooddeliveryapp.authentication.common.Resource
 import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
-import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
-import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.RegisterContract.SideEffect
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.RegisterContract.UiAction
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.RegisterContract.UiState
-import com.example.fooddeliveryapp.authentication.login.presentation.contracts.RegisterContract
 import com.example.fooddeliveryapp.mvi.MVI
 import com.example.fooddeliveryapp.mvi.mvi
 import dagger.hilt.android.lifecycle.HiltViewModel

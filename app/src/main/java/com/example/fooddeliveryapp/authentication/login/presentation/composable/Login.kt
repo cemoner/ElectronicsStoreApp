@@ -56,29 +56,8 @@ fun Login(uiState: UiState, onAction:(UiAction) -> Unit, sideEffect: Flow<SideEf
         }
     }
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-        val (username,password,normalLogin,googleLogin,registerRow,orText,progressBar) = createRefs()
+        val (username,password,normalLogin,registerRow,progressBar) = createRefs()
 
-        Button(onClick = {
-            onAction(UiAction.OnLoginClick)
-        }, modifier = Modifier.constrainAs(googleLogin){
-            top.linkTo(parent.top)
-            bottom.linkTo(username.top)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-        }) {
-            Icon(painter = painterResource(id = R.drawable.ic_google_logo),
-                contentDescription = "",
-                modifier = Modifier.size(32.dp),
-                tint = Color.Unspecified,
-            )
-        }
-
-        Text("Or use email", fontSize = 14.sp,modifier = Modifier.constrainAs(orText){
-            top.linkTo(googleLogin.bottom, margin = 16.dp)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-
-        })
         UserName(userNameText = uiState.userName ,
             function = { onAction(UiAction.OnUserNameChange(it)) },
             modifier = Modifier.constrainAs(username){
