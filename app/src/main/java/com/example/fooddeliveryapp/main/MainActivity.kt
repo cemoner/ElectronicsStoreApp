@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
@@ -14,8 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
-import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
+import com.example.fooddeliveryapp.authentication.login.presentation.util.IsLoggedInSingleton
 import com.example.fooddeliveryapp.authentication.login.presentation.composable.Login
 import com.example.fooddeliveryapp.authentication.login.presentation.composable.Register
 import com.example.fooddeliveryapp.home.presentation.composable.HomePage
@@ -25,7 +26,6 @@ import com.example.fooddeliveryapp.shared.navigation.presentation.composable.Sho
 import com.example.fooddeliveryapp.shared.profile.presentation.composable.Profile
 import com.example.fooddeliveryapp.ui.theme.FoodDeliveryAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 @Composable
 fun App(modifier: Modifier) {
@@ -60,11 +61,35 @@ fun App(modifier: Modifier) {
 
     ) { innerPadding ->
         NavHost(
+            enterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Down,
+                    animationSpec = tween(150),
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Down,
+                    animationSpec = tween(150),
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Up,
+                    animationSpec = tween(150),
+                )
+            },
+            popExitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Up,
+                    animationSpec = tween(150),
+                )
+            },
             navController = navController,
             startDestination = BottomNavItem.Home.route,
-            Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding)
         ) {
-            composable(BottomNavItem.Home.route) { HomePage(modifier = modifier, navController = navController )}
+            composable(BottomNavItem.Home.route) { HomePage(navController = navController )}
             composable(BottomNavItem.Favorites.route) {
             }
             composable(BottomNavItem.Profile.route) {

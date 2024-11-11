@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.authentication.components
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -18,12 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.Dimension
 
 @Composable
-fun Password(passwordText:String,function:(String) -> Unit,modifier: Modifier){
+fun Password(passwordText:String,function:(String) -> Unit){
     TextField(value = passwordText,
         onValueChange = function,
         label = { Text("Password") },
         placeholder = { Text("Enter your password") },
-        modifier = modifier,
         shape = RoundedCornerShape(32.dp),
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
@@ -42,6 +42,7 @@ fun Password(passwordText:String,function:(String) -> Unit,modifier: Modifier){
             imeAction = ImeAction.Done, // Sets the action button on the keyboard to "Done"
             keyboardType = KeyboardType.Password // Displays a password keyboard, usually with masked input
         ),
-        visualTransformation = PasswordVisualTransformation()
+        visualTransformation = PasswordVisualTransformation(),
+        modifier = Modifier.padding(8.dp)
     )
 }

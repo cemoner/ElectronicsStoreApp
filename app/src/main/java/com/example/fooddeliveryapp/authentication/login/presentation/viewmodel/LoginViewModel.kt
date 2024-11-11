@@ -1,76 +1,92 @@
 package com.example.fooddeliveryapp.authentication.login.presentation.viewmodel
-
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fooddeliveryapp.authentication.common.Resource
-import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
-import com.example.fooddeliveryapp.authentication.login.domain.model.IsLoggedInSingleton
-import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract
+import com.example.fooddeliveryapp.authentication.login.data.model.request.SignInRequest
+import com.example.fooddeliveryapp.authentication.login.data.model.response.AuthResponse
+import com.example.fooddeliveryapp.authentication.login.data.model.result.NetworkResult
+import com.example.fooddeliveryapp.authentication.login.domain.usecase.AuthUseCase
+import com.example.fooddeliveryapp.authentication.login.presentation.util.IsLoggedInSingleton
+import com.example.fooddeliveryapp.mvi.MVI
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.UiAction
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.UiState
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.SideEffect
+import com.example.fooddeliveryapp.mvi.mvi
+import kotlinx.coroutines.delay
+
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: FirebaseAuthRepository
-):ViewModel() {
-    private val _passwordText = MutableStateFlow("")
-    private val _userNameText = MutableStateFlow("")
-    private val _navigationEvent = MutableStateFlow<String?>(null)
-    private val _toastMessage = MutableStateFlow<String?>(null)
-    val userNameText = _userNameText.asStateFlow()
-    val passwordText = _passwordText.asStateFlow()
-    val navigationEvent: StateFlow<String?> = _navigationEvent
-    val toastMessage: StateFlow<String?> = _toastMessage  // Expose the toast message
+    private val authUseCase: AuthUseCase
+):ViewModel(),MVI<UiState,UiAction,SideEffect> by mvi(initialUiState())  {
 
 
-
-
-    fun onAction(action: LoginContract.UiAction) {
+    override fun onAction(action: UiAction) {
         when (action) {
-            is LoginContract.UiAction.OnLoginClick -> {
+            is UiAction.OnLoginClick -> {
                viewModelScope.launch {
                    onLoginClick()
                }
             }
-            is LoginContract.UiAction.OnUserNameChange -> onUserNameChange(action.userName)
-            is LoginContract.UiAction.OnPasswordChange -> onPasswordChange(
-                action.password
-            )
+            is UiAction.OnEmailChange -> {
+                onUserNameChange(action.email)
+            }
+            is UiAction.OnPasswordChange -> {
+                onPasswordChange(action.password)
+            }
         }
     }
 
 
-
-    fun onNavigateTo(destination:String) {
-        _navigationEvent.value = destination
-    }
-
-    fun onNavigationHandled() {
-        _navigationEvent.value = null
-    }
-
-    fun onUserNameChange(text: String) {
-        _userNameText.value = text
-    }
-    fun onPasswordChange(text: String) {
-        _passwordText.value = text
-    }
-
-    suspend fun onLoginClick(){
-        val result = authRepository.signIn(userNameText.value,passwordText.value)
-        if(result is Resource.Success){
-            IsLoggedInSingleton.setIsLoggedIn(true)
-            onNavigateTo("Profile")
-            _toastMessage.value = "Login Successful. You are now being redirected to the profile page"
+    private fun onNavigateTo(destination:String) {
+        viewModelScope.launch {
+            emitSideEffect(SideEffect.Navigate(destination))
         }
-        if(result is Resource.Error){
-            // onNavigateTo silinince toast çıkmıyor ?????????????????????????????
-            _toastMessage.value = "Login Error. E-mail or password is incorrect. Try Again."
-            onNavigateTo("Profile")
+    }
+
+    private fun onCreateToast(message:String){
+        viewModelScope.launch {
+            emitSideEffect(SideEffect.ShowToast(message))
         }
+    }
+
+    private fun onUserNameChange(text: String) {
+        updateUiState(newUiState = uiState.value.copy(email = text))
+    }
+    private fun onPasswordChange(text: String) {
+        updateUiState(newUiState = uiState.value.copy(password = text))
+    }
+
+    private fun onLoginClick() = viewModelScope.launch {
+
+        updateUiState(newUiState = uiState.value.copy(showProgress = true))
+
+        val response:AuthResponse = authUseCase.signIn(
+            SignInRequest(
+                uiState.value.email.trim(),
+                uiState.value.password))
+
+        when(response.status){
+            200 -> {
+                IsLoggedInSingleton.setIsLoggedIn(true)
+                onNavigateTo("Profile")
+                onCreateToast(response.message)
+                updateUiState(newUiState = uiState.value.copy(showProgress = false))
+
+            }
+
+            400 -> {
+                onCreateToast(response.message)
+                updateUiState(newUiState = uiState.value.copy(showProgress = false))
+            }
+        }
+
+
+
     }
 }
+
+private fun initialUiState(): UiState = UiState("","","",false)

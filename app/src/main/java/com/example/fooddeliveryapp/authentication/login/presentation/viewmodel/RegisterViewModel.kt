@@ -1,84 +1,107 @@
 package com.example.fooddeliveryapp.authentication.login.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.example.fooddeliveryapp.authentication.common.Resource
+import com.example.fooddeliveryapp.authentication.login.data.model.request.SignInRequest
+import com.example.fooddeliveryapp.authentication.login.data.model.request.SignUpRequest
+import com.example.fooddeliveryapp.authentication.login.data.model.result.NetworkResult
 import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
-import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract
-import com.example.fooddeliveryapp.authentication.login.presentation.contracts.RegisterContract
+import com.example.fooddeliveryapp.authentication.login.domain.usecase.AuthUseCase
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.RegisterContract.SideEffect
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.RegisterContract.UiAction
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.RegisterContract.UiState
+import com.example.fooddeliveryapp.authentication.login.presentation.util.IsLoggedInSingleton
+import com.example.fooddeliveryapp.mvi.MVI
+import com.example.fooddeliveryapp.mvi.mvi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val authRepository: FirebaseAuthRepository
-):ViewModel() {
+    private val authUseCase: AuthUseCase
+):ViewModel(), MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {
 
-    private val _userNameText = MutableStateFlow("")
-    private val _passwordText = MutableStateFlow("")
-    private val _surName = MutableStateFlow("")
-    private val _navigationEvent = MutableStateFlow<String?>(null)
-    private val _name = MutableStateFlow("")
-
-    val userNameText = _userNameText.asStateFlow()
-    val passwordText = _passwordText.asStateFlow()
-    val name = _name.asStateFlow()
-    val surName = _surName.asStateFlow()
-    val navigationEvent: StateFlow<String?> = _navigationEvent
-
-    fun onAction(action: RegisterContract.UiAction) {
+    override fun onAction(action: UiAction) {
         when (action) {
-            is RegisterContract.UiAction.OnRegisterClick ->
+            is UiAction.OnRegisterClick ->
             {
                 viewModelScope.launch {
                     onRegisterClick()
                 }
             }
-            is RegisterContract.UiAction.OnNameChange -> onNameChange(action.name)
-            is RegisterContract.UiAction.OnSurNameChange -> onSurNameChange(action.surName)
-            is RegisterContract.UiAction.OnUserNameChange -> onUserNameChange(action.userName)
-            is RegisterContract.UiAction.OnPasswordChange -> onPasswordChange(action.password)
+            is UiAction.OnNameChange -> onNameChange(action.name)
+            is UiAction.OnSurNameChange -> onSurNameChange(action.surName)
+            is UiAction.OnEmailChange -> onUserNameChange(action.email)
+            is UiAction.OnPasswordChange -> onPasswordChange(action.password)
+            is UiAction.OnPhoneChange -> onPhoneChange(action.phone)
+            is UiAction.OnAddressChange -> onAddressChange(action.address)
         }
     }
 
 
+
     fun onNavigateTo(destination:String) {
-        _navigationEvent.value = destination
+        viewModelScope.launch {
+            emitSideEffect(SideEffect.Navigate(destination))
+        }
     }
 
-    fun onNavigationHandled() {
-        _navigationEvent.value = null
+    private fun onCreateToast(message:String){
+        viewModelScope.launch {
+            emitSideEffect(SideEffect.ShowToast(message))
+        }
     }
 
-    
-
-
-    fun onUserNameChange(text: String) {
-        _userNameText.value = text
+    private fun onUserNameChange(text: String) {
+        updateUiState(newUiState = uiState.value.copy(email = text))
     }
-    fun onPasswordChange(text: String) {
-        _passwordText.value = text
+    private fun onPasswordChange(text: String) {
+        updateUiState(newUiState = uiState.value.copy(password = text))
     }
 
-    fun onNameChange(text: String) {
-        _name.value = text
+    private fun onNameChange(text: String) {
+        updateUiState(newUiState = uiState.value.copy(name = text))
     }
 
-    fun onSurNameChange(text: String) {
-        _surName.value = text
+    private fun onSurNameChange(text: String) {
+        updateUiState(newUiState = uiState.value.copy(surName = text))
+    }
+    private fun onPhoneChange(text: String) {
+        updateUiState(newUiState = uiState.value.copy(phone = text))
+    }
+    private fun onAddressChange(text: String) {
+        updateUiState(newUiState = uiState.value.copy(address = text))
     }
 
-    suspend fun onRegisterClick() {
-        var result = authRepository.signUp(userNameText.value,passwordText.value)
-        if (result is Resource.Success) {
-            onNavigateTo("Profile")
+    private fun onRegisterClick() = viewModelScope.launch {
+
+        updateUiState(newUiState = uiState.value.copy(showProgress = true))
+
+        val response = authUseCase.signUp(
+            SignUpRequest(
+                uiState.value.email,
+                uiState.value.password,
+                "${uiState.value.name} + ${uiState.value.surName}",
+                uiState.value.phone,uiState.value.address))
+
+
+        when(response.status){
+            200 -> {
+                onNavigateTo("Profile")
+                onCreateToast(response.message)
+                updateUiState(newUiState = uiState.value.copy(showProgress = false))
+            }
+
+            400 -> {
+                onCreateToast(response.message)
+                updateUiState(newUiState = uiState.value.copy(showProgress = false))
+            }
         }
     }
 
 }
+
+private fun initialUiState(): UiState = UiState("","","","","",false, "","")

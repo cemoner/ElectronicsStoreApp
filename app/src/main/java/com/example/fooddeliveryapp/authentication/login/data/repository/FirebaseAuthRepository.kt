@@ -11,6 +11,7 @@ class FirebaseAuthRepository @Inject constructor(
 ) {
 
     suspend fun signUp(email:String,password:String): Resource<String>{
+
         return try {
             val result = auth.createUserWithEmailAndPassword(email,password).await()
             Resource.Success(

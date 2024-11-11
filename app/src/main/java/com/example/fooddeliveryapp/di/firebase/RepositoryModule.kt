@@ -1,8 +1,7 @@
-package com.example.fooddeliveryapp.di
+package com.example.fooddeliveryapp.di.firebase
 
 import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
 import com.google.firebase.auth.FirebaseAuth
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
