@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -17,13 +19,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.fooddeliveryapp.authentication.login.presentation.util.IsLoggedInSingleton
-import com.example.fooddeliveryapp.authentication.login.presentation.composable.Login
-import com.example.fooddeliveryapp.authentication.login.presentation.composable.Register
-import com.example.fooddeliveryapp.home.presentation.composable.HomePage
+import com.example.fooddeliveryapp.authentication.login.presentation.composable.LoginScreen
+import com.example.fooddeliveryapp.authentication.login.presentation.composable.RegisterScreen
+import com.example.fooddeliveryapp.home.presentation.composable.HomePageScreen
 import com.example.fooddeliveryapp.shared.navigation.domain.model.BottomNavItem
 import com.example.fooddeliveryapp.shared.navigation.presentation.composable.BottomNavigationBar
 import com.example.fooddeliveryapp.shared.navigation.presentation.composable.ShoppingCart
-import com.example.fooddeliveryapp.shared.profile.presentation.composable.Profile
+import com.example.fooddeliveryapp.shared.profile.presentation.composable.ProfileScreen
 import com.example.fooddeliveryapp.ui.theme.FoodDeliveryAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,7 +50,7 @@ fun App(modifier: Modifier) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    Scaffold(
+    Scaffold(modifier = Modifier.fillMaxSize().systemBarsPadding(),
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
             if (shouldShowCart(currentRoute)) {
@@ -89,18 +91,18 @@ fun App(modifier: Modifier) {
             startDestination = BottomNavItem.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(BottomNavItem.Home.route) { HomePage(navController = navController )}
+            composable(BottomNavItem.Home.route) { HomePageScreen(navController = navController ) }
             composable(BottomNavItem.Favorites.route) {
             }
             composable(BottomNavItem.Profile.route) {
                 if(IsLoggedInSingleton.getIsLoggedIn()){
-                    Profile(navController)
+                    ProfileScreen(navController)
                 }
                 else {
-                    Login(navController)
+                    LoginScreen(navController)
                 }
             }
-            composable("Register"){ Register(navController) }
+            composable("Register"){ RegisterScreen(navController) }
             composable("Cart"){}
         }
     }

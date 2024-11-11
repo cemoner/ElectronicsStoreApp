@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.authentication.components
+package com.example.fooddeliveryapp.authentication.login.presentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EmailTextField(emailText:String,function: (String) -> Unit){
+fun EmailTextField(emailText:String, function: (String) -> Unit){
     TextField(
         value = emailText,
         onValueChange =  function ,
@@ -26,8 +26,8 @@ fun EmailTextField(emailText:String,function: (String) -> Unit){
         shape = RoundedCornerShape(32.dp),
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Color.Transparent, // Removes the underline when focused
-            unfocusedIndicatorColor = Color.Transparent, // Removes the underline when not focused
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
             cursorColor = Color.Black
         ),
         leadingIcon = {

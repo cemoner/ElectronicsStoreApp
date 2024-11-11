@@ -49,16 +49,16 @@ data class ButtonItem(
 )
 
 @Composable
-fun Profile(navController: NavController){
+fun ProfileScreen(navController: NavController){
     val viewModel: ProfileViewModel = hiltViewModel()
 
     val (uiState,uiAction,sideEffect) = viewModel.unpack()
-    Profile(uiState,uiAction,sideEffect,navController)
+    ProfileContent(uiState,uiAction,sideEffect,navController)
 }
 
 
 @Composable
-fun Profile(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<SideEffect>, navController: NavController){
+fun ProfileContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<SideEffect>, navController: NavController){
     val whiteColor = colorResource(id = R.color.white)
 
     val buttonNames = mapOf(

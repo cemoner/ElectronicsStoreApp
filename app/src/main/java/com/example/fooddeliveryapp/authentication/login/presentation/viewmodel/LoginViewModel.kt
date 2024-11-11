@@ -13,6 +13,8 @@ import com.example.fooddeliveryapp.authentication.login.presentation.contracts.L
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.UiState
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.SideEffect
 import com.example.fooddeliveryapp.mvi.mvi
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.delay
 
 
 @HiltViewModel
@@ -69,8 +71,8 @@ class LoginViewModel @Inject constructor(
         when(response.status){
             200 -> {
                 IsLoggedInSingleton.setIsLoggedIn(true)
-                onNavigateTo("Profile")
                 onCreateToast(response.message)
+                onNavigateTo("Profile")
                 updateUiState(newUiState = uiState.value.copy(showProgress = false))
 
             }

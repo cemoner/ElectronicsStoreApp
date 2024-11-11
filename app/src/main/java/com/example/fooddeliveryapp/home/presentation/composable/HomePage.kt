@@ -31,10 +31,10 @@ import com.example.fooddeliveryapp.mvi.unpack
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun HomePage(navController: NavController) {
+fun HomePageScreen(navController: NavController) {
     val viewModel:HomePageViewModel = hiltViewModel()
     val (uiState,onAction,sideEffect) = viewModel.unpack()
-    HomePage(uiState,onAction,sideEffect,navController)
+    HomePageContent(uiState,onAction,sideEffect,navController)
 }
 
 
@@ -42,7 +42,7 @@ fun HomePage(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomePage(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<SideEffect>,navController: NavController){
+fun HomePageContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<SideEffect>,navController: NavController){
 
     CollectSideEffect(sideEffect) {
         when(it){
@@ -88,7 +88,7 @@ fun HomePage(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<Sid
 fun TopBar(modifier: Modifier) {
     TopAppBar(title = { Text("Welcome",
         color =Color.Black)},
-        modifier = modifier,
+        modifier = modifier.padding(bottom = 12.dp),
         backgroundColor =  colorResource(id = R.color.white),
         actions = { Icon(imageVector = Icons.Default.Home, contentDescription = "Address",
             modifier = Modifier.size(48.dp).padding(5.dp), tint = Color.hsl(254f, 0.44f, 0.32f)) })

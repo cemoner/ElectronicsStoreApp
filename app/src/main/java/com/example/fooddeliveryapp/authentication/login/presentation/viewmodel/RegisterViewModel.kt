@@ -10,6 +10,7 @@ import com.example.fooddeliveryapp.authentication.login.presentation.contracts.R
 import com.example.fooddeliveryapp.mvi.MVI
 import com.example.fooddeliveryapp.mvi.mvi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -84,8 +85,9 @@ class RegisterViewModel @Inject constructor(
 
         when(response.status){
             200 -> {
-                onNavigateTo("Profile")
                 onCreateToast(response.message)
+                delay(1000)
+                onNavigateTo("Profile")
                 updateUiState(newUiState = uiState.value.copy(showProgress = false))
             }
 

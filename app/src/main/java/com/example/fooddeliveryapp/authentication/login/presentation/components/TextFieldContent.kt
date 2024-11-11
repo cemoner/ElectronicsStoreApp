@@ -1,7 +1,8 @@
-package com.example.fooddeliveryapp.authentication.components
+package com.example.fooddeliveryapp.authentication.login.presentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -11,11 +12,13 @@ import androidx.compose.material.icons.filled.DriveFileRenameOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun FormTextField(text:String,function: (String) -> Unit,type:String){
+fun FormTextFieldContent(text:String, function: (String) -> Unit, type:String){
     TextField(value = text,
         onValueChange = function,
         label = { Text(type) },
@@ -33,6 +36,12 @@ fun FormTextField(text:String,function: (String) -> Unit,type:String){
                 contentDescription = "",
                 tint = Color.Gray
             )
-        }, modifier = Modifier.padding(8.dp)
+        }, modifier = Modifier.padding(8.dp),
+
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Email
+        )
+
     )
 }
