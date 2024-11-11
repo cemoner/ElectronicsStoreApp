@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.di
+package com.example.fooddeliveryapp.di.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module

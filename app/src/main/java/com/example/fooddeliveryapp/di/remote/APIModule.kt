@@ -1,7 +1,7 @@
-package com.example.fooddeliveryapp.di
+package com.example.fooddeliveryapp.di.remote
 
+import com.example.fooddeliveryapp.authentication.login.data.api.AuthAPI
 import com.example.fooddeliveryapp.retrofit.ApiClient
-import com.example.fooddeliveryapp.authentication.login.data.api.UserAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +15,6 @@ class APIModule {
 
     @Provides
     @Singleton
-    fun provideUserApi(): UserAPI = ApiClient.create()
+    fun provideAuthAPI(): AuthAPI = ApiClient.create()
 
 }

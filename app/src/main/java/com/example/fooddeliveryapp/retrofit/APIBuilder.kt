@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "https://virtserver.swaggerhub.com/candroid/E-Commerce/1.0.0"
+    private const val BASE_URL = "https://api.canerture.com/ecommerce/"
 
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()

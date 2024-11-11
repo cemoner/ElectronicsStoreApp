@@ -1,8 +1,11 @@
 package com.example.fooddeliveryapp.authentication.login.presentation.viewmodel
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fooddeliveryapp.authentication.common.Resource
-import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
+import com.example.fooddeliveryapp.authentication.login.data.model.request.SignInRequest
+import com.example.fooddeliveryapp.authentication.login.data.model.response.AuthResponse
+import com.example.fooddeliveryapp.authentication.login.data.model.result.NetworkResult
+import com.example.fooddeliveryapp.authentication.login.domain.usecase.AuthUseCase
 import com.example.fooddeliveryapp.authentication.login.presentation.util.IsLoggedInSingleton
 import com.example.fooddeliveryapp.mvi.MVI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +20,7 @@ import kotlinx.coroutines.delay
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: FirebaseAuthRepository
+    private val authUseCase: AuthUseCase
 ):ViewModel(),MVI<UiState,UiAction,SideEffect> by mvi(initialUiState())  {
 
 
@@ -28,8 +31,8 @@ class LoginViewModel @Inject constructor(
                    onLoginClick()
                }
             }
-            is UiAction.OnUserNameChange -> {
-                onUserNameChange(action.userName)
+            is UiAction.OnEmailChange -> {
+                onUserNameChange(action.email)
             }
             is UiAction.OnPasswordChange -> {
                 onPasswordChange(action.password)
@@ -51,25 +54,38 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun onUserNameChange(text: String) {
-        updateUiState(newUiState = uiState.value.copy(userName = text))
+        updateUiState(newUiState = uiState.value.copy(email = text))
     }
     private fun onPasswordChange(text: String) {
         updateUiState(newUiState = uiState.value.copy(password = text))
     }
 
     private fun onLoginClick() = viewModelScope.launch {
+
         updateUiState(newUiState = uiState.value.copy(showProgress = true))
-        delay(2500)
-        val result = authRepository.signIn(uiState.value.userName,uiState.value.password)
-        updateUiState(newUiState = uiState.value.copy(showProgress = false))
-        if(result is Resource.Success){
-            IsLoggedInSingleton.setIsLoggedIn(true)
-            onNavigateTo("Profile")
-            onCreateToast("Login Successful. You are now being redirected to the profile page")
+
+        val response:AuthResponse = authUseCase.signIn(
+            SignInRequest(
+                uiState.value.email.trim(),
+                uiState.value.password))
+
+        when(response.status){
+            200 -> {
+                IsLoggedInSingleton.setIsLoggedIn(true)
+                onNavigateTo("Profile")
+                onCreateToast(response.message)
+                updateUiState(newUiState = uiState.value.copy(showProgress = false))
+
+            }
+
+            400 -> {
+                onCreateToast(response.message)
+                updateUiState(newUiState = uiState.value.copy(showProgress = false))
+            }
         }
-        if(result is Resource.Error){
-            onCreateToast("Login Error. E-mail or password is incorrect. Try Again.")
-        }
+
+
+
     }
 }
 

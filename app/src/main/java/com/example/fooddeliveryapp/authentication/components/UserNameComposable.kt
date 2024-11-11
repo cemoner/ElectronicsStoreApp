@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.authentication.components
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -16,13 +17,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun UserName(userNameText:String,function: (String) -> Unit,modifier:Modifier){
+fun EmailTextField(emailText:String,function: (String) -> Unit){
     TextField(
-        value = userNameText,
+        value = emailText,
         onValueChange =  function ,
         label = { Text("E-mail") },
         placeholder = { Text("Enter your e-mail") },
-        modifier = modifier,
         shape = RoundedCornerShape(32.dp),
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
@@ -41,5 +41,6 @@ fun UserName(userNameText:String,function: (String) -> Unit,modifier:Modifier){
             imeAction = ImeAction.Next, // Sets the action button on the keyboard to "Done"
             keyboardType = KeyboardType.Email // Displays a password keyboard, usually with masked input
         ),
+        modifier = Modifier.padding(8.dp)
     )
 }
