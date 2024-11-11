@@ -1,10 +1,9 @@
 package com.example.fooddeliveryapp.authentication.login.domain.usecase
 
-import com.example.fooddeliveryapp.authentication.login.data.model.entity.User
 import com.example.fooddeliveryapp.authentication.login.data.model.request.SignInRequest
 import com.example.fooddeliveryapp.authentication.login.data.model.request.SignUpRequest
 import com.example.fooddeliveryapp.authentication.login.data.model.response.AuthResponse
-import com.example.fooddeliveryapp.authentication.login.data.model.result.NetworkResult
+import com.example.fooddeliveryapp.retrofit.NetworkResult
 import com.example.fooddeliveryapp.authentication.login.domain.repository.AuthenticationRepository
 import javax.inject.Inject
 

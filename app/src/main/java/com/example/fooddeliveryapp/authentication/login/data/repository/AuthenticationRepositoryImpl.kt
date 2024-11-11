@@ -4,7 +4,7 @@ import com.example.fooddeliveryapp.retrofit.ApiHandler
 import com.example.fooddeliveryapp.authentication.login.data.datasource.remote.RetrofitDataSource
 import com.example.fooddeliveryapp.authentication.login.data.model.request.SignInRequest
 import com.example.fooddeliveryapp.authentication.login.data.model.request.SignUpRequest
-import com.example.fooddeliveryapp.authentication.login.data.model.result.NetworkResult
+import com.example.fooddeliveryapp.retrofit.NetworkResult
 import com.example.fooddeliveryapp.authentication.login.data.model.entity.User
 import com.example.fooddeliveryapp.authentication.login.domain.repository.AuthenticationRepository
 import javax.inject.Inject

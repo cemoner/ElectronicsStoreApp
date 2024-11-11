@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.authentication.login.data.model.result
+package com.example.fooddeliveryapp.retrofit
 
 sealed class NetworkResult<out T : Any> {
     data class Success<out T : Any>(val code: Int, val data: T) : NetworkResult<T>()

@@ -62,9 +62,9 @@ fun Register(uiState: UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<Si
     Column(modifier = Modifier.fillMaxSize().padding(),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
 
         FormTextField(uiState.name,{onAction(UiAction.OnNameChange(it))},"Name")
-        FormTextField(uiState.name,{onAction(UiAction.OnSurNameChange(it))},"Surname")
-        FormTextField(uiState.name,{onAction(UiAction.OnPhoneChange(it))},"Phone")
-        FormTextField(uiState.name,{onAction(UiAction.OnAddressChange(it))},"Address")
+        FormTextField(uiState.surName,{onAction(UiAction.OnSurNameChange(it))},"Surname")
+        FormTextField(uiState.phone,{onAction(UiAction.OnPhoneChange(it))},"Phone")
+        FormTextField(uiState.address,{onAction(UiAction.OnAddressChange(it))},"Address")
         EmailTextField(emailText = uiState.email,{onAction(UiAction.OnEmailChange(it))})
         Password(uiState.password, {onAction(UiAction.OnPasswordChange(it))})
         if(uiState.showProgress){ CircularProgressIndicator()}

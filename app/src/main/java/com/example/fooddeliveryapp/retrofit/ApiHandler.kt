@@ -1,7 +1,6 @@
 package com.example.fooddeliveryapp.retrofit
 
 import android.util.Log
-import com.example.fooddeliveryapp.authentication.login.data.model.result.NetworkResult
 import retrofit2.HttpException
 import retrofit2.Response
 

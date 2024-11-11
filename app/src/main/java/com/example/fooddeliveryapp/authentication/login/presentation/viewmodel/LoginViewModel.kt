@@ -1,10 +1,8 @@
 package com.example.fooddeliveryapp.authentication.login.presentation.viewmodel
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fooddeliveryapp.authentication.login.data.model.request.SignInRequest
 import com.example.fooddeliveryapp.authentication.login.data.model.response.AuthResponse
-import com.example.fooddeliveryapp.authentication.login.data.model.result.NetworkResult
 import com.example.fooddeliveryapp.authentication.login.domain.usecase.AuthUseCase
 import com.example.fooddeliveryapp.authentication.login.presentation.util.IsLoggedInSingleton
 import com.example.fooddeliveryapp.mvi.MVI
@@ -15,7 +13,6 @@ import com.example.fooddeliveryapp.authentication.login.presentation.contracts.L
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.UiState
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.SideEffect
 import com.example.fooddeliveryapp.mvi.mvi
-import kotlinx.coroutines.delay
 
 
 @HiltViewModel
