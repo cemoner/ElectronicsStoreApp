@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.shared.profile.presentation.composable
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,11 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.fooddeliveryapp.R
+import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract
 import com.example.fooddeliveryapp.shared.profile.presentation.contracts.ProfileContract.UiState
 import com.example.fooddeliveryapp.shared.profile.presentation.contracts.ProfileContract.UiAction
 import com.example.fooddeliveryapp.shared.profile.presentation.contracts.ProfileContract.SideEffect
@@ -49,17 +52,30 @@ data class ButtonItem(
 )
 
 @Composable
-fun ProfileScreen(navController: NavController){
+fun ProfileScreen(
+    navController: NavController,
+    userId:String){
+
     val viewModel: ProfileViewModel = hiltViewModel()
+    viewModel.checkIsLoggedIn()
+    viewModel.getUserData(userId.replace("{","").replace("}",""))
 
     val (uiState,uiAction,sideEffect) = viewModel.unpack()
-    ProfileContent(uiState,uiAction,sideEffect,navController)
+    ProfileContent(uiState,uiAction,sideEffect,navController,userId)
 }
 
 
 @Composable
-fun ProfileContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<SideEffect>, navController: NavController){
+fun ProfileContent(
+    uiState: UiState,
+    onAction: (UiAction) -> Unit,
+    sideEffect: Flow<SideEffect>,
+    navController: NavController,
+    userId: String
+){
     val whiteColor = colorResource(id = R.color.white)
+    val context = LocalContext.current
+
 
     val buttonNames = mapOf(
         "Change Password" to ButtonItem("Change Password", "changePassword",Icons.Default.Password,UiAction.OnChangePassword),
@@ -70,9 +86,12 @@ fun ProfileContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Fl
     )
 
     CollectSideEffect(sideEffect) {
-        when (it) {
+        when(it){
             is SideEffect.Navigate -> {
                 navController.navigate(it.route)
+            }
+            is SideEffect.ShowToast -> {
+                Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -86,7 +105,19 @@ fun ProfileContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Fl
     ) {
 
         LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            item {UserInfoSection(whiteColor)}
+            item {
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = whiteColor )
+                ) {
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Column(modifier = Modifier.padding(32.dp).fillMaxWidth()) {
+                            Text(text = "Name: ${uiState.name}", color = Color.Black, modifier = Modifier.padding(5.dp))
+                            Text(text = "Email: ${uiState.email}", color = Color.Black, modifier = Modifier.padding(5.dp))
+                            Text(text = "Phone: ${uiState.phoneNumber}", color = Color.Black, modifier = Modifier.padding(5.dp))
+                        }
+                    }
+                }
+            }
             items(buttonNames.entries.toList()) { buttonItem ->
                 CreateButtons(
                     text = buttonItem.value.displayName,
@@ -100,21 +131,6 @@ fun ProfileContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Fl
 
 }
 
-@Composable
-fun UserInfoSection(whiteColor: Color) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = whiteColor )
-    ) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(48.dp).fillMaxWidth()) {
-                Text(text = "User Name: John Doe", color = Color.Black, modifier = Modifier.padding(5.dp))
-                Text(text = "Email: johndoe@example.com", color = Color.Black, modifier = Modifier.padding(5.dp))
-                Text(text = "Phone: +1234567690", color = Color.Black, modifier = Modifier.padding(5.dp))
-            }
-        }
-    }
-}
-
 
 @Composable
 fun CreateButtons(text: String, onClick: () -> Unit, icon: ImageVector, whiteColor: Color) {
@@ -122,13 +138,13 @@ fun CreateButtons(text: String, onClick: () -> Unit, icon: ImageVector, whiteCol
     Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
 
 
-        Button(onClick = onClick, modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp, horizontal = 0.dp), colors = ButtonDefaults.buttonColors(whiteColor),
-            contentPadding = PaddingValues(vertical = 12.dp, horizontal = 12.dp)){
+        Button(onClick = onClick, modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp, horizontal = 0.dp), colors = ButtonDefaults.buttonColors(whiteColor),
+            contentPadding = PaddingValues(vertical = 8.dp, horizontal = 8.dp)){
             Row(horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()){
                 Icon(
                     imageVector = icon,
                     contentDescription = "${text} + Icon" ,
-                    modifier = Modifier.size(36.dp).padding(end = 4.dp),
+                    modifier = Modifier.size(24.dp).padding(end = 2.dp),
                     tint = Color.Black
                 )
                 Text(text = text, color = Color.Black)

@@ -3,6 +3,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fooddeliveryapp.authentication.login.data.model.request.SignInRequest
 import com.example.fooddeliveryapp.authentication.login.data.model.response.AuthResponse
+import com.example.fooddeliveryapp.authentication.login.domain.model.AuthDetail
 import com.example.fooddeliveryapp.authentication.login.domain.usecase.AuthUseCase
 import com.example.fooddeliveryapp.authentication.login.presentation.util.IsLoggedInSingleton
 import com.example.fooddeliveryapp.mvi.MVI
@@ -13,6 +14,7 @@ import com.example.fooddeliveryapp.authentication.login.presentation.contracts.L
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.UiState
 import com.example.fooddeliveryapp.authentication.login.presentation.contracts.LoginContract.SideEffect
 import com.example.fooddeliveryapp.mvi.mvi
+import com.example.fooddeliveryapp.shared.navigation.model.NavItem
 import kotlinx.coroutines.Delay
 import kotlinx.coroutines.delay
 
@@ -63,7 +65,7 @@ class LoginViewModel @Inject constructor(
 
         updateUiState(newUiState = uiState.value.copy(showProgress = true))
 
-        val response:AuthResponse = authUseCase.signIn(
+        val response:AuthDetail = authUseCase.signIn(
             SignInRequest(
                 uiState.value.email.trim(),
                 uiState.value.password))
@@ -72,7 +74,7 @@ class LoginViewModel @Inject constructor(
             200 -> {
                 IsLoggedInSingleton.setIsLoggedIn(true)
                 onCreateToast(response.message)
-                onNavigateTo("Profile")
+                onNavigateTo("profile/{${response.userId}}")
                 updateUiState(newUiState = uiState.value.copy(showProgress = false))
 
             }

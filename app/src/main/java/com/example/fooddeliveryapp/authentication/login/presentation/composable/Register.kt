@@ -27,6 +27,7 @@ import com.example.fooddeliveryapp.authentication.login.presentation.contracts.R
 import com.example.fooddeliveryapp.authentication.login.presentation.viewmodel.RegisterViewModel
 import com.example.fooddeliveryapp.mvi.CollectSideEffect
 import com.example.fooddeliveryapp.mvi.unpack
+import com.example.fooddeliveryapp.shared.navigation.model.NavItem
 import kotlinx.coroutines.flow.Flow
 
 
@@ -52,7 +53,6 @@ fun RegisterContent(uiState: UiState, onAction: (UiAction) -> Unit, sideEffect: 
             }
         }
     }
-    val topBias = 1f / 3.5f
     Column(modifier = Modifier.fillMaxSize().padding(),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
 
         FormTextFieldContent(uiState.name,{onAction(UiAction.OnNameChange(it))},"Name")
@@ -63,7 +63,7 @@ fun RegisterContent(uiState: UiState, onAction: (UiAction) -> Unit, sideEffect: 
         PasswordTextField(uiState.password, {onAction(UiAction.OnPasswordChange(it))},{onAction(UiAction.OnRegisterClick)})
         if(uiState.showProgress){ CircularProgressIndicator()}
         Button(modifier = Modifier.padding(top = 6.dp),onClick = {onAction(UiAction.OnRegisterClick)}, shape = RoundedCornerShape(32.dp)) { Text("Register",modifier= Modifier.padding(7.5.dp), fontSize = 14.sp)}
-        RegOrLoginDuo(navController = navController, route = "Profile", textString = "Already have an Account?", buttonString = "Log In")
+        RegOrLoginDuo(navController = navController, route = NavItem.Login.route, textString = "Already have an Account?", buttonString = "Log In")
     }
 
 }

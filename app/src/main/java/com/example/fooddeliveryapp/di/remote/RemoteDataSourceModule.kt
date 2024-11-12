@@ -1,6 +1,6 @@
 package com.example.fooddeliveryapp.di.remote
 
-import com.example.fooddeliveryapp.authentication.login.data.api.AuthAPI
+import com.example.fooddeliveryapp.authentication.login.data.api.AuthApi
 import com.example.fooddeliveryapp.authentication.login.data.datasource.remote.RetrofitDataSource
 import dagger.Module
 import dagger.Provides
@@ -15,6 +15,6 @@ class RemoteDataSourceModule {
 
     @Provides
     @Singleton
-    fun providesDataSource(authApi: AuthAPI): RetrofitDataSource = RetrofitDataSource(authApi = authApi)
+    fun providesDataSource(authApi: AuthApi): RetrofitDataSource = RetrofitDataSource(authApi = authApi)
 
 }

@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.fooddeliveryapp.shared.navigation.domain.model.BottomNavItem
+import com.example.fooddeliveryapp.shared.navigation.model.NavItem
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
@@ -33,12 +33,12 @@ fun BottomNavigationBar(navController: NavController) {
                     width = 0.5.dp,
                     color = Color.LightGray,
                     shape = MaterialTheme.shapes.small
-                ) // Adding border
+                )
                ) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
 
-            BottomNavItem.values().forEach { item ->
+            NavItem.bottomValues().forEach { item ->
                 BottomNavigationItem(
                     selected = currentRoute == item.route,
                     onClick = {

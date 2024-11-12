@@ -26,6 +26,7 @@ import com.example.fooddeliveryapp.authentication.login.presentation.contracts.L
 import com.example.fooddeliveryapp.authentication.login.presentation.viewmodel.LoginViewModel
 import com.example.fooddeliveryapp.mvi.CollectSideEffect
 import com.example.fooddeliveryapp.mvi.unpack
+import com.example.fooddeliveryapp.shared.navigation.model.NavItem
 import kotlinx.coroutines.flow.Flow
 
 @Composable
@@ -67,7 +68,7 @@ fun LoginContent(uiState: UiState, onAction:(UiAction) -> Unit, sideEffect: Flow
         if(uiState.showProgress){
             CircularProgressIndicator(modifier = Modifier.padding(top = 8.dp))
         }
-        RegOrLoginDuo(navController = navController, route = "Register", textString = "Don't have an Account?", buttonString = "Register")
+        RegOrLoginDuo(navController = navController, route = NavItem.Register.route, textString = "Don't have an Account?", buttonString = "Register")
     }
 
 }
