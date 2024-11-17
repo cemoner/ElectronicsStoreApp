@@ -1,8 +1,10 @@
 package com.example.fooddeliveryapp.di.remote
 
-import com.example.fooddeliveryapp.authentication.login.data.api.AuthApi
+import com.example.fooddeliveryapp.profile.authentication.login.data.api.AuthApi
+import com.example.fooddeliveryapp.home.data.api.HomeApi
+import com.example.fooddeliveryapp.home.data.api.ProductDetailApi
 import com.example.fooddeliveryapp.retrofit.ApiClient
-import com.example.fooddeliveryapp.shared.profile.data.api.ProfileApi
+import com.example.fooddeliveryapp.profile.profile.data.api.ProfileApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,10 +18,18 @@ class APIModule {
 
     @Provides
     @Singleton
-    fun provideAuthApi(): AuthApi = ApiClient.create()
+    fun providesAuthApi(): AuthApi = ApiClient.create()
 
     @Provides
     @Singleton
-    fun provideProfileApi(): ProfileApi = ApiClient.create()
+    fun providesProfileApi(): ProfileApi = ApiClient.create()
+
+    @Provides
+    @Singleton
+    fun providesHomeApi(): HomeApi = ApiClient.create()
+
+    @Provides
+    @Singleton
+    fun providesProductDetailApi(): ProductDetailApi = ApiClient.create()
 
 }

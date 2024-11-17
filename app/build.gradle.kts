@@ -94,6 +94,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx.v240)
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
 }
 kapt {
