@@ -15,14 +15,11 @@ interface ApiHandler {
             if (response.isSuccessful) {
                 NetworkResult.Success(response.code(), response.body()!!)
             } else {
-                Log.d("APIHandler", "Error body: ${response.errorBody()?.string()}")
                 NetworkResult.Error(response.code(), response.errorBody()?.string())
             }
         } catch (e: HttpException) {
-            Log.d("APIHandler", "HTTP Exception: ${e.message()}")
             NetworkResult.Error(e.code(), e.message())
         } catch (e: Throwable) {
-            Log.d("APIHandler", "Unknown Exception: ${e.message}")
             NetworkResult.Exception(e)
         }
     }
