@@ -1,0 +1,12 @@
+package com.example.fooddeliveryapp.common.presentation.model.entity
+
+data class ProductUI(
+    val id: Int,
+    val title: String,
+    val price: Double,
+    val salePrice: Double,
+    val description: String,
+    val category: String,
+    val image: String,
+    val rate: Double,
+)

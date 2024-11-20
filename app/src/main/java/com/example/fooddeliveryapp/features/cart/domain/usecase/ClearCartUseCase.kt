@@ -1,0 +1,8 @@
+package com.example.fooddeliveryapp.features.cart.domain.usecase
+
+import com.example.fooddeliveryapp.features.cart.domain.repository.CartRepository
+import javax.inject.Inject
+
+class ClearCartUseCase @Inject constructor(private val cartRepository: CartRepository){
+    suspend operator fun invoke(store: String,userId:String):Result<String> = cartRepository.clearCart(store, userId)
+}
