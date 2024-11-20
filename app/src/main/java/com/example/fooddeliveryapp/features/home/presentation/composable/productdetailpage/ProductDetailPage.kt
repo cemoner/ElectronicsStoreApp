@@ -47,7 +47,7 @@ import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.features.home.presentation.contract.ProductDetailPageContract.UiState
 import com.example.fooddeliveryapp.features.home.presentation.contract.ProductDetailPageContract.UiAction
 import com.example.fooddeliveryapp.features.home.presentation.contract.ProductDetailPageContract.SideEffect
-import com.example.fooddeliveryapp.features.home.presentation.model.ProductUI
+import com.example.fooddeliveryapp.common.presentation.model.entity.ProductUI
 import com.example.fooddeliveryapp.features.home.presentation.viewmodel.ProductDetailPageViewModel
 import com.example.fooddeliveryapp.mvi.CollectSideEffect
 import com.example.fooddeliveryapp.mvi.unpack
@@ -67,7 +67,7 @@ fun ProductDetailPage(){
 @Composable
 fun ProductDetailPageContent(uiState: UiState, onAction:(UiAction) -> Unit, sideEffect: Flow<SideEffect>){
 
-    val product: ProductUI = uiState.product!!
+    val product: ProductUI = uiState.product
     val screenWidth = LocalConfiguration.current.screenWidthDp
     val context = LocalContext.current
 
@@ -194,7 +194,7 @@ fun BottomBar(uiState: UiState, onAction: (UiAction) -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = if(uiState.product!!.salePrice == 0.0) {
+                text = if(uiState.product.salePrice == 0.0) {
                     "Price: ${uiState.product.price} ₺"
                 }
                     else {

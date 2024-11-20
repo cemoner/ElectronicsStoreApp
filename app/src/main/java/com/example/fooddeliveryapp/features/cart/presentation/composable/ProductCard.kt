@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.features.cart.presentation.contract.CartPageContract.UiAction
-import com.example.fooddeliveryapp.features.home.presentation.model.ProductUI
+import com.example.fooddeliveryapp.common.presentation.model.entity.ProductUI
 
 @Composable
 fun ProductCard(product: ProductUI, onAction:(UiAction) -> Unit) {

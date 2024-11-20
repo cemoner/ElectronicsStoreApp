@@ -1,11 +1,11 @@
 package com.example.fooddeliveryapp.features.cart.data.model.response
 
-import com.example.fooddeliveryapp.features.cart.domain.model.Product
+import com.example.fooddeliveryapp.common.data.model.entity.ProductDto
 import com.google.gson.annotations.SerializedName
 
-data class CartResponse(
+data class GetCartResponse(
     @SerializedName("products")
-    val products:List<Product>,
+    val products:List<ProductDto>,
     @SerializedName("status")
     val status:Int,
     @SerializedName("message")

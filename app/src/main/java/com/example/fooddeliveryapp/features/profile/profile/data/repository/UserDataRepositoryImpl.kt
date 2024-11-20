@@ -5,13 +5,13 @@ import com.example.fooddeliveryapp.retrofit.NetworkResult
 import com.example.fooddeliveryapp.features.profile.profile.data.datasource.remote.UserDataSource
 import com.example.fooddeliveryapp.features.profile.profile.data.mapper.toDomainModel
 import com.example.fooddeliveryapp.features.profile.profile.data.model.request.UserRequest
-import com.example.fooddeliveryapp.features.profile.profile.domain.model.UserInfo
+import com.example.fooddeliveryapp.features.profile.profile.domain.model.entity.User
 import com.example.fooddeliveryapp.features.profile.profile.domain.repository.UserDataRepository
 import javax.inject.Inject
 
 class UserDataRepositoryImpl @Inject constructor(private val userDataSource: UserDataSource):
     UserDataRepository,ApiHandler {
-    override suspend fun getUser(storeName:String,userId: String): Result<UserInfo> {
+    override suspend fun getUser(storeName:String,userId: String): Result<User> {
         val result = handleApi { userDataSource.getUser(UserRequest(storeName,userId)) }
         when(result){
             is NetworkResult.Success -> {

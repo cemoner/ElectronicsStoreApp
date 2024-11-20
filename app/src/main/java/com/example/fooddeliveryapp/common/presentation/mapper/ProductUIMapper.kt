@@ -1,7 +1,7 @@
-package com.example.fooddeliveryapp.features.home.presentation.mapper
+package com.example.fooddeliveryapp.common.presentation.mapper
 
-import com.example.fooddeliveryapp.features.home.domain.model.Product
-import com.example.fooddeliveryapp.features.home.presentation.model.ProductUI
+import com.example.fooddeliveryapp.common.domain.model.entity.Product
+import com.example.fooddeliveryapp.common.presentation.model.entity.ProductUI
 
 fun Product.toUiModel(): ProductUI {
     return ProductUI(

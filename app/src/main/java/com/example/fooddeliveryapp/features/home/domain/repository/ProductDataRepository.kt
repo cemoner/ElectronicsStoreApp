@@ -1,6 +1,6 @@
 package com.example.fooddeliveryapp.features.home.domain.repository
 
-import com.example.fooddeliveryapp.features.home.domain.model.Product
+import com.example.fooddeliveryapp.common.domain.model.entity.Product
 
 interface ProductDataRepository {
     suspend fun getProducts(store:String): Result<List<Product>>

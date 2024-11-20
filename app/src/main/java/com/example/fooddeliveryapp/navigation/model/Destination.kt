@@ -1,8 +1,5 @@
 package com.example.fooddeliveryapp.navigation.model
 
-import android.net.Uri
-import com.example.fooddeliveryapp.features.home.presentation.model.ProductUI
-
 sealed class Destination(protected val route:String,vararg params:String) {
 
     val fullRoute:String = if(params.isEmpty()) route else {

@@ -1,8 +1,8 @@
 package com.example.fooddeliveryapp.features.home.data.repository
 
 import com.example.fooddeliveryapp.features.home.data.datasource.remote.ProductDataRemoteDataSource
-import com.example.fooddeliveryapp.features.home.data.mapper.toDomainModel
-import com.example.fooddeliveryapp.features.home.domain.model.Product
+import com.example.fooddeliveryapp.common.data.mapper.toDomainModel
+import com.example.fooddeliveryapp.common.domain.model.entity.Product
 import com.example.fooddeliveryapp.features.home.domain.repository.ProductDataRepository
 import com.example.fooddeliveryapp.retrofit.ApiHandler
 import com.example.fooddeliveryapp.retrofit.NetworkResult

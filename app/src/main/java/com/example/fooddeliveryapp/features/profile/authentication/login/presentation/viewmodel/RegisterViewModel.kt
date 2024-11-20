@@ -2,7 +2,7 @@ package com.example.fooddeliveryapp.features.profile.authentication.login.presen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fooddeliveryapp.features.profile.authentication.login.domain.usecase.AuthUseCase
+import com.example.fooddeliveryapp.features.profile.authentication.login.domain.usecase.SignUpUseCase
 import com.example.fooddeliveryapp.features.profile.authentication.login.presentation.contract.RegisterContract.SideEffect
 import com.example.fooddeliveryapp.features.profile.authentication.login.presentation.contract.RegisterContract.UiAction
 import com.example.fooddeliveryapp.features.profile.authentication.login.presentation.contract.RegisterContract.UiState
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val authUseCase: AuthUseCase, private val navigator: AppNavigator
+    private val signUpUseCase: SignUpUseCase, private val navigator: AppNavigator
 ):ViewModel(), MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {
 
     override fun onAction(action: UiAction) {
@@ -81,7 +81,7 @@ class RegisterViewModel @Inject constructor(
 
         if (inputValidation(uiState.value.email)) {
 
-            val result = authUseCase.signUp(
+            val result = signUpUseCase(
                 uiState.value.email,
                 uiState.value.password,
                 "${uiState.value.name} + ${uiState.value.surName}",

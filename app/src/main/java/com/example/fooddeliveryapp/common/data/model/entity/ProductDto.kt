@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.features.home.data.model.entity
+package com.example.fooddeliveryapp.common.data.model.entity
 
 import com.google.gson.annotations.SerializedName
 

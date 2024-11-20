@@ -2,7 +2,10 @@ package com.example.fooddeliveryapp.features.cart.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fooddeliveryapp.features.cart.domain.usecase.CartUseCase
+import com.example.fooddeliveryapp.common.presentation.mapper.toUiModel
+import com.example.fooddeliveryapp.features.cart.domain.usecase.ClearCartUseCase
+import com.example.fooddeliveryapp.features.cart.domain.usecase.DeleteCartItemUseCase
+import com.example.fooddeliveryapp.features.cart.domain.usecase.GetCartItemsUseCase
 import com.example.fooddeliveryapp.mvi.MVI
 import com.example.fooddeliveryapp.mvi.mvi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +21,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CartPageViewModel @Inject constructor(private val cartUseCase: CartUseCase, private val appNavigator: AppNavigator):ViewModel(),
+class CartPageViewModel @Inject constructor(
+    private val deleteCartItemUseCase: DeleteCartItemUseCase,
+    private val getCartItemsUseCase: GetCartItemsUseCase,
+    private val clearCartUseCase: ClearCartUseCase,
+    private val appNavigator: AppNavigator):ViewModel(),
     MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {
 
         init {
@@ -85,44 +92,46 @@ class CartPageViewModel @Inject constructor(private val cartUseCase: CartUseCase
 
     private fun clearCart(storeName:String,userId:String) {
         viewModelScope.launch {
-            val response = cartUseCase.clearCart(storeName, userId)
-            when(response) {
-                200 -> {
-                    onCreateToast("Cart cleared")
-                    calculateTotalPrice()
-                    updateUiState(newUiState = uiState.value.copy(products = emptyList()))
-                }
-
-                400 -> {
-                    onCreateToast("Cart could not be cleared")
-                }
+            val result = clearCartUseCase(storeName, userId)
+            result.onSuccess {
+                onCreateToast("Cart cleared")
+                getCartProducts()
+                calculateTotalPrice()
+            }
+            result.onFailure {
+                onCreateToast(it.message.toString())
             }
         }
     }
 
      private fun getCartProducts() = viewModelScope.launch{
         if(IsLoggedInSingleton.getIsLoggedIn()) {
-            val response = cartUseCase.getCart(StoreNameSingleton.getStoreName(),UserIdSingleton.getUserId())
-            updateUiState(newUiState = uiState.value.copy(products = response))
-            calculateTotalPrice()
+            val result = getCartItemsUseCase(StoreNameSingleton.getStoreName(),UserIdSingleton.getUserId())
+            result.onSuccess {
+                updateUiState(newUiState = uiState.value.copy(products = it.map { it1 -> it1.toUiModel() }))
+            }
+            result.onFailure {
+                onCreateToast(it.message.toString())
         }
+            }
     }
 
 
     private fun onDeleteFromCart(productId:Int){
         if(IsLoggedInSingleton.getIsLoggedIn()){
             viewModelScope.launch {
-                val response = cartUseCase.deleteFromCart(StoreNameSingleton.getStoreName(),
-                    UserIdSingleton.getUserId(),productId)
-                when(response.first){
-                    200 -> {
-                        onCreateToast("Product deleted from cart")
-                        getCartProducts()
-                        calculateTotalPrice()
-                    }
-                    400 -> {
-                        onCreateToast(response.second)
-                    }
+                val result = deleteCartItemUseCase(
+                    StoreNameSingleton.getStoreName(),
+                    UserIdSingleton.getUserId(),
+                    productId
+                )
+                result.onSuccess {
+                    onCreateToast("Product deleted from cart")
+                    getCartProducts()
+                    calculateTotalPrice()
+                }
+                result.onFailure {
+                    onCreateToast(it.message.toString())
                 }
             }
         }

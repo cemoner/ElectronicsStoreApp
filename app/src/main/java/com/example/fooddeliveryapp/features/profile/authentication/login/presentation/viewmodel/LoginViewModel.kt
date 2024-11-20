@@ -1,6 +1,7 @@
 package com.example.fooddeliveryapp.features.profile.authentication.login.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fooddeliveryapp.features.profile.authentication.login.domain.usecase.SignInUseCase
 import com.example.fooddeliveryapp.main.util.IsLoggedInSingleton
 import com.example.fooddeliveryapp.mvi.MVI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,12 +14,10 @@ import com.example.fooddeliveryapp.main.util.UserIdSingleton
 import com.example.fooddeliveryapp.mvi.mvi
 import com.example.fooddeliveryapp.navigation.model.Destination
 import com.example.fooddeliveryapp.navigation.navigator.AppNavigator
-import com.example.fooddeliveryapp.features.profile.authentication.login.domain.usecase.AuthUseCase
-
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authUseCase: AuthUseCase, private val navigator: AppNavigator
+    private val signInUseCase: SignInUseCase, private val navigator: AppNavigator
 ):ViewModel(),MVI<UiState,UiAction,SideEffect> by mvi(initialUiState())  {
 
 
@@ -73,7 +72,7 @@ class LoginViewModel @Inject constructor(
 
         updateUiState(newUiState = uiState.value.copy(showProgress = true))
 
-        val result = authUseCase.signIn(
+        val result = signInUseCase(
             uiState.value.email,
             uiState.value.password
         )

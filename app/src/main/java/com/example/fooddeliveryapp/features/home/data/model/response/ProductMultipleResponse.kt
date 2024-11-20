@@ -1,6 +1,6 @@
 package com.example.fooddeliveryapp.features.home.data.model.response
 
-import com.example.fooddeliveryapp.features.home.data.model.entity.ProductDto
+import com.example.fooddeliveryapp.common.data.model.entity.ProductDto
 import com.google.gson.annotations.SerializedName
 
 data class ProductMultipleResponse(

@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.features.home.presentation.model
+package com.example.fooddeliveryapp.common.presentation.model.entity
 
 data class ProductUI(
     val id: Int,

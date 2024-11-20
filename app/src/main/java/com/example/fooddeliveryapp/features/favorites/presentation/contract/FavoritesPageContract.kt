@@ -1,9 +1,9 @@
 package com.example.fooddeliveryapp.features.favorites.presentation.contract
 
-import com.example.fooddeliveryapp.features.favorites.domain.model.Product
+import com.example.fooddeliveryapp.common.presentation.model.entity.ProductUI
 
 sealed interface FavoritesPageContract {
-    data class UiState(val products:List<Product>)
+    data class UiState(val products:List<ProductUI>)
 
     sealed interface UiAction{
         object OnBackCLicked: UiAction

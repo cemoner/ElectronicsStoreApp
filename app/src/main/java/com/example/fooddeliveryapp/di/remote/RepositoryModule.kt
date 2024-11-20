@@ -1,7 +1,7 @@
 package com.example.fooddeliveryapp.di.remote
 
-import com.example.fooddeliveryapp.features.cart.data.datasource.remote.CartRemoteDataSource
-import com.example.fooddeliveryapp.features.cart.data.repository.CartRepositoryImpl
+import com.example.fooddeliveryapp.features.cart.data.datasource.remote.CartActionDataSource
+import com.example.fooddeliveryapp.features.cart.data.repository.CartActionRepositoryImpl
 import com.example.fooddeliveryapp.features.cart.domain.repository.CartRepository
 import com.example.fooddeliveryapp.features.home.data.datasource.remote.ProductActionRemoteDataSource
 import com.example.fooddeliveryapp.features.home.data.datasource.remote.ProductDataRemoteDataSource
@@ -37,6 +37,6 @@ class RepositoryModule {
     fun providesProductActionRepository(productActionRemoteDataSource: ProductActionRemoteDataSource):ProductActionRepository = ProductActionRepositoryImpl(productActionRemoteDataSource)
 
     @Provides
-    fun providesCartRepository(cartDataSource: CartRemoteDataSource): CartRepository = CartRepositoryImpl(cartDataSource)
+    fun providesCartRepository(cartDataSource: CartActionDataSource): CartRepository = CartActionRepositoryImpl(cartDataSource)
 
 }

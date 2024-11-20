@@ -2,7 +2,7 @@ package com.example.fooddeliveryapp.features.cart.data.api
 
 import com.example.fooddeliveryapp.features.cart.data.model.request.ClearCartRequest
 import com.example.fooddeliveryapp.features.cart.data.model.request.DeleteFromCartRequest
-import com.example.fooddeliveryapp.features.cart.data.model.response.CartResponse
+import com.example.fooddeliveryapp.features.cart.data.model.response.GetCartResponse
 import com.example.fooddeliveryapp.features.cart.data.model.response.ClearCartResponse
 import com.example.fooddeliveryapp.features.cart.data.model.response.DeleteFromCartResponse
 import com.example.fooddeliveryapp.retrofit.API
@@ -13,10 +13,10 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface CartApi:API {
+interface CartActionApi:API {
 
     @GET("get_cart_products")
-    suspend fun getCart(@Header("store") store:String, @Query("userId") userId: String): Response<CartResponse>
+    suspend fun getCart(@Header("store") store:String, @Query("userId") userId: String): Response<GetCartResponse>
 
     @POST("delete_from_cart")
     suspend fun deleteFromCart(@Header("store") store:String, @Body deleteFromCartRequest: DeleteFromCartRequest): Response<DeleteFromCartResponse>

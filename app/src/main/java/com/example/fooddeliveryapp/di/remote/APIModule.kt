@@ -1,6 +1,6 @@
 package com.example.fooddeliveryapp.di.remote
 
-import com.example.fooddeliveryapp.features.cart.data.api.CartApi
+import com.example.fooddeliveryapp.features.cart.data.api.CartActionApi
 import com.example.fooddeliveryapp.features.profile.authentication.login.data.api.AuthApi
 import com.example.fooddeliveryapp.features.home.data.api.ProductDataApi
 import com.example.fooddeliveryapp.features.home.data.api.ProductActionApi
@@ -36,6 +36,6 @@ class APIModule {
 
     @Provides
     @Singleton
-    fun providesCartApi(): CartApi = ApiClient.create()
+    fun providesCartApi(): CartActionApi = ApiClient.create()
 
 }

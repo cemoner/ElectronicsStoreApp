@@ -10,8 +10,8 @@ import com.example.fooddeliveryapp.features.home.domain.usecase.GetProductDetail
 import com.example.fooddeliveryapp.features.home.presentation.contract.ProductDetailPageContract.SideEffect
 import com.example.fooddeliveryapp.features.home.presentation.contract.ProductDetailPageContract.UiAction
 import com.example.fooddeliveryapp.features.home.presentation.contract.ProductDetailPageContract.UiState
-import com.example.fooddeliveryapp.features.home.presentation.mapper.toUiModel
-import com.example.fooddeliveryapp.features.home.presentation.model.ProductUI
+import com.example.fooddeliveryapp.common.presentation.mapper.toUiModel
+import com.example.fooddeliveryapp.common.presentation.model.entity.ProductUI
 import com.example.fooddeliveryapp.main.util.IsLoggedInSingleton
 import com.example.fooddeliveryapp.main.util.StoreNameSingleton
 import com.example.fooddeliveryapp.main.util.UserIdSingleton
