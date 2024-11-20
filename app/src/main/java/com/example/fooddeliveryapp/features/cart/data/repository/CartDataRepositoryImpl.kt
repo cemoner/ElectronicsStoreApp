@@ -1,7 +1,7 @@
 package com.example.fooddeliveryapp.features.cart.data.repository
 
 import com.example.fooddeliveryapp.common.data.mapper.toDomainModel
-import com.example.fooddeliveryapp.common.domain.model.entity.Product
+import com.example.fooddeliveryapp.common.domain.model.Product
 import com.example.fooddeliveryapp.features.cart.data.datasource.remote.CartDataRemoteDataSource
 import com.example.fooddeliveryapp.features.cart.data.model.request.GetCartRequest
 import com.example.fooddeliveryapp.features.cart.domain.repository.CartDataRepository

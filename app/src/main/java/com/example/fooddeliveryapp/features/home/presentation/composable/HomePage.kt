@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.features.home.presentation.composable.homepage
+package com.example.fooddeliveryapp.features.home.presentation.composable
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,6 +30,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.fooddeliveryapp.R
+import com.example.fooddeliveryapp.common.presentation.composable.ProductCard
 import com.example.fooddeliveryapp.features.home.presentation.viewmodel.HomePageViewModel
 import com.example.fooddeliveryapp.features.home.presentation.contract.HomePageContract.UiState
 import com.example.fooddeliveryapp.features.home.presentation.contract.HomePageContract.UiAction
@@ -44,9 +45,6 @@ fun HomePageScreen() {
     val (uiState,onAction,sideEffect) = viewModel.unpack()
     HomePageContent(uiState,onAction,sideEffect)
 }
-
-
-
 
 @Composable
 fun HomePageContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<SideEffect>){
@@ -69,8 +67,16 @@ fun HomePageContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: F
                 LazyVerticalStaggeredGrid(
                     columns = StaggeredGridCells.Fixed(2),
                 ) {
-                    items(uiState.products){ product ->
-                        ProductCard(product,onAction)
+                    items(uiState.products) { product ->
+                        ProductCard(
+                            product = product,
+                            onProductClicked = { productId ->
+                                onAction(UiAction.OnProductClicked(productId))
+                            },
+                            onAddToCartClicked = { productId ->
+                                onAction(UiAction.OnAddToCartButtonClicked(productId))
+                            }
+                        )
                     }
                 }
             }
@@ -84,11 +90,11 @@ fun HomePageContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: F
 fun SearchBar(uiState:UiState, onAction: (UiAction) -> Unit){
     SearchBar(
         query = uiState.searchText,
-        onQueryChange = {onAction(UiAction.SearchTextChange(it))},
-        onSearch = { onAction(UiAction.SearchTextChange(it)) } ,
+        onQueryChange = {onAction(UiAction.OnSearchTextChange(it))},
+        onSearch = { onAction(UiAction.OnSearchTextChange(it)) } ,
         active = uiState.isSearching,
         colors = SearchBarDefaults.colors(colorResource(R.color.white)),
-        onActiveChange = {onAction(UiAction.SearchClicked)},
+        onActiveChange = {onAction(UiAction.OnSearchBarClicked)},
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
@@ -97,7 +103,7 @@ fun SearchBar(uiState:UiState, onAction: (UiAction) -> Unit){
         },
         trailingIcon = {
             if (uiState.searchText.isNotEmpty()) {
-                IconButton(onClick = { onAction(UiAction.SearchTextChange(""))}) {
+                IconButton(onClick = { onAction(UiAction.OnSearchTextChange(""))}) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Clear"

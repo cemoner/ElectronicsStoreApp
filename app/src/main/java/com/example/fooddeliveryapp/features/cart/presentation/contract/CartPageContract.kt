@@ -1,6 +1,6 @@
 package com.example.fooddeliveryapp.features.cart.presentation.contract
 
-import com.example.fooddeliveryapp.common.presentation.model.entity.ProductUI
+import com.example.fooddeliveryapp.common.presentation.model.ProductUI
 
 sealed interface CartPageContract {
     data class UiState(

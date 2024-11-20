@@ -18,8 +18,9 @@ interface RegisterContract {
         data class OnSurNameChange(val surName: String) : UiAction
         data class OnPhoneChange(val phone: String) : UiAction
         data class OnAddressChange(val address: String) : UiAction
-        object OnRegisterClick : UiAction
-        object OnLoginButtonClick : UiAction
+        object OnRegisterButtonClicked : UiAction
+        object OnLoginButtonClicked : UiAction
+        object OnBackButtonClicked:UiAction
 
 
     }

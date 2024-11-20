@@ -1,7 +1,7 @@
 package com.example.fooddeliveryapp.features.profile.profile.data.mapper
 
 import com.example.fooddeliveryapp.features.profile.profile.data.model.entity.UserDto
-import com.example.fooddeliveryapp.features.profile.profile.domain.model.entity.User
+import com.example.fooddeliveryapp.features.profile.profile.domain.model.User
 
 fun UserDto.toDomainModel(): User {
     return User(

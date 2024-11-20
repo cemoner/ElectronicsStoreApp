@@ -5,7 +5,7 @@ import com.example.fooddeliveryapp.retrofit.NetworkResult
 import com.example.fooddeliveryapp.features.profile.profile.data.datasource.remote.UserDataSource
 import com.example.fooddeliveryapp.features.profile.profile.data.mapper.toDomainModel
 import com.example.fooddeliveryapp.features.profile.profile.data.model.request.UserRequest
-import com.example.fooddeliveryapp.features.profile.profile.domain.model.entity.User
+import com.example.fooddeliveryapp.features.profile.profile.domain.model.User
 import com.example.fooddeliveryapp.features.profile.profile.domain.repository.UserDataRepository
 import javax.inject.Inject
 

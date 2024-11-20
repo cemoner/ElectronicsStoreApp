@@ -1,6 +1,6 @@
 package com.example.fooddeliveryapp.features.profile.profile.domain.repository
 
-import com.example.fooddeliveryapp.features.profile.profile.domain.model.entity.User
+import com.example.fooddeliveryapp.features.profile.profile.domain.model.User
 
 interface UserDataRepository {
 

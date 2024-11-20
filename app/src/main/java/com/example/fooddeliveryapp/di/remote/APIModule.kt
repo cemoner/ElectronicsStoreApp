@@ -2,13 +2,11 @@ package com.example.fooddeliveryapp.di.remote
 
 import com.example.fooddeliveryapp.features.cart.data.api.CartActionApi
 import com.example.fooddeliveryapp.features.cart.data.api.CartDataApi
-import com.example.fooddeliveryapp.features.favorites.data.api.FavoritesActionApi
-import com.example.fooddeliveryapp.features.favorites.data.api.FavoritesDataApi
-import com.example.fooddeliveryapp.features.profile.authentication.login.data.api.AuthApi
-import com.example.fooddeliveryapp.features.home.data.api.ProductDataApi
 import com.example.fooddeliveryapp.features.home.data.api.ProductActionApi
-import com.example.fooddeliveryapp.retrofit.ApiClient
+import com.example.fooddeliveryapp.features.home.data.api.ProductDataApi
+import com.example.fooddeliveryapp.features.profile.authentication.login.data.api.AuthApi
 import com.example.fooddeliveryapp.features.profile.profile.data.api.UserApi
+import com.example.fooddeliveryapp.retrofit.ApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,13 +42,5 @@ class APIModule {
     @Provides
     @Singleton
     fun providesCartDataApi(): CartDataApi = ApiClient.create()
-
-    @Provides
-    @Singleton
-    fun providesFavoritesActionApi(): FavoritesActionApi = ApiClient.create()
-
-    @Provides
-    @Singleton
-    fun providesFavoritesDataApi(): FavoritesDataApi = ApiClient.create()
 
 }

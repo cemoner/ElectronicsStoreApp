@@ -16,4 +16,7 @@ interface ProductDataApi:API {
     @GET("get_product_detail")
     suspend fun getProductDetail(@Header("store") store:String, @Query("id") productId:Int):Response<SingularProductResponse>
 
+    @GET("get_favorites")
+    suspend fun getFavorites(@Header("store") store:String, @Query("userId") userId:String):Response<MultipleProductsResponse>
+
 }

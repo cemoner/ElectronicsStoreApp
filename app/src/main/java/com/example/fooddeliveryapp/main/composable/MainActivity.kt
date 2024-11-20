@@ -18,9 +18,9 @@
     import androidx.navigation.NavHostController
     import androidx.navigation.compose.rememberNavController
     import com.example.fooddeliveryapp.features.cart.presentation.composable.CartPageScreen
-    import com.example.fooddeliveryapp.features.favorites.presentation.composable.FavoritesPageScreen
-    import com.example.fooddeliveryapp.features.home.presentation.composable.homepage.HomePageScreen
-    import com.example.fooddeliveryapp.features.home.presentation.composable.productdetailpage.ProductDetailPage
+    import com.example.fooddeliveryapp.features.home.presentation.composable.FavoritesPageScreen
+    import com.example.fooddeliveryapp.features.home.presentation.composable.HomePageScreen
+    import com.example.fooddeliveryapp.features.home.presentation.composable.ProductDetailPage
     import com.example.fooddeliveryapp.main.contract.MainContract.UiState
     import com.example.fooddeliveryapp.main.contract.MainContract.UiAction
     import com.example.fooddeliveryapp.main.contract.MainContract.SideEffect

@@ -23,7 +23,7 @@ class LoginViewModel @Inject constructor(
 
     override fun onAction(action: UiAction) {
         when (action) {
-            is UiAction.OnLoginClick -> {
+            is UiAction.OnLoginButtonClicked -> {
                viewModelScope.launch {
                    onLoginClick()
                }
@@ -34,9 +34,11 @@ class LoginViewModel @Inject constructor(
             is UiAction.OnPasswordChange -> {
                 onPasswordChange(action.password)
             }
-            is UiAction.OnRegisterButtonClick -> {
+            is UiAction.OnRegisterButtonClicked -> {
                 noArgNavigation(Destination.Register(), Destination.Login())
             }
+
+            is UiAction.OnBackButtonClicked -> tryNavigateBack()
         }
     }
 
@@ -45,6 +47,12 @@ class LoginViewModel @Inject constructor(
             destination,
             popUpToRoute = popUpTo,
         )
+    }
+
+    fun tryNavigateBack(){
+        viewModelScope.launch {
+            navigator.tryNavigateBack()
+        }
     }
 
     private fun navigationToProfileWithArg(id:String,popUpTo: String?){

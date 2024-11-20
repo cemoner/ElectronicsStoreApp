@@ -12,4 +12,7 @@ class ProductDataRemoteDataSource @Inject constructor(private val productDataApi
 
     suspend fun getProductDetail(store:String, productId:Int): Response<SingularProductResponse> = productDataApi.getProductDetail(store, productId)
 
+    suspend fun getFavorites(store:String, userId:String): Response<MultipleProductsResponse> = productDataApi.getFavorites(store, userId)
+
+
 }

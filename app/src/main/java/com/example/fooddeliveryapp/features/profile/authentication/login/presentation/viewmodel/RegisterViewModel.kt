@@ -21,7 +21,7 @@ class RegisterViewModel @Inject constructor(
 
     override fun onAction(action: UiAction) {
         when (action) {
-            is UiAction.OnRegisterClick ->
+            is UiAction.OnRegisterButtonClicked ->
             {
                 viewModelScope.launch {
                     onRegisterClick()
@@ -33,10 +33,16 @@ class RegisterViewModel @Inject constructor(
             is UiAction.OnPasswordChange -> onPasswordChange(action.password)
             is UiAction.OnPhoneChange -> onPhoneChange(action.phone)
             is UiAction.OnAddressChange -> onAddressChange(action.address)
-            is UiAction.OnLoginButtonClick -> noArgNavigation(Destination.Login(),null)
+            is UiAction.OnLoginButtonClicked -> noArgNavigation(Destination.Login(),null)
+            is UiAction.OnBackButtonClicked -> tryNavigateBack()
         }
     }
 
+    fun tryNavigateBack(){
+        viewModelScope.launch {
+            navigator.tryNavigateBack()
+        }
+    }
 
 
     private fun noArgNavigation(destination: String,popUpTo:String?){

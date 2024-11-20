@@ -32,7 +32,7 @@ class ProfileViewModel @Inject constructor(
 
     override fun onAction(action:UiAction) {
         when (action) {
-            is UiAction.OnLogout -> {
+            is UiAction.OnLogoutButtonClicked -> {
                 onLogout()
             }
             is UiAction.OnChangePassword -> {}

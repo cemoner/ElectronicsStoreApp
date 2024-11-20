@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.features.profile.profile.domain.model.entity
+package com.example.fooddeliveryapp.features.profile.profile.domain.model
 
 data class User(
     val userId:String,

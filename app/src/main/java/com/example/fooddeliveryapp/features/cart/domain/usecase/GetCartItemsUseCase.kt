@@ -1,7 +1,6 @@
 package com.example.fooddeliveryapp.features.cart.domain.usecase
 
-import com.example.fooddeliveryapp.common.domain.model.entity.Product
-import com.example.fooddeliveryapp.features.cart.domain.repository.CartActionRepository
+import com.example.fooddeliveryapp.common.domain.model.Product
 import com.example.fooddeliveryapp.features.cart.domain.repository.CartDataRepository
 import javax.inject.Inject
 

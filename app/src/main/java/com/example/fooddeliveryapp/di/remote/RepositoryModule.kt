@@ -6,12 +6,6 @@ import com.example.fooddeliveryapp.features.cart.data.repository.CartActionActio
 import com.example.fooddeliveryapp.features.cart.data.repository.CartDataRepositoryImpl
 import com.example.fooddeliveryapp.features.cart.domain.repository.CartActionRepository
 import com.example.fooddeliveryapp.features.cart.domain.repository.CartDataRepository
-import com.example.fooddeliveryapp.features.favorites.data.datasource.remote.FavoritesActionRemoteDataSource
-import com.example.fooddeliveryapp.features.favorites.data.datasource.remote.FavoritesDataRemoteDataSource
-import com.example.fooddeliveryapp.features.favorites.data.repository.FavoritesActionRepositoryImpl
-import com.example.fooddeliveryapp.features.favorites.data.repository.FavoritesDataRepositoryImpl
-import com.example.fooddeliveryapp.features.favorites.domain.repository.FavoritesActionRepository
-import com.example.fooddeliveryapp.features.favorites.domain.repository.FavoritesDataRepository
 import com.example.fooddeliveryapp.features.home.data.datasource.remote.ProductActionRemoteDataSource
 import com.example.fooddeliveryapp.features.home.data.datasource.remote.ProductDataRemoteDataSource
 import com.example.fooddeliveryapp.features.home.data.repository.ProductActionRepositoryImpl
@@ -56,13 +50,4 @@ class RepositoryModule {
     @Provides
     fun providesCartDataRepository(cartDataRemoteDataSource: CartDataRemoteDataSource): CartDataRepository =
         CartDataRepositoryImpl(cartDataRemoteDataSource)
-
-    @Provides
-    fun providesFavoritesDataRepository(favoritesDataRemoteDataSource: FavoritesDataRemoteDataSource): FavoritesDataRepository =
-        FavoritesDataRepositoryImpl(favoritesDataRemoteDataSource)
-
-    @Provides
-    fun providesFavoritesActionRepository(favoritesActionRemoteDataSource: FavoritesActionRemoteDataSource): FavoritesActionRepository =
-        FavoritesActionRepositoryImpl(favoritesActionRemoteDataSource)
-
 }

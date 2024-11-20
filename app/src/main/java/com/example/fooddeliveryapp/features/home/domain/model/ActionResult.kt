@@ -1,5 +1,5 @@
 package com.example.fooddeliveryapp.features.home.domain.model
 
-data class AddResult(
+data class ActionResult(
     val message:String? = null
 )

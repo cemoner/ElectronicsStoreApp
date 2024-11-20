@@ -1,6 +1,6 @@
 package com.example.fooddeliveryapp.features.profile.profile.domain.usecase
 
-import com.example.fooddeliveryapp.features.profile.profile.domain.model.entity.User
+import com.example.fooddeliveryapp.features.profile.profile.domain.model.User
 import com.example.fooddeliveryapp.features.profile.profile.domain.repository.UserDataRepository
 import javax.inject.Inject
 

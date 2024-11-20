@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.common.domain.model.entity
+package com.example.fooddeliveryapp.common.domain.model
 
 data class Product(
     val id: Int,

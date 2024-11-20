@@ -1,4 +1,4 @@
-package com.example.fooddeliveryapp.features.home.presentation.composable.productdetailpage
+package com.example.fooddeliveryapp.features.home.presentation.composable
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -47,7 +47,7 @@ import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.features.home.presentation.contract.ProductDetailPageContract.UiState
 import com.example.fooddeliveryapp.features.home.presentation.contract.ProductDetailPageContract.UiAction
 import com.example.fooddeliveryapp.features.home.presentation.contract.ProductDetailPageContract.SideEffect
-import com.example.fooddeliveryapp.common.presentation.model.entity.ProductUI
+import com.example.fooddeliveryapp.common.presentation.model.ProductUI
 import com.example.fooddeliveryapp.features.home.presentation.viewmodel.ProductDetailPageViewModel
 import com.example.fooddeliveryapp.mvi.CollectSideEffect
 import com.example.fooddeliveryapp.mvi.unpack
@@ -139,12 +139,12 @@ fun TopBar(uiState: UiState,onAction:(UiAction) -> Unit){
 
 
         navigationIcon = {
-            IconButton(onClick = {onAction(UiAction.BackClicked)})  {
+            IconButton(onClick = {onAction(UiAction.OnBackButtonClicked)})  {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Color.Gray)
             }
         },
         actions = {
-            IconButton(onClick = {onAction(UiAction.AddToFavoritesClicked(uiState.product.id))})  {
+            IconButton(onClick = {onAction(UiAction.AddToFavoritesButtonClicked(uiState.product.id))})  {
                 Icon(Icons.Default.Favorite, contentDescription = "Back", tint = (colorResource(R.color.purple_500)))
             }
         }
@@ -206,7 +206,7 @@ fun BottomBar(uiState: UiState, onAction: (UiAction) -> Unit) {
                 textAlign = TextAlign.Center
             )
             Button(
-                onClick = { onAction(UiAction.AddToCartClicked(uiState.product.id)) },
+                onClick = { onAction(UiAction.AddToCartButtonClicked(uiState.product.id)) },
                 shape = RectangleShape,
                 modifier = Modifier.weight(1f).clip(RoundedCornerShape(10.dp)),
                 colors = ButtonDefaults.buttonColors(

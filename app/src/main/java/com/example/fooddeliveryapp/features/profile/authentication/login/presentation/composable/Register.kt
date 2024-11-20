@@ -9,9 +9,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,17 +56,34 @@ fun RegisterContent(uiState: UiState, onAction: (UiAction) -> Unit, sideEffect: 
             }
         }
     }
-    Column(modifier = Modifier.fillMaxSize().padding(),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+    Scaffold(
+        topBar = {TopBar(onAction)}
+    ) { innerPadding ->
+        Column(modifier = Modifier.fillMaxSize().padding(innerPadding),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
 
-        FormTextFieldContent(uiState.name,{onAction(UiAction.OnNameChange(it))},"Name")
-        FormTextFieldContent(uiState.surName,{onAction(UiAction.OnSurNameChange(it))},"Surname")
-        FormTextFieldContent(uiState.phone,{onAction(UiAction.OnPhoneChange(it))},"Phone")
-        FormTextFieldContent(uiState.address,{onAction(UiAction.OnAddressChange(it))},"Address")
-        EmailTextField(emailText = uiState.email,{onAction(UiAction.OnEmailChange(it))})
-        PasswordTextField(uiState.password, {onAction(UiAction.OnPasswordChange(it))},{onAction(UiAction.OnRegisterClick)})
-        if(uiState.showProgress){ CircularProgressIndicator()}
-        Button(modifier = Modifier.padding(top = 6.dp),onClick = {onAction(UiAction.OnRegisterClick)}, shape = RoundedCornerShape(32.dp)) { Text("Register",modifier= Modifier.padding(7.5.dp), fontSize = 14.sp)}
-        RegOrLoginDuo({onAction(UiAction.OnLoginButtonClick)},textString = "Already have an Account?", buttonString = "Log In")
+            FormTextFieldContent(uiState.name,{onAction(UiAction.OnNameChange(it))},"Name")
+            FormTextFieldContent(uiState.surName,{onAction(UiAction.OnSurNameChange(it))},"Surname")
+            FormTextFieldContent(uiState.phone,{onAction(UiAction.OnPhoneChange(it))},"Phone")
+            FormTextFieldContent(uiState.address,{onAction(UiAction.OnAddressChange(it))},"Address")
+            EmailTextField(emailText = uiState.email,{onAction(UiAction.OnEmailChange(it))})
+            PasswordTextField(uiState.password, {onAction(UiAction.OnPasswordChange(it))},{onAction(UiAction.OnRegisterButtonClicked)})
+            if(uiState.showProgress){ CircularProgressIndicator()}
+            Button(modifier = Modifier.padding(top = 6.dp),onClick = {onAction(UiAction.OnRegisterButtonClicked)}, shape = RoundedCornerShape(32.dp)) { Text("Register",modifier= Modifier.padding(7.5.dp), fontSize = 14.sp)}
+            RegOrLoginDuo({onAction(UiAction.OnLoginButtonClicked)},textString = "Already have an Account?", buttonString = "Log In")
+        }
     }
 
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBar(onAction:(UiAction) -> Unit){
+    TopAppBar(
+        title = {},
+        navigationIcon = {
+            IconButton(onClick = {onAction(UiAction.OnBackButtonClicked)})  {
+                Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back", tint = Color.Gray)
+            }
+        },
+    )
 }

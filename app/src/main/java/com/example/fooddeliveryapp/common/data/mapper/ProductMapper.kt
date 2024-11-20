@@ -1,7 +1,7 @@
 package com.example.fooddeliveryapp.common.data.mapper
 
 import com.example.fooddeliveryapp.common.data.model.entity.ProductDto
-import com.example.fooddeliveryapp.common.domain.model.entity.Product
+import com.example.fooddeliveryapp.common.domain.model.Product
 
 fun ProductDto.toDomainModel(): Product {
     return Product(
