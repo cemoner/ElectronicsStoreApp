@@ -1,10 +1,11 @@
 package com.example.fooddeliveryapp.di.remote
 
-import com.example.fooddeliveryapp.profile.authentication.login.data.api.AuthApi
-import com.example.fooddeliveryapp.home.data.api.HomeApi
-import com.example.fooddeliveryapp.home.data.api.ProductDetailApi
+import com.example.fooddeliveryapp.features.cart.data.api.CartApi
+import com.example.fooddeliveryapp.features.profile.authentication.login.data.api.AuthApi
+import com.example.fooddeliveryapp.features.home.data.api.ProductDataApi
+import com.example.fooddeliveryapp.features.home.data.api.ProductActionApi
 import com.example.fooddeliveryapp.retrofit.ApiClient
-import com.example.fooddeliveryapp.profile.profile.data.api.ProfileApi
+import com.example.fooddeliveryapp.features.profile.profile.data.api.UserApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,14 +23,19 @@ class APIModule {
 
     @Provides
     @Singleton
-    fun providesProfileApi(): ProfileApi = ApiClient.create()
+    fun providesProfileApi(): UserApi = ApiClient.create()
 
     @Provides
     @Singleton
-    fun providesHomeApi(): HomeApi = ApiClient.create()
+    fun providesHomeApi(): ProductDataApi = ApiClient.create()
+
 
     @Provides
     @Singleton
-    fun providesProductDetailApi(): ProductDetailApi = ApiClient.create()
+    fun providesProductActionApi(): ProductActionApi = ApiClient.create()
+
+    @Provides
+    @Singleton
+    fun providesCartApi(): CartApi = ApiClient.create()
 
 }
