@@ -1,8 +1,17 @@
 package com.example.fooddeliveryapp.di.remote
 
-import com.example.fooddeliveryapp.features.cart.data.datasource.remote.CartActionDataSource
-import com.example.fooddeliveryapp.features.cart.data.repository.CartActionRepositoryImpl
-import com.example.fooddeliveryapp.features.cart.domain.repository.CartRepository
+import com.example.fooddeliveryapp.features.cart.data.datasource.remote.CartActionRemoteDataSource
+import com.example.fooddeliveryapp.features.cart.data.datasource.remote.CartDataRemoteDataSource
+import com.example.fooddeliveryapp.features.cart.data.repository.CartActionActionRepositoryImpl
+import com.example.fooddeliveryapp.features.cart.data.repository.CartDataRepositoryImpl
+import com.example.fooddeliveryapp.features.cart.domain.repository.CartActionRepository
+import com.example.fooddeliveryapp.features.cart.domain.repository.CartDataRepository
+import com.example.fooddeliveryapp.features.favorites.data.datasource.remote.FavoritesActionRemoteDataSource
+import com.example.fooddeliveryapp.features.favorites.data.datasource.remote.FavoritesDataRemoteDataSource
+import com.example.fooddeliveryapp.features.favorites.data.repository.FavoritesActionRepositoryImpl
+import com.example.fooddeliveryapp.features.favorites.data.repository.FavoritesDataRepositoryImpl
+import com.example.fooddeliveryapp.features.favorites.domain.repository.FavoritesActionRepository
+import com.example.fooddeliveryapp.features.favorites.domain.repository.FavoritesDataRepository
 import com.example.fooddeliveryapp.features.home.data.datasource.remote.ProductActionRemoteDataSource
 import com.example.fooddeliveryapp.features.home.data.datasource.remote.ProductDataRemoteDataSource
 import com.example.fooddeliveryapp.features.home.data.repository.ProductActionRepositoryImpl
@@ -25,18 +34,35 @@ import dagger.hilt.components.SingletonComponent
 class RepositoryModule {
 
     @Provides
-    fun providesAuthenticationRepository(authRemoteDataSource: AuthRemoteDataSource): AuthenticationRepository =  AuthenticationRepositoryImpl(authRemoteDataSource)
+    fun providesAuthenticationRepository(authRemoteDataSource: AuthRemoteDataSource): AuthenticationRepository =
+        AuthenticationRepositoryImpl(authRemoteDataSource)
 
     @Provides
-    fun providesUserRepository(userDataSource: UserDataSource): UserDataRepository =  UserDataRepositoryImpl(userDataSource)
+    fun providesUserRepository(userDataSource: UserDataSource): UserDataRepository =
+        UserDataRepositoryImpl(userDataSource)
 
     @Provides
-    fun providesProductDataRepository(productDataRemoteDataSource: ProductDataRemoteDataSource): ProductDataRepository = ProductDataRepositoryImpl(productDataRemoteDataSource)
+    fun providesProductDataRepository(productDataRemoteDataSource: ProductDataRemoteDataSource): ProductDataRepository =
+        ProductDataRepositoryImpl(productDataRemoteDataSource)
 
     @Provides
-    fun providesProductActionRepository(productActionRemoteDataSource: ProductActionRemoteDataSource):ProductActionRepository = ProductActionRepositoryImpl(productActionRemoteDataSource)
+    fun providesProductActionRepository(productActionRemoteDataSource: ProductActionRemoteDataSource): ProductActionRepository =
+        ProductActionRepositoryImpl(productActionRemoteDataSource)
 
     @Provides
-    fun providesCartRepository(cartDataSource: CartActionDataSource): CartRepository = CartActionRepositoryImpl(cartDataSource)
+    fun providesCartActionRepository(cartActionRemoteDataSource: CartActionRemoteDataSource): CartActionRepository =
+        CartActionActionRepositoryImpl(cartActionRemoteDataSource)
+
+    @Provides
+    fun providesCartDataRepository(cartDataRemoteDataSource: CartDataRemoteDataSource): CartDataRepository =
+        CartDataRepositoryImpl(cartDataRemoteDataSource)
+
+    @Provides
+    fun providesFavoritesDataRepository(favoritesDataRemoteDataSource: FavoritesDataRemoteDataSource): FavoritesDataRepository =
+        FavoritesDataRepositoryImpl(favoritesDataRemoteDataSource)
+
+    @Provides
+    fun providesFavoritesActionRepository(favoritesActionRemoteDataSource: FavoritesActionRemoteDataSource): FavoritesActionRepository =
+        FavoritesActionRepositoryImpl(favoritesActionRemoteDataSource)
 
 }

@@ -1,8 +1,9 @@
-package com.example.fooddeliveryapp.features.favorites.data.model.response
+package com.example.fooddeliveryapp.common.data.model.response
+
 import com.example.fooddeliveryapp.common.data.model.entity.ProductDto
 import com.google.gson.annotations.SerializedName
 
-data class FavoritesResponse(
+data class MultipleProductsResponse(
     @SerializedName("products")
     val products:List<ProductDto>,
     @SerializedName("status")
