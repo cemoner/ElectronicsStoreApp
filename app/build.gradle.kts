@@ -1,9 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
+    id("com.google.gms.google-services")
     id ("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
 
@@ -11,11 +11,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.fooddeliveryapp"
+    namespace = "com.example.electronicsstoreapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.fooddeliveryapp"
+        applicationId = "com.example.electronicsstoreapp"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -74,7 +74,6 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.engage.core)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -89,13 +88,15 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation( libs.androidx.material.icons.extended)
-    implementation(platform(libs.firebase.bom.v3351))
     implementation(libs.androidx.lifecycle.viewmodel.ktx.v240)
     implementation(libs.androidx.lifecycle.runtime.ktx.v240)
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation(platform(libs.firebase.bom.v3360))
+    implementation(libs.firebase.analytics)
+    implementation (libs.androidx.core.splashscreen)
 
 }
 kapt {

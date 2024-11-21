@@ -3,7 +3,9 @@ agp = "8.7.2"
 coilCompose = "3.0.3"
 constraintlayoutComposeVersion = "1.0.1"
 converterGson = "2.9.0"
+coreSplashscreen = "1.0.1"
 firebaseBom = "33.5.1"
+firebaseBomVersion = "33.6.0"
 hiltAndroid = "2.52"
 hiltAndroidGradlePlugin = "2.52"
 hiltCompiler = "2.52"
@@ -34,6 +36,7 @@ retrofit = "2.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltVersion" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltVersion" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltVersion" }
@@ -47,7 +50,9 @@ coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version
 constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutComposeVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "hiltAndroidGradlePlugin" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom-v3351 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-bom-v3360 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidGradlePlugin" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroidGradlePlugin" }
