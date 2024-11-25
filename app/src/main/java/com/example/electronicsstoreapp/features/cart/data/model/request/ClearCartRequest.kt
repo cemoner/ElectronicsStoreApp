@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class ClearCartRequest(
     @SerializedName("userId")
-    val userId:String
+    val userId: String,
 )

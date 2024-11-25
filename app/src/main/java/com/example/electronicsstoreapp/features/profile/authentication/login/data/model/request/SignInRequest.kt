@@ -2,5 +2,5 @@ package com.example.electronicsstoreapp.features.profile.authentication.login.da
 
 data class SignInRequest(
     val email: String,
-    val password: String
+    val password: String,
 )

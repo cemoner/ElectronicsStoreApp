@@ -3,8 +3,7 @@ package com.example.electronicsstoreapp.main.util
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
-class PushNotificationService:FirebaseMessagingService() {
-
+class PushNotificationService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
     }

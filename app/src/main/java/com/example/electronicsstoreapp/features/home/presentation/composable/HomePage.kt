@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
@@ -29,6 +28,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,17 +44,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.electronicsstoreapp.R
 import com.example.electronicsstoreapp.common.presentation.composable.ProductCard
-import com.example.electronicsstoreapp.features.home.presentation.viewmodel.HomePageViewModel
-import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageContract.UiState
-import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageContract.UiAction
 import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageContract.SideEffect
+import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageContract.UiAction
+import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageContract.UiState
 import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageToolBarUiState
+import com.example.electronicsstoreapp.features.home.presentation.viewmodel.HomePageViewModel
 import com.example.electronicsstoreapp.mvi.CollectSideEffect
 import com.example.electronicsstoreapp.mvi.unpack
 import kotlinx.coroutines.flow.Flow
@@ -62,32 +60,38 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun HomePageScreen() {
     val viewModel: HomePageViewModel = hiltViewModel()
-    val (uiState,onAction,sideEffect) = viewModel.unpack()
-    HomePageContent(uiState,onAction,sideEffect)
+    val (uiState, onAction, sideEffect) = viewModel.unpack()
+    HomePageContent(uiState, onAction, sideEffect)
 }
 
 @Composable
-fun HomePageContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<SideEffect>){
+fun HomePageContent(
+    uiState: UiState,
+    onAction: (UiAction) -> Unit,
+    sideEffect: Flow<SideEffect>,
+) {
     val context = LocalContext.current
     CollectSideEffect(sideEffect) {
-        when(it){
+        when (it) {
             is SideEffect.ShowToast -> {
                 Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
     Scaffold(
-        topBar = {  TopBar(uiState,onAction) },
+        topBar = { TopBar(uiState, onAction) },
         content = { padding ->
-            Column(modifier = Modifier.
-                padding(padding)
-                .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally)
-            {
+            Column(
+                modifier =
+                    Modifier
+                        .padding(padding)
+                        .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
                 LazyVerticalStaggeredGrid(
                     columns = StaggeredGridCells.Fixed(2),
                 ) {
-                    when(uiState){
+                    when (uiState) {
                         is UiState.Success -> {
                             items(uiState.searchProducts) { product ->
                                 ProductCard(
@@ -97,40 +101,40 @@ fun HomePageContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: F
                                     },
                                     onFavoritesClicked = { productId ->
                                         onAction(UiAction.OnFavoritesButtonClicked(productId))
-                                    }
+                                    },
                                 )
                             }
                         }
                         UiState.Error -> {
-
                         }
                         UiState.Loading -> {
-                            items(8){
+                            items(8) {
                                 Column(
                                     verticalArrangement = Arrangement.Top,
                                     horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier
-                                        .padding(16.dp)
-                                        .defaultMinSize(minHeight = 250.dp)
-                                        .fillMaxWidth(
-                                        )
+                                    modifier =
+                                        Modifier
+                                            .padding(16.dp)
+                                            .defaultMinSize(minHeight = 250.dp)
+                                            .fillMaxWidth(),
                                 ) {
                                     Box(
-                                        modifier = Modifier.defaultMinSize(minHeight = 150.dp).fillMaxWidth().shimmerEffect().clip(
-                                            RoundedCornerShape(6.dp)
-                                        )
+                                        modifier =
+                                            Modifier.defaultMinSize(minHeight = 150.dp).fillMaxWidth().shimmerEffect().clip(
+                                                RoundedCornerShape(6.dp),
+                                            ),
                                     )
                                     Spacer(modifier = Modifier.height(6.dp))
                                     Box(
-                                        modifier = Modifier.defaultMinSize(minHeight = 20.dp).fillMaxWidth().shimmerEffect()
+                                        modifier = Modifier.defaultMinSize(minHeight = 20.dp).fillMaxWidth().shimmerEffect(),
                                     )
                                     Spacer(modifier = Modifier.height(6.dp))
                                     Box(
-                                        modifier = Modifier.defaultMinSize(minHeight = 20.dp).fillMaxWidth().shimmerEffect()
+                                        modifier = Modifier.defaultMinSize(minHeight = 20.dp).fillMaxWidth().shimmerEffect(),
                                     )
                                     Spacer(modifier = Modifier.height(6.dp))
                                     Box(
-                                        modifier = Modifier.defaultMinSize(minHeight = 20.dp).fillMaxWidth().shimmerEffect()
+                                        modifier = Modifier.defaultMinSize(minHeight = 20.dp).fillMaxWidth().shimmerEffect(),
                                     )
                                 }
                             }
@@ -138,77 +142,85 @@ fun HomePageContent(uiState:UiState, onAction: (UiAction) -> Unit, sideEffect: F
                     }
                 }
             }
-        }
+        },
     )
 }
 
-
-fun Modifier.shimmerEffect(): Modifier = composed {
-    var size by remember {
-        mutableStateOf(IntSize.Zero)
-    }
-    val transition = rememberInfiniteTransition(label = "shimmer effect")
-    val startOffSetX by transition.animateFloat(
-        initialValue = -2 * size.width.toFloat(),
-        targetValue = 2 * size.width.toFloat(),
-        animationSpec = InfiniteRepeatableSpec(
-            animation = tween(1000)
-        ), label = ""
-    )
-    background(
-        brush = Brush.linearGradient(
-            colors = listOf(
-                MaterialTheme.colorScheme.surface,
-                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                MaterialTheme.colorScheme.surface
-            ),
-            start = Offset(startOffSetX, 0f),
-            end = Offset(startOffSetX + size.width.toFloat(), size.height.toFloat())
+fun Modifier.shimmerEffect(): Modifier =
+    composed {
+        var size by remember {
+            mutableStateOf(IntSize.Zero)
+        }
+        val transition = rememberInfiniteTransition(label = "shimmer effect")
+        val startOffSetX by transition.animateFloat(
+            initialValue = -2 * size.width.toFloat(),
+            targetValue = 2 * size.width.toFloat(),
+            animationSpec =
+                InfiniteRepeatableSpec(
+                    animation = tween(1000),
+                ),
+            label = "",
         )
-    )
-        .onGloballyPositioned {
+        background(
+            brush =
+                Brush.linearGradient(
+                    colors =
+                        listOf(
+                            MaterialTheme.colorScheme.surface,
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                            MaterialTheme.colorScheme.surface,
+                        ),
+                    start = Offset(startOffSetX, 0f),
+                    end = Offset(startOffSetX + size.width.toFloat(), size.height.toFloat()),
+                ),
+        ).onGloballyPositioned {
             size = it.size
         }
-}
-
+    }
 
 @Composable
-fun SearchBar(uiState: UiState, onAction: (UiAction) -> Unit) {
+fun SearchBar(
+    uiState: UiState,
+    onAction: (UiAction) -> Unit,
+) {
     if (uiState !is UiState.Success) return
     if (uiState.toolBarUiState is HomePageToolBarUiState.Search) {
         TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color.Transparent)
-                .clip(RoundedCornerShape(18.dp)),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.Transparent)
+                    .clip(RoundedCornerShape(18.dp)),
             value = uiState.toolBarUiState.searchText,
             onValueChange = {
                 onAction(UiAction.OnSearchTextChange(it))
             },
             singleLine = true,
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                focusedContainerColor = MaterialTheme.colorScheme.surface,
-                unfocusedIndicatorColor = MaterialTheme.colorScheme.surface,
-                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                cursorColor = MaterialTheme.colorScheme.primary,
-            ),
+            colors =
+                TextFieldDefaults.colors(
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedIndicatorColor = MaterialTheme.colorScheme.surface,
+                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                    cursorColor = MaterialTheme.colorScheme.primary,
+                ),
             placeholder = {
                 Text(
                     text = "Search",
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 )
             },
         )
     }
 }
 
-
-
 @Composable
-fun TopBar(uiState: UiState, onAction: (UiAction) -> Unit) {
+fun TopBar(
+    uiState: UiState,
+    onAction: (UiAction) -> Unit,
+) {
     if (uiState !is UiState.Success) return
-    when(uiState.toolBarUiState){
+    when (uiState.toolBarUiState) {
         is HomePageToolBarUiState.DefaultToolBar -> DefaultTopBar(uiState, onAction)
         is HomePageToolBarUiState.Search -> SearchActiveTopBar(uiState, onAction)
     }
@@ -216,12 +228,15 @@ fun TopBar(uiState: UiState, onAction: (UiAction) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DefaultTopBar(uiState: UiState, onAction: (UiAction) -> Unit) {
+fun DefaultTopBar(
+    uiState: UiState,
+    onAction: (UiAction) -> Unit,
+) {
     TopAppBar(
         title = {
             Text(
                 text = "Home",
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
         },
         actions = {
@@ -229,22 +244,26 @@ fun DefaultTopBar(uiState: UiState, onAction: (UiAction) -> Unit) {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search",
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-            titleContentColor = MaterialTheme.colorScheme.onSurface,
-            actionIconContentColor = MaterialTheme.colorScheme.primary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                titleContentColor = MaterialTheme.colorScheme.onSurface,
+                actionIconContentColor = MaterialTheme.colorScheme.primary,
+            ),
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchActiveTopBar(uiState: UiState, onAction: (UiAction) -> Unit) {
+fun SearchActiveTopBar(
+    uiState: UiState,
+    onAction: (UiAction) -> Unit,
+) {
     TopAppBar(
         title = { SearchBar(uiState, onAction) },
         navigationIcon = {
@@ -254,15 +273,16 @@ fun SearchActiveTopBar(uiState: UiState, onAction: (UiAction) -> Unit) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
                     contentDescription = "Back",
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            navigationIconContentColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onSurface,
-            actionIconContentColor = MaterialTheme.colorScheme.primary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+                navigationIconContentColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onSurface,
+                actionIconContentColor = MaterialTheme.colorScheme.primary,
+            ),
     )
 }

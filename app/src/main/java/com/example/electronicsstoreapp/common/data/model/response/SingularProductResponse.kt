@@ -7,7 +7,7 @@ data class SingularProductResponse(
     @SerializedName("product")
     val products: ProductDto,
     @SerializedName("status")
-    val status:Int,
+    val status: Int,
     @SerializedName("message")
-    val message:String
+    val message: String,
 )

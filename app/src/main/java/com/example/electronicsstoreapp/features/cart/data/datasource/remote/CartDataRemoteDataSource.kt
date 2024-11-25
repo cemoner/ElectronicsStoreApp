@@ -6,6 +6,13 @@ import com.example.electronicsstoreapp.features.cart.data.model.request.GetCartR
 import retrofit2.Response
 import javax.inject.Inject
 
-class CartDataRemoteDataSource @Inject constructor(private val cartDataApi: CartDataApi) {
-    suspend fun getCart(store:String, getCartRequest: GetCartRequest): Response<MultipleProductsResponse> = cartDataApi.getCart(store, getCartRequest.userId)
-}
+class CartDataRemoteDataSource
+    @Inject
+    constructor(
+        private val cartDataApi: CartDataApi,
+    ) {
+        suspend fun getCart(
+            store: String,
+            getCartRequest: GetCartRequest,
+        ): Response<MultipleProductsResponse> = cartDataApi.getCart(store, getCartRequest.userId)
+    }

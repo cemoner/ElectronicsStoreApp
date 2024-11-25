@@ -7,7 +7,10 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
 
-interface CartDataApi:API {
+interface CartDataApi : API {
     @GET("get_cart_products")
-    suspend fun getCart(@Header("store") store:String, @Query("userId") userId: String): Response<MultipleProductsResponse>
+    suspend fun getCart(
+        @Header("store") store: String,
+        @Query("userId") userId: String,
+    ): Response<MultipleProductsResponse>
 }

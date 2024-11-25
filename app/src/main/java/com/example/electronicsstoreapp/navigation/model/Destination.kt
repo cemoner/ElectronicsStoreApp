@@ -1,41 +1,53 @@
 package com.example.electronicsstoreapp.navigation.model
 
-sealed class Destination(protected val route:String,vararg params:String) {
+sealed class Destination(
+    protected val route: String,
+    vararg params: String,
+) {
+    val fullRoute: String =
+        if (params.isEmpty()) {
+            route
+        } else {
+            val builder = StringBuilder(route)
+            params.forEach { builder.append("/{$it}") }
+            builder.toString()
+        }
 
-    val fullRoute:String = if(params.isEmpty()) route else {
-        val builder = StringBuilder(route)
-        params.forEach { builder.append("/{${it}}") }
-        builder.toString()
+    sealed class NoArgumentDestination(
+        route: String,
+    ) : Destination(route) {
+        operator fun invoke(): String = route
     }
 
-    sealed class NoArgumentDestination(route: String): Destination(route){
-        operator fun invoke():String = route
-    }
+    object Home : NoArgumentDestination("home")
 
+    object Favorites : NoArgumentDestination("favorites")
 
-    object Home: NoArgumentDestination("home")
-    object Favorites: NoArgumentDestination("favorites")
-    object Login: NoArgumentDestination("login")
-    object Register: NoArgumentDestination("register")
-    object Cart: NoArgumentDestination("cart")
+    object Login : NoArgumentDestination("login")
 
+    object Register : NoArgumentDestination("register")
+
+    object Cart : NoArgumentDestination("cart")
 
     object ProductDetail : Destination(
         route = "productDetail",
-        "productId") {
-        const val PRODUCT_ID_KEY =  "productId"
+        "productId",
+    ) {
+        const val PRODUCT_ID_KEY = "productId"
 
-        operator fun invoke(productId:Int): String = route.appendParams(
-            PRODUCT_ID_KEY to productId,
-        )
+        operator fun invoke(productId: Int): String =
+            route.appendParams(
+                PRODUCT_ID_KEY to productId,
+            )
     }
 
-    object Profile: Destination("profile","userId"){
+    object Profile : Destination("profile", "userId") {
         const val USER_ID_KEY = "userId"
 
-        operator fun invoke(userId:String):String = route.appendParams(
-            USER_ID_KEY to userId
-        )
+        operator fun invoke(userId: String): String =
+            route.appendParams(
+                USER_ID_KEY to userId,
+            )
     }
 }
 

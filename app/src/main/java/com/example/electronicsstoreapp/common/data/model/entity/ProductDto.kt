@@ -26,5 +26,5 @@ data class ProductDto(
     @SerializedName("count")
     val count: Int,
     @SerializedName("saleState")
-    val saleState: Boolean
+    val saleState: Boolean,
 )

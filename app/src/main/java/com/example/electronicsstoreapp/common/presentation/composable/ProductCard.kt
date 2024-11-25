@@ -40,48 +40,54 @@ import com.example.electronicsstoreapp.main.util.FavoritesSingleton
 fun ProductCard(
     product: ProductUI,
     onProductClicked: (Int) -> Unit,
-    onFavoritesClicked: (Int) -> Unit
+    onFavoritesClicked: (Int) -> Unit,
 ) {
     Card(
         onClick = { onProductClicked(product.id) },
         enabled = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
         elevation = CardDefaults.cardElevation(4.dp),
     ) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
             Column(
                 verticalArrangement = Arrangement.SpaceAround,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .defaultMinSize(minHeight = 255.dp)
+                modifier =
+                    Modifier
+                        .padding(16.dp)
+                        .defaultMinSize(minHeight = 255.dp),
             ) {
                 Spacer(modifier = Modifier.height(18.dp))
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .heightIn(max = 200.dp),
-                        contentAlignment = Alignment.Center
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .heightIn(max = 200.dp),
+                        contentAlignment = Alignment.Center,
                     ) {
                         AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data(product.image1)
-                                .crossfade(true)
-                                .allowHardware(false)
-                                .size(Size.ORIGINAL)
-                                .build(),
+                            model =
+                                ImageRequest
+                                    .Builder(LocalContext.current)
+                                    .data(product.image1)
+                                    .crossfade(true)
+                                    .allowHardware(false)
+                                    .size(Size.ORIGINAL)
+                                    .build(),
                             contentDescription = product.description,
                             contentScale = ContentScale.FillWidth,
                             placeholder = painterResource(R.drawable.placeholder),
-                            modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
+                            modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant),
                         )
                     }
                     Text(
@@ -89,52 +95,52 @@ fun ProductCard(
                         style = MaterialTheme.typography.titleMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
                         text = product.category,
                         style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
                         text = "${product.rate}/5",
                         style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
                         text = "${product.price} ₺",
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
             }
             IconButton(
                 onClick = { onFavoritesClicked(product.id) },
-                modifier = Modifier.align(Alignment.TopEnd)
+                modifier = Modifier.align(Alignment.TopEnd),
             ) {
                 Icon(
                     imageVector = Icons.Default.Favorite,
                     contentDescription = "Favorite",
-                    tint = if (FavoritesSingleton.isFavorite(product.id)) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant
-                    }
+                    tint =
+                        if (FavoritesSingleton.isFavorite(product.id)) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        },
                 )
             }
         }
     }
 }
-

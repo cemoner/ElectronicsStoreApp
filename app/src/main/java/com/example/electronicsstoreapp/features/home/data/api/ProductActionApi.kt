@@ -9,24 +9,22 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 
-interface ProductActionApi:API {
-
+interface ProductActionApi : API {
     @POST("add_to_cart")
     suspend fun addToCart(
         @Header("store") store: String,
-        @Body addRequest: ActionRequest
+        @Body addRequest: ActionRequest,
     ): Response<ActionResponse>
 
     @POST("add_to_favorites")
     suspend fun addToFavorites(
         @Header("store") store: String,
-        @Body addRequest: ActionRequest
+        @Body addRequest: ActionRequest,
     ): Response<ActionResponse>
-
 
     @POST("delete_from_favorites")
     suspend fun deleteFromFavorites(
         @Header("store") store: String,
-        @Body removeRequest: ActionRequest2
+        @Body removeRequest: ActionRequest2,
     ): Response<ActionResponse>
 }

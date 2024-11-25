@@ -10,5 +10,5 @@ data class UserDto(
     @SerializedName("name")
     val name: String,
     @SerializedName("phone")
-    val phone: String
+    val phone: String,
 )

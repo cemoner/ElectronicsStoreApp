@@ -12,12 +12,9 @@ import com.example.electronicsstoreapp.navigation.navigator.AppNavigator
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
-open class CommonViewModel (
-):ViewModel() {
-
+open class CommonViewModel : ViewModel() {
     @Inject
-    lateinit var  addToCartUseCase: AddToCartUseCase
+    lateinit var addToCartUseCase: AddToCartUseCase
 
     @Inject
     lateinit var addToFavoritesUseCase: AddToFavoritesUseCase
@@ -28,9 +25,13 @@ open class CommonViewModel (
     @Inject
     lateinit var navigator: AppNavigator
 
-
-    fun onAddToCartButtonClicked(storeName: String, userId: String, productId: Int, onCreateToast:(String) -> Unit){
-        if(IsLoggedInSingleton.getIsLoggedIn()){
+    fun onAddToCartButtonClicked(
+        storeName: String,
+        userId: String,
+        productId: Int,
+        onCreateToast: (String) -> Unit,
+    ) {
+        if (IsLoggedInSingleton.getIsLoggedIn()) {
             viewModelScope.launch {
                 val addResult = addToCartUseCase(storeName, userId, productId)
                 addResult.onSuccess {
@@ -40,14 +41,12 @@ open class CommonViewModel (
                     onCreateToast(it.message.toString())
                 }
             }
-        }
-        else {
+        } else {
             onCreateToast("Please login to add to cart")
-
         }
     }
 
-    fun navigateToProductDetail(productId:Int){
+    fun navigateToProductDetail(productId: Int) {
         navigator.tryNavigateTo(
             Destination.ProductDetail(productId),
             popUpToRoute = null,
@@ -55,10 +54,15 @@ open class CommonViewModel (
         )
     }
 
-    fun onFavoritesButtonClicked(storeName:String,userId:String,productId:Int,onCreateToast:(String) -> Unit) = viewModelScope.launch{
-        if(IsLoggedInSingleton.getIsLoggedIn()){
-            if(!FavoritesSingleton.isFavorite(productId)){
-                val result = addToFavoritesUseCase(storeName,userId,productId)
+    fun onFavoritesButtonClicked(
+        storeName: String,
+        userId: String,
+        productId: Int,
+        onCreateToast: (String) -> Unit,
+    ) = viewModelScope.launch {
+        if (IsLoggedInSingleton.getIsLoggedIn()) {
+            if (!FavoritesSingleton.isFavorite(productId)) {
+                val result = addToFavoritesUseCase(storeName, userId, productId)
                 result.onSuccess {
                     FavoritesSingleton.addToFavorites(productId)
                     onCreateToast(it.message!!)
@@ -66,9 +70,8 @@ open class CommonViewModel (
                 result.onFailure {
                     onCreateToast(it.message!!)
                 }
-            }
-            else {
-                val result = deleteFromFavoritesUseCase(storeName,userId,productId)
+            } else {
+                val result = deleteFromFavoritesUseCase(storeName, userId, productId)
                 result.onSuccess {
                     onCreateToast(it.message!!)
                     FavoritesSingleton.deleteFromFavorites(productId)
@@ -77,16 +80,14 @@ open class CommonViewModel (
                     onCreateToast(it.message!!)
                 }
             }
-        }
-        else {
+        } else {
             onCreateToast("You need to be logged in to do this.")
         }
     }
 
-    fun tryNavigateBack(){
+    fun tryNavigateBack() {
         viewModelScope.launch {
             navigator.tryNavigateBack()
         }
     }
-
 }

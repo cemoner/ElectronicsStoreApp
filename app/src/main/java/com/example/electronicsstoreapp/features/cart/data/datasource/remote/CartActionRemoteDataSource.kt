@@ -8,10 +8,18 @@ import com.example.electronicsstoreapp.features.cart.data.model.response.DeleteF
 import retrofit2.Response
 import javax.inject.Inject
 
-class CartActionRemoteDataSource @Inject constructor(private val cartActionApi: CartActionApi) {
+class CartActionRemoteDataSource
+    @Inject
+    constructor(
+        private val cartActionApi: CartActionApi,
+    ) {
+        suspend fun deleteFromCart(
+            store: String,
+            deleteFromCartRequest: DeleteFromCartRequest,
+        ): Response<DeleteFromCartResponse> = cartActionApi.deleteFromCart(store, deleteFromCartRequest)
 
-
-    suspend fun deleteFromCart(store: String,deleteFromCartRequest: DeleteFromCartRequest): Response<DeleteFromCartResponse> = cartActionApi.deleteFromCart(store,deleteFromCartRequest)
-
-    suspend fun clearCart(store: String,clearCartRequest: ClearCartRequest): Response<ClearCartResponse> = cartActionApi.clearCart(store, clearCartRequest)
-}
+        suspend fun clearCart(
+            store: String,
+            clearCartRequest: ClearCartRequest,
+        ): Response<ClearCartResponse> = cartActionApi.clearCart(store, clearCartRequest)
+    }

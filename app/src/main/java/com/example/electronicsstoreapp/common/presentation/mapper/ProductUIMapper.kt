@@ -3,8 +3,8 @@ package com.example.electronicsstoreapp.common.presentation.mapper
 import com.example.electronicsstoreapp.common.domain.model.Product
 import com.example.electronicsstoreapp.common.presentation.model.ProductUI
 
-fun Product.toUiModel(): ProductUI {
-    return ProductUI(
+fun Product.toUiModel(): ProductUI =
+    ProductUI(
         id = id,
         title = title,
         price = price,
@@ -16,4 +16,3 @@ fun Product.toUiModel(): ProductUI {
         image3 = imageThree,
         rate = rate,
     )
-}

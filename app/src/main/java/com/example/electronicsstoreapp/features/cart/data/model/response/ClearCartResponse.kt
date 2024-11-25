@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ClearCartResponse(
     @SerializedName("status")
-    val status:Int,
+    val status: Int,
     @SerializedName("message")
-    val message:String
+    val message: String,
 )

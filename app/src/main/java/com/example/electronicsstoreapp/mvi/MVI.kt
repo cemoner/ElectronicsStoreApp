@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-interface MVI<UiState,UiAction,SideEffect> {
+interface MVI<UiState, UiAction, SideEffect> {
     val uiState: StateFlow<UiState>
     val sideEffect: Flow<SideEffect>
 
@@ -18,9 +18,8 @@ interface MVI<UiState,UiAction,SideEffect> {
     fun updateUiState(newUiState: UiState)
 
     fun CoroutineScope.emitSideEffect(effect: SideEffect)
-
-
 }
+
 @Stable
 @Composable
 fun <UiState, UiAction, SideEffect> MVI<UiState, UiAction, SideEffect>.unpack() =

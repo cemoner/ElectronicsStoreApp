@@ -12,26 +12,28 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.UiAction
 import com.example.electronicsstoreapp.common.presentation.model.ProductUI
-import androidx.compose.material3.MaterialTheme
+import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.UiAction
 
 @Composable
-fun ProductCard(product: ProductUI, onAction: (UiAction) -> Unit) {
+fun ProductCard(
+    product: ProductUI,
+    onAction: (UiAction) -> Unit,
+) {
     Card(
         onClick = { onAction(UiAction.OnProductClicked(product.id)) },
         enabled = true,
         modifier = Modifier.fillMaxWidth().padding(8.dp),
         elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
     ) {
-        Row() {
+        Row {
             AsyncImage(
                 model = product.image1,
                 contentDescription = "Product Image",
@@ -45,7 +47,7 @@ fun ProductCard(product: ProductUI, onAction: (UiAction) -> Unit) {
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete",
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
         }

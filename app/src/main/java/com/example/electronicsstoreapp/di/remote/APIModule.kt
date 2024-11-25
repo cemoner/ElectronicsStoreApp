@@ -15,9 +15,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-
 class APIModule {
-
     @Provides
     @Singleton
     fun providesAuthApi(): AuthApi = ApiClient.create()
@@ -30,7 +28,6 @@ class APIModule {
     @Singleton
     fun providesHomeApi(): ProductDataApi = ApiClient.create()
 
-
     @Provides
     @Singleton
     fun providesProductActionApi(): ProductActionApi = ApiClient.create()
@@ -42,5 +39,4 @@ class APIModule {
     @Provides
     @Singleton
     fun providesCartDataApi(): CartDataApi = ApiClient.create()
-
 }

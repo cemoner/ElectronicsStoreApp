@@ -11,7 +11,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class NavigatorModule {
-
     @Provides
     @Singleton
     fun providesNavigator(): AppNavigator = AppNavigatorImpl()

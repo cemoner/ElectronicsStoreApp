@@ -33,29 +33,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.electronicsstoreapp.R
-import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.UiState
-import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.UiAction
 import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.SideEffect
+import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.UiAction
+import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.UiState
 import com.example.electronicsstoreapp.features.cart.presentation.viewmodel.CartPageViewModel
 import com.example.electronicsstoreapp.mvi.CollectSideEffect
 import com.example.electronicsstoreapp.mvi.unpack
 import kotlinx.coroutines.flow.Flow
 
-
 @Composable
-fun CartPageScreen(){
+fun CartPageScreen() {
     val viewModel = hiltViewModel<CartPageViewModel>()
-    val (uiState,onAction,sideEffect) = viewModel.unpack()
-    CartPageContent(uiState,onAction,sideEffect)
-
+    val (uiState, onAction, sideEffect) = viewModel.unpack()
+    CartPageContent(uiState, onAction, sideEffect)
 }
 
 @Composable
-fun CartPageContent(uiState: UiState, onAction: (UiAction) -> Unit, sideEffect: Flow<SideEffect>){
+fun CartPageContent(
+    uiState: UiState,
+    onAction: (UiAction) -> Unit,
+    sideEffect: Flow<SideEffect>,
+) {
     val context = LocalContext.current
 
     CollectSideEffect(sideEffect) {
-        when(it){
+        when (it) {
             is SideEffect.ShowToast -> {
                 Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
             }
@@ -64,65 +66,86 @@ fun CartPageContent(uiState: UiState, onAction: (UiAction) -> Unit, sideEffect: 
 
     Scaffold(
         topBar = { TopBar(onAction) },
-        bottomBar = { BottomBar(uiState,onAction) }
+        bottomBar = { BottomBar(uiState, onAction) },
     ) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            if(uiState.products.isEmpty()){
-                item{Text("Your cart is empty.", modifier = Modifier.fillMaxSize().padding(12.dp), fontSize = 25.sp, textAlign = TextAlign.Center)}
+            if (uiState.products.isEmpty()) {
+                item {
+                    Text(
+                        "Your cart is empty.",
+                        modifier = Modifier.fillMaxSize().padding(12.dp),
+                        fontSize = 25.sp,
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
             items(uiState.products.size) {
-                ProductCard(uiState.products[it],onAction)
+                ProductCard(uiState.products[it], onAction)
             }
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(onAction:(UiAction) -> Unit){
+fun TopBar(onAction: (UiAction) -> Unit) {
     TopAppBar(
         title = {
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.CenterStart
+                contentAlignment = Alignment.CenterStart,
             ) {
                 Text(
                     text = "Cart",
                     color = Color.Black,
-                    fontSize = 20.sp
+                    fontSize = 20.sp,
                 )
-            } },
-
+            }
+        },
         navigationIcon = {
-            IconButton(onClick = {onAction(UiAction.BackClicked)})  {
+            IconButton(onClick = { onAction(UiAction.BackClicked) }) {
                 Icon(Icons.Default.Close, contentDescription = "Back", tint = Color.Gray)
             }
         },
     )
-
 }
 
 @Composable
-fun BottomBar(uiState: UiState, onAction:(UiAction) -> Unit){
+fun BottomBar(
+    uiState: UiState,
+    onAction: (UiAction) -> Unit,
+) {
     Column(modifier = Modifier.padding(16.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween){
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
             Text("Delivery Charge:")
             Text("0₺")
         }
         Row(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween){
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
             Text("Total Price:${uiState.totalPrice} ₺")
         }
-        Button(onClick = {onAction(UiAction.OnBuyClicked)},modifier = Modifier.fillMaxWidth().clip(
-            RoundedCornerShape(10),
-        ),colors = ButtonDefaults.buttonColors(colorResource(R.color.purple_500))) {
-            Text("Place Order",modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleLarge, color = Color.White)
+        Button(
+            onClick = { onAction(UiAction.OnBuyClicked) },
+            modifier =
+                Modifier.fillMaxWidth().clip(
+                    RoundedCornerShape(10),
+                ),
+            colors = ButtonDefaults.buttonColors(colorResource(R.color.purple_500)),
+        ) {
+            Text(
+                "Place Order",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge,
+                color = Color.White,
+            )
         }
     }
 }

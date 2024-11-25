@@ -7,5 +7,4 @@ data class ActionRequest(
     val userId: String,
     @SerializedName("productId")
     val productId: Int,
-
 )

@@ -8,11 +8,14 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface AuthApi:API {
-
+interface AuthApi : API {
     @POST("sign_in")
-    suspend fun signIn(@Body signInRequest: SignInRequest): Response<AuthResponse>
+    suspend fun signIn(
+        @Body signInRequest: SignInRequest,
+    ): Response<AuthResponse>
 
     @POST("sign_up")
-    suspend fun signUp(@Body signUpRequest: SignUpRequest): Response<AuthResponse>
+    suspend fun signUp(
+        @Body signUpRequest: SignUpRequest,
+    ): Response<AuthResponse>
 }

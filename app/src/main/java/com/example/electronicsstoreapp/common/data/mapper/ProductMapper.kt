@@ -3,8 +3,8 @@ package com.example.electronicsstoreapp.common.data.mapper
 import com.example.electronicsstoreapp.common.data.model.entity.ProductDto
 import com.example.electronicsstoreapp.common.domain.model.Product
 
-fun ProductDto.toDomainModel(): Product {
-    return Product(
+fun ProductDto.toDomainModel(): Product =
+    Product(
         id = id,
         title = title,
         price = price,
@@ -15,6 +15,6 @@ fun ProductDto.toDomainModel(): Product {
         imageTwo = imageTwo,
         imageThree = imageThree,
         rate = rate,
-        count = count, saleState = saleState
+        count = count,
+        saleState = saleState,
     )
-}

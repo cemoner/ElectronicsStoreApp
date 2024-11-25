@@ -1,11 +1,10 @@
 package com.example.electronicsstoreapp.main.util
-class UserIdSingleton private constructor(){
-    companion object {
-        private var userId:String = "-1"
 
-        fun getUserId():String {
-            return userId
-        }
+class UserIdSingleton private constructor() {
+    companion object {
+        private var userId: String = "-1"
+
+        fun getUserId(): String = userId
 
         fun setUserId(name: String) {
             userId = name

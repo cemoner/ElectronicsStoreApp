@@ -6,12 +6,10 @@ import com.example.electronicsstoreapp.features.profile.profile.data.model.respo
 import retrofit2.Response
 import javax.inject.Inject
 
-class UserDataSource @Inject constructor(
-    private val profileApi: UserApi
-) {
-
-    suspend fun getUser(userRequest: UserRequest): Response<UserResponse> {
-        return profileApi.getUser(userRequest.store,userRequest.userId)}
-
-
-}
+class UserDataSource
+    @Inject
+    constructor(
+        private val profileApi: UserApi,
+    ) {
+        suspend fun getUser(userRequest: UserRequest): Response<UserResponse> = profileApi.getUser(userRequest.store, userRequest.userId)
+    }

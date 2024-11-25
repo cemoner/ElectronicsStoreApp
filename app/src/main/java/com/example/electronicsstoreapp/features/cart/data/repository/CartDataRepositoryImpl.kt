@@ -9,18 +9,24 @@ import com.example.electronicsstoreapp.retrofit.ApiHandler
 import com.example.electronicsstoreapp.retrofit.NetworkResult
 import javax.inject.Inject
 
-class CartDataRepositoryImpl @Inject constructor(private val cartDataRemoteDataSource: CartDataRemoteDataSource):CartDataRepository,ApiHandler{
+class CartDataRepositoryImpl
+    @Inject
+    constructor(
+        private val cartDataRemoteDataSource: CartDataRemoteDataSource,
+    ) : CartDataRepository,
+        ApiHandler {
+        override suspend fun getCart(
+            store: String,
+            userId: String,
+        ): Result<List<Product>> {
+            val result = handleApi { cartDataRemoteDataSource.getCart(store, GetCartRequest(userId)) }
 
-    override suspend fun getCart(store: String, userId:String): Result<List<Product>> {
-        val result = handleApi { cartDataRemoteDataSource.getCart(store, GetCartRequest(userId)) }
-
-        when (result) {
-            is NetworkResult.Success -> {
-                return Result.success(result.data.products.map { it.toDomainModel() })
+            when (result) {
+                is NetworkResult.Success -> {
+                    return Result.success(result.data.products.map { it.toDomainModel() })
+                }
+                is NetworkResult.Error -> return Result.failure(Exception(result.errorMsg))
+                is NetworkResult.Exception -> return Result.failure(result.e)
             }
-            is NetworkResult.Error -> return Result.failure(Exception(result.errorMsg))
-            is NetworkResult.Exception -> return Result.failure(result.e)
         }
     }
-}
-

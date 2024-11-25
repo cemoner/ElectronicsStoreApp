@@ -12,5 +12,5 @@ data class Product(
     val imageThree: String,
     val rate: Double,
     val count: Int,
-    val saleState: Boolean
+    val saleState: Boolean,
 )

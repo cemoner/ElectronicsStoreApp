@@ -8,15 +8,21 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
 
-interface ProductDataApi:API {
-
+interface ProductDataApi : API {
     @GET("get_products")
-    suspend fun getProducts(@Header("store") store:String):Response<MultipleProductsResponse>
+    suspend fun getProducts(
+        @Header("store") store: String,
+    ): Response<MultipleProductsResponse>
 
     @GET("get_product_detail")
-    suspend fun getProductDetail(@Header("store") store:String, @Query("id") productId:Int):Response<SingularProductResponse>
+    suspend fun getProductDetail(
+        @Header("store") store: String,
+        @Query("id") productId: Int,
+    ): Response<SingularProductResponse>
 
     @GET("get_favorites")
-    suspend fun getFavorites(@Header("store") store:String, @Query("userId") userId:String):Response<MultipleProductsResponse>
-
+    suspend fun getFavorites(
+        @Header("store") store: String,
+        @Query("userId") userId: String,
+    ): Response<MultipleProductsResponse>
 }

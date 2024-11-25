@@ -3,6 +3,8 @@ package com.example.electronicsstoreapp.features.profile.profile.domain.reposito
 import com.example.electronicsstoreapp.features.profile.profile.domain.model.User
 
 interface UserDataRepository {
-
-    suspend fun getUser(storeName:String,userId:String): Result<User>
+    suspend fun getUser(
+        storeName: String,
+        userId: String,
+    ): Result<User>
 }

@@ -10,14 +10,16 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 
-interface CartActionApi:API {
-
-
+interface CartActionApi : API {
     @POST("delete_from_cart")
-    suspend fun deleteFromCart(@Header("store") store:String, @Body deleteFromCartRequest: DeleteFromCartRequest): Response<DeleteFromCartResponse>
+    suspend fun deleteFromCart(
+        @Header("store") store: String,
+        @Body deleteFromCartRequest: DeleteFromCartRequest,
+    ): Response<DeleteFromCartResponse>
 
     @POST("clear_cart")
-    suspend fun clearCart(@Header("store") store:String, @Body clearCartRequest: ClearCartRequest): Response<ClearCartResponse>
-
-
+    suspend fun clearCart(
+        @Header("store") store: String,
+        @Body clearCartRequest: ClearCartRequest,
+    ): Response<ClearCartResponse>
 }

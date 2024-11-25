@@ -2,14 +2,12 @@ package com.example.electronicsstoreapp.main.util
 
 class IsLoggedInSingleton private constructor() {
     companion object {
-        private var isLoggedIn:Boolean = false
+        private var isLoggedIn: Boolean = false
 
-        fun getIsLoggedIn():Boolean {
-            return isLoggedIn
-        }
+        fun getIsLoggedIn(): Boolean = isLoggedIn
 
         fun setIsLoggedIn(boolean: Boolean) {
-             isLoggedIn = boolean
+            isLoggedIn = boolean
         }
     }
 }

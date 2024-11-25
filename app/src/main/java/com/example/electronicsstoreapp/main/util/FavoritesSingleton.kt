@@ -20,11 +20,9 @@ object FavoritesSingleton {
         _favorites.remove(productId)
     }
 
-    fun isFavorite(productId: Int): Boolean {
-        return favorites.contains(productId)
-    }
+    fun isFavorite(productId: Int): Boolean = favorites.contains(productId)
+
     fun clearFavorites() {
         _favorites.clear()
     }
-
 }

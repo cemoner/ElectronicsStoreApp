@@ -8,7 +8,8 @@ object RetrofitClient {
     private const val BASE_URL = "https://api.canerture.com/ecommerce/"
 
     val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
+        Retrofit
+            .Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -16,7 +17,5 @@ object RetrofitClient {
 }
 
 object ApiClient {
-    inline fun <reified T : API> create(): T {
-        return retrofit.create(T::class.java)
-    }
+    inline fun <reified T : API> create(): T = retrofit.create(T::class.java)
 }

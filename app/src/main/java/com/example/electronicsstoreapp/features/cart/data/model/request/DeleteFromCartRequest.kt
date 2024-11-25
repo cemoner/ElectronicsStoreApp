@@ -6,5 +6,5 @@ data class DeleteFromCartRequest(
     @SerializedName("userId")
     val userId: String,
     @SerializedName("id")
-    val productId: Int
+    val productId: Int,
 )

@@ -1,4 +1,5 @@
 package com.example.electronicsstoreapp.features.home.domain.exception
 
-class FavoritesOperationException(message: String) : Exception(message) {
-}
+class FavoritesOperationException(
+    message: String,
+) : Exception(message)
