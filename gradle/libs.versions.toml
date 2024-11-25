@@ -1,8 +1,14 @@
 [versions]
+accompanistPager = "<latest_version>"
+accompanistPagerIndicators = "0.30.1"
+accompanistPagerVersion = "0.30.1"
 agp = "8.7.2"
+coilCompose = "3.0.3"
 constraintlayoutComposeVersion = "1.0.1"
 converterGson = "2.9.0"
+coreSplashscreen = "1.0.1"
 firebaseBom = "33.5.1"
+firebaseBomVersion = "33.6.0"
 hiltAndroid = "2.52"
 hiltAndroidGradlePlugin = "2.52"
 hiltCompiler = "2.52"
@@ -30,9 +36,16 @@ firebaseAuth = "23.0.0"
 firebase = "33.1.2"
 ksp = "2.0.10-1.0.24"
 retrofit = "2.9.0"
+firebaseMessagingKtx = "24.1.0"
+firebaseMessaging = "24.1.0"
 
 [libraries]
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
+accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPager" }
+accompanist-pager-indicators-v0301 = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicators" }
+accompanist-pager-v0301 = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltVersion" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltVersion" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltVersion" }
@@ -41,10 +54,16 @@ androidx-lifecycle-viewmodel-ktx-v240 = { module = "androidx.lifecycle:lifecycle
 androidx-material = { module = "androidx.compose.material:material", version.ref = "material" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutComposeVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "hiltAndroidGradlePlugin" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom-v3351 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-bom-v3360 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidGradlePlugin" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroidGradlePlugin" }
@@ -78,6 +97,8 @@ hilt-kapt = {group="com.google.dagger", name="hilt-android" ,version.ref = "hilt
 
 firebase-bom = {group="com.google.firebase", name="firebase-bom",version.ref="firebase"}
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
