@@ -11,7 +11,9 @@ fun Product.toUiModel(): ProductUI {
         salePrice = salePrice,
         description = description,
         category = category,
-        image = imageOne,
+        image1 = imageOne,
+        image2 = imageTwo,
+        image3 = imageThree,
         rate = rate,
     )
 }

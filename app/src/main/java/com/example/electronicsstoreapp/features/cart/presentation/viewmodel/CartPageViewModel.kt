@@ -109,6 +109,7 @@ class CartPageViewModel @Inject constructor(
             val result = getCartItemsUseCase(StoreNameSingleton.getStoreName(),UserIdSingleton.getUserId())
             result.onSuccess {
                 updateUiState(newUiState = uiState.value.copy(products = it.map { it1 -> it1.toUiModel() }))
+                calculateTotalPrice()
             }
             result.onFailure {
                 onCreateToast(it.message.toString())

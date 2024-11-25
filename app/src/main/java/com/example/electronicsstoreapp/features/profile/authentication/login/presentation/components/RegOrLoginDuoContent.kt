@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -20,7 +21,7 @@ fun RegOrLoginDuo(onClick:() -> Unit, textString:String, buttonString:String){
         Button(
             onClick = onClick ,
             colors = ButtonDefaults.textButtonColors(
-                backgroundColor = Color.Transparent
+                backgroundColor = MaterialTheme.colorScheme.surfaceBright
             ),
             elevation = null,
         ) {

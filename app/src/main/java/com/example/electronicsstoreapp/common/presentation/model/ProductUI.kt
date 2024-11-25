@@ -7,6 +7,9 @@ data class ProductUI(
     val salePrice: Double,
     val description: String,
     val category: String,
-    val image: String,
+    val image1: String,
+    val image2:String,
+    val image3:String,
     val rate: Double,
+    val isLoading:Boolean = false
 )

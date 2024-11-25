@@ -26,11 +26,17 @@ class ProductDetailPageViewModel @Inject constructor(
         viewModelScope.launch {
             val productId = savedStateHandle.get<String>("productId")?.toIntOrNull()
                 ?: throw IllegalArgumentException("Invalid or missing productId")
-            val productResult = getProductDetailUseCase(StoreNameSingleton.getStoreName(),productId)
+            val productResult =
+                getProductDetailUseCase(StoreNameSingleton.getStoreName(), productId)
             lateinit var productUI: ProductUI
             productResult.onSuccess {
                 productUI = it.toUiModel()
-                updateUiState(newUiState = uiState.value.copy(product = productUI))
+                updateUiState(
+                    newUiState = uiState.value.copy(
+                        product = productUI,
+                        images = listOf(productUI.image1, productUI.image1, productUI.image1)
+                    )
+                )
             }
             productResult.onFailure {
                 onCreateToast(it.message!!)
@@ -39,19 +45,31 @@ class ProductDetailPageViewModel @Inject constructor(
 
     }
 
-     override fun onAction(action: UiAction) {
+    override fun onAction(action: UiAction) {
         when (action) {
             is UiAction.AddToCartButtonClicked -> {
-                onAddToCartButtonClicked(StoreNameSingleton.getStoreName(),UserIdSingleton.getUserId(),action.productId,::onCreateToast)
+                onAddToCartButtonClicked(
+                    StoreNameSingleton.getStoreName(),
+                    UserIdSingleton.getUserId(),
+                    action.productId,
+                    ::onCreateToast
+                )
             }
 
             is UiAction.OnFavoritesButtonClicked -> {
-                onFavoritesButtonClicked(StoreNameSingleton.getStoreName(),UserIdSingleton.getUserId(),action.productId,::onCreateToast)
+                onFavoritesButtonClicked(
+                    StoreNameSingleton.getStoreName(),
+                    UserIdSingleton.getUserId(),
+                    action.productId,
+                    ::onCreateToast
+                )
             }
 
             is UiAction.OnBackButtonClicked -> tryNavigateBack()
         }
     }
+
+
 
     private fun onCreateToast(message:String){
         viewModelScope.launch {
@@ -61,7 +79,7 @@ class ProductDetailPageViewModel @Inject constructor(
 }
 
 private fun initialUiState(): UiState = UiState(
-    ProductUI(
+    product = ProductUI(
     -1,
     "Product",
     0.00,
@@ -69,6 +87,9 @@ private fun initialUiState(): UiState = UiState(
     "Description",
     "Category",
     "Image Link",
+        "Image 2 Link",
+        "Image 3 Link",
     0.00
-)
+    ),
+    emptyList()
 )

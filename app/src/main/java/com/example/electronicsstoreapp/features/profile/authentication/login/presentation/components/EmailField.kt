@@ -10,6 +10,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,7 +18,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmailTextField(emailText:String, function: (String) -> Unit){
     TextField(
@@ -30,13 +30,13 @@ fun EmailTextField(emailText:String, function: (String) -> Unit){
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            cursorColor = Color.Black
+            cursorColor = MaterialTheme.colorScheme.primary
         ),
         leadingIcon = {
             Icon(
             Icons.Default.Person,
             contentDescription = "",
-            tint = Color.Gray
+            tint = MaterialTheme.colorScheme.surfaceTint
         )
         },
         keyboardOptions = KeyboardOptions(

@@ -1,6 +1,7 @@
 package com.example.electronicsstoreapp.navigation.presentation.composable
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
@@ -24,7 +25,7 @@ fun NavigationBar(navController:NavHostController) {
 
 
 
-    NavigationBar(containerColor = colorResource(id = R.color.white)) {
+    NavigationBar(containerColor = MaterialTheme.colorScheme.background ) {
         items.forEach{ item->
             NavigationBarItem(
                 icon = {

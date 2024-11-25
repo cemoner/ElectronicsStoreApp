@@ -10,6 +10,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Key
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,13 +33,13 @@ fun PasswordTextField(passwordText:String, function:(String) -> Unit,loginFuncti
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            cursorColor = Color.Black
+            cursorColor = MaterialTheme.colorScheme.primary
         ),
         leadingIcon = {
             Icon(
             Icons.Default.Key,
             contentDescription = "",
-            tint = Color.Gray
+            tint = MaterialTheme.colorScheme.surfaceTint
         )
         },
         keyboardOptions = KeyboardOptions(

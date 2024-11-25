@@ -1,18 +1,21 @@
 package com.example.electronicsstoreapp.features.home.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.electronicsstoreapp.common.domain.model.Product
 import com.example.electronicsstoreapp.features.home.domain.usecase.GetProductsUseCase
 import com.example.electronicsstoreapp.mvi.MVI
 import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageContract.UiState
 import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageContract.UiAction
 import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageContract.SideEffect
 import com.example.electronicsstoreapp.common.presentation.mapper.toUiModel
+import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageToolBarUiState
 import com.example.electronicsstoreapp.main.util.StoreNameSingleton
 import com.example.electronicsstoreapp.main.util.UserIdSingleton
 import com.example.electronicsstoreapp.mvi.mvi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,16 +26,7 @@ class HomePageViewModel @Inject constructor(
 ) {
 
     init {
-        viewModelScope.launch {
-            val result = getProductsUseCase(StoreNameSingleton.getStoreName())
-            result.onSuccess {
-                val productUIList = it.map(Product::toUiModel)
-                updateUiState(newUiState = uiState.value.copy(products = productUIList))
-            }
-            result.onFailure {
-                onCreateToast(it.message!!)
-            }
-        }
+        getProducts()
     }
 
     override fun onAction(action: UiAction) {
@@ -40,14 +34,14 @@ class HomePageViewModel @Inject constructor(
             is UiAction.OnSearchTextChange -> {
                 onSearchTextChange(action.searchText)
             }
-            is UiAction.OnSearchBarClicked -> {
-                onToggleSearch()
+            is UiAction.OnToolBarStateChange -> {
+                onToolBarStateChange()
+
             }
             is UiAction.OnProductClicked -> {
                 navigateToProductDetail(action.productId)
             }
-            is UiAction.OnAddToCartButtonClicked -> onAddToCartButtonClicked(StoreNameSingleton.getStoreName(),UserIdSingleton.getUserId(),action.productId,::onCreateToast)
-            is UiAction.OnFavoritesButtonClicked -> TODO()
+            is UiAction.OnFavoritesButtonClicked -> onFavoritesButtonClicked(StoreNameSingleton.getStoreName(),UserIdSingleton.getUserId(),action.productId,::onCreateToast)
         }
     }
 
@@ -57,21 +51,51 @@ class HomePageViewModel @Inject constructor(
         }
     }
 
+    private fun getProducts() = viewModelScope.launch {
 
-    fun onIsSearchingChange(boolean: Boolean){
-        updateUiState(newUiState = uiState.value.copy(isSearching = boolean))
-    }
+        updateUiState(UiState.Loading)
 
+        val result = withContext(Dispatchers.IO) {
+            getProductsUseCase(StoreNameSingleton.getStoreName())
+        }
 
-    fun onSearchTextChange(text: String) {
-        updateUiState(newUiState = uiState.value.copy(searchText = text))
-    }
+        result.onSuccess {
+            val productUIList = it.map { product ->
+                product.toUiModel().copy(isLoading = false)
+            }
 
-    fun onToggleSearch() {
-        onIsSearchingChange(!uiState.value.isSearching)
-        if (!uiState.value.isSearching) {
-            onSearchTextChange("")
+            updateUiState(UiState.Success(
+                toolBarUiState = HomePageToolBarUiState.DefaultToolBar,
+                allProducts = productUIList,
+                searchProducts = productUIList
+            ))
+        }
+
+        result.onFailure {
+            updateUiState(UiState.Error)
+            onCreateToast(it.message ?: "An error occurred")
         }
     }
+
+    fun onSearchTextChange(text: String) {
+        viewModelScope.launch {
+            val currentState = (uiState.value) as? UiState.Success ?: return@launch
+            val toolBarUiState = currentState.toolBarUiState as? HomePageToolBarUiState.Search ?: return@launch
+            val filteredProducts = currentState.allProducts.filter { it.title.contains(text, ignoreCase = true) || it.category.contains(text,ignoreCase = true)}
+            Log.e("filteredProducts",filteredProducts.toString())
+            val newToolBarUiState = toolBarUiState.copy(searchText = text)
+            updateUiState(currentState.copy(searchProducts = filteredProducts,toolBarUiState = newToolBarUiState))
+        }
+    }
+
+    fun onToolBarStateChange(){
+        val currentState = (uiState.value) as? UiState.Success ?: return
+
+        val newToolBarUiState = when(currentState.toolBarUiState){
+            is HomePageToolBarUiState.DefaultToolBar -> HomePageToolBarUiState.Search("")
+            is HomePageToolBarUiState.Search -> HomePageToolBarUiState.DefaultToolBar
+        }
+        updateUiState(currentState.copy(searchProducts = currentState.allProducts,toolBarUiState = newToolBarUiState))
+    }
 }
-private fun initialUiState(): UiState = UiState("",false, emptyList())
+private fun initialUiState(): UiState = UiState.Loading

@@ -9,6 +9,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DriveFileRenameOutline
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,19 +23,19 @@ fun FormTextFieldContent(text:String, function: (String) -> Unit, type:String){
     TextField(value = text,
         onValueChange = function,
         label = { Text(type) },
-        placeholder = { Text("Enter your ${type}") },
+        placeholder = { Text("Enter your $type") },
         shape = RoundedCornerShape(32.dp),
         singleLine = true,
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            cursorColor = Color.Black
+            cursorColor = MaterialTheme.colorScheme.primary
         ),
         leadingIcon = {
             Icon(
                 Icons.Default.DriveFileRenameOutline,
                 contentDescription = "",
-                tint = Color.Gray
+                tint = MaterialTheme.colorScheme.surfaceTint
             )
         }, modifier = Modifier.padding(8.dp),
 

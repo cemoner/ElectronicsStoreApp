@@ -16,35 +16,37 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.electronicsstoreapp.R
 import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.UiAction
 import com.example.electronicsstoreapp.common.presentation.model.ProductUI
+import androidx.compose.material3.MaterialTheme
 
 @Composable
-fun ProductCard(product: ProductUI, onAction:(UiAction) -> Unit) {
+fun ProductCard(product: ProductUI, onAction: (UiAction) -> Unit) {
     Card(
-        onClick = { onAction(UiAction.OnProductClicked(product.id))},
+        onClick = { onAction(UiAction.OnProductClicked(product.id)) },
         enabled = true,
         modifier = Modifier.fillMaxWidth().padding(8.dp),
         elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
-    ){
-        Row(){
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+    ) {
+        Row() {
             AsyncImage(
-                model = product.image,
+                model = product.image1,
                 contentDescription = "Product Image",
                 modifier = Modifier.padding(5.dp).weight(0.4f),
             )
             Column(modifier = Modifier.padding(8.dp).fillMaxHeight().weight(0.4f), verticalArrangement = Arrangement.SpaceBetween) {
-                Text(text = product.title)
-                Text(text = product.price.toString())
-
+                Text(text = product.title, style = MaterialTheme.typography.bodyLarge)
+                Text(text = "${product.price} ₺", style = MaterialTheme.typography.bodyMedium)
             }
-            IconButton(onClick = {onAction(UiAction.DeleteFromCart(product.id))}) {
-                Icon(Icons.Default.Delete, contentDescription = "Delete",tint = colorResource(R.color.purple_500))
+            IconButton(onClick = { onAction(UiAction.DeleteFromCart(product.id)) }) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete",
+                    tint = MaterialTheme.colorScheme.primary
+                )
             }
         }
     }

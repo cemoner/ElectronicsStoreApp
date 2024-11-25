@@ -28,6 +28,7 @@ import com.example.electronicsstoreapp.features.home.presentation.contract.Favor
 import com.example.electronicsstoreapp.features.home.presentation.contract.FavoritesPageContract.UiAction
 import com.example.electronicsstoreapp.features.home.presentation.contract.FavoritesPageContract.SideEffect
 import com.example.electronicsstoreapp.common.presentation.composable.ProductCard
+import com.example.electronicsstoreapp.features.home.presentation.contract.HomePageContract
 import com.example.electronicsstoreapp.mvi.CollectSideEffect
 import com.example.electronicsstoreapp.mvi.unpack
 import kotlinx.coroutines.flow.Flow
@@ -65,8 +66,8 @@ fun FavoritesPageContent(uiState: UiState, onAction: (UiAction) -> Unit, sideEff
                     onProductClicked = { productId ->
                         onAction(UiAction.OnProductClicked(productId))
                     },
-                    onAddToCartClicked = { productId ->
-                        onAction(UiAction.OnAddToCartButtonClicked(productId))
+                    onFavoritesClicked = { productId ->
+                        onAction(UiAction.OnFavoritesButtonClicked(productId))
                     }
                 )
             }

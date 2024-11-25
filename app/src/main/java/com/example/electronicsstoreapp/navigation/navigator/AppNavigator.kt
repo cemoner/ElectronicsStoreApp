@@ -32,6 +32,8 @@ interface AppNavigator {
         restoreState: Boolean = false
 
     )
+     fun clearBackStack()
+
 }
 
 sealed class NavigationIntent {
@@ -48,4 +50,6 @@ sealed class NavigationIntent {
         val saveState:Boolean = false,
         val restoreState:Boolean = false,
     ): NavigationIntent()
+
+    object ClearBackStack : NavigationIntent()
 }

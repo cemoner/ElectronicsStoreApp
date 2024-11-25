@@ -13,6 +13,7 @@ import com.example.electronicsstoreapp.mvi.mvi
 import com.example.electronicsstoreapp.navigation.model.Destination
 import com.example.electronicsstoreapp.navigation.navigator.AppNavigator
 import com.example.electronicsstoreapp.features.profile.profile.domain.usecase.GetUserUseCase
+import com.example.electronicsstoreapp.main.util.FavoritesSingleton
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,26 +33,29 @@ class ProfileViewModel @Inject constructor(
 
     override fun onAction(action:UiAction) {
         when (action) {
-            is UiAction.OnLogoutButtonClicked -> {
-                onLogout()
-            }
+            is UiAction.OnLogoutButtonClicked -> onLogout(Destination.Login())
             is UiAction.OnChangePassword -> {}
             is UiAction.OnOrderHistory -> {}
             is UiAction.OnAddressManagement -> {}
-            is UiAction.OnFavorites -> {}
+            is UiAction.OnFavorites -> {tryNavigateTo(Destination.Favorites())}
 
         }
     }
 
-    private fun onLogout() {
+    private fun onLogout(destination: String) {
         IsLoggedInSingleton.setIsLoggedIn(false)
         UserIdSingleton.setUserId("-1")
+        if(FavoritesSingleton.favorites.isNotEmpty()){
+            FavoritesSingleton.clearFavorites()
+        }
         onCreateToast("Logged out successfully")
-        navigator.tryNavigateBack()
+        navigator.clearBackStack()
         navigator.tryNavigateTo(Destination.Login())
     }
 
-
+    private fun tryNavigateTo(destination:String){
+        navigator.tryNavigateTo(destination)
+    }
 
     private fun onCreateToast(message:String){
         viewModelScope.launch {

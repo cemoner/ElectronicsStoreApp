@@ -6,6 +6,7 @@ plugins {
     id("com.google.gms.google-services")
     id ("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
+    id("com.google.firebase.crashlytics")
 
 
 }
@@ -74,6 +75,8 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.engage.core)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.messaging.ktx)
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -97,6 +100,11 @@ dependencies {
     implementation(platform(libs.firebase.bom.v3360))
     implementation(libs.firebase.analytics)
     implementation (libs.androidx.core.splashscreen)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.google.firebase.analytics)
+    implementation (libs.accompanist.pager.v0301)
+    implementation (libs.accompanist.pager.indicators.v0301)
+
 
 }
 kapt {

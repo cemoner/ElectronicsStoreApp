@@ -48,6 +48,9 @@ class AppNavigatorImpl @Inject constructor(): AppNavigator {
             )
         )
     }
+    override fun clearBackStack() {
+        navigationChannel.trySend(NavigationIntent.ClearBackStack)
+    }
 
     override fun tryNavigateTo(
         route: String,

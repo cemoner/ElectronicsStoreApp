@@ -37,7 +37,11 @@ class FavoritesPageViewModel @Inject constructor(
         when(action){
             is UiAction.OnAddToCartButtonClicked -> onAddToCartButtonClicked(StoreNameSingleton.getStoreName(),UserIdSingleton.getUserId(),action.productId,::onCreateToast)
             is UiAction.OnBackButtonCLicked -> tryNavigateBack()
-            is UiAction.OnFavoritesButtonClicked -> onFavoritesButtonClicked(StoreNameSingleton.getStoreName(),UserIdSingleton.getUserId(),action.productId,::onCreateToast)
+            is UiAction.OnFavoritesButtonClicked ->
+            {
+                onFavoritesButtonClicked(StoreNameSingleton.getStoreName(),UserIdSingleton.getUserId(),action.productId,::onCreateToast)
+                getFavorites(StoreNameSingleton.getStoreName(), UserIdSingleton.getUserId())
+            }
             is UiAction.OnProductClicked -> navigateToProductDetail(action.productId)
         }
     }
