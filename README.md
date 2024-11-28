@@ -85,10 +85,9 @@ Product Details:
 ![product2](https://github.com/user-attachments/assets/10eae111-692d-4395-8cff-4a5839ece837)
 <br>
 ---
-Cart & Profile:
+Cart:
 <br>
 ![cart](https://github.com/user-attachments/assets/f7d983b7-9f96-4c9f-8cff-3d928a3ed4ce)
-![profile1](https://github.com/user-attachments/assets/c0b8cda8-cbea-4e0f-98c5-5dc98b610a5a)
 ---
 🚀 Features in Development
 Push Notifications: Stay updated with the latest deals and offers.
