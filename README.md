@@ -53,7 +53,7 @@ Welcome to the **Electronic Store App** repository! This project is a modern, fe
  ┣ 📂 main               # App-level classes (e.g., Application, entry point)
  ┣ 📂 mvi                # Base classes and utilities for MVI pattern
  ┗ 📂 navigation         # Navigation-related code (e.g., NavHost, destinations)
-
+```
 ---
 ⚙️ Setup Instructions
 Clone this repository:
