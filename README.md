@@ -10,7 +10,6 @@ Welcome to the **Electronic Store App** repository! This project is a modern, fe
 - **Product Catalog**: Browse and search a wide range of electronics.
 - **Product Details**: View detailed product specifications and reviews.
 - **Cart Management**: Add, remove, and manage items in the cart.
-- **Order Checkout**: Streamlined process for placing orders.
 - **User Profile**: Manage account settings and view order history.
 - **Dynamic Navigation**: Feature-aware navigation system.
 
