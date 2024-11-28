@@ -78,17 +78,14 @@ Authentication:
 <br>
 Home:
 <br>
-![foto1](https://github.com/user-attachments/assets/9c8c291f-f67e-448c-98b9-1491e91f90d5)
-![foto2](https://github.com/user-attachments/assets/4d1c8e12-eb82-4879-8c67-268e0aa9bc53)
+![home](https://github.com/user-attachments/assets/9ff97b50-aa98-4862-80ba-a5d47c72579d)
 <br>
 Product Details:
 <br>
-![foto3](https://github.com/user-attachments/assets/18aedd35-0be3-4c46-8aa1-2ac3e55333a2)
-![foto5](https://github.com/user-attachments/assets/dd36326e-38b9-427d-8214-a39bff874dcb)
 <br>
 Cart & Profile:
 <br>
-![foto6](https://github.com/user-attachments/assets/5c2365d2-2f73-45e5-b209-1d9066444496)
+![cart](https://github.com/user-attachments/assets/f7d983b7-9f96-4c9f-8cff-3d928a3ed4ce)
 ![profile1](https://github.com/user-attachments/assets/c0b8cda8-cbea-4e0f-98c5-5dc98b610a5a)
 ---
 🚀 Features in Development
