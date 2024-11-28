@@ -39,8 +39,7 @@ Welcome to the **Electronic Store App** repository! This project is a modern, fe
 
 ## 📂 Project Structure
 
-<details>
-<summary><strong>Overall Structure</strong></summary>
+### Overall Structure
 
 ```plaintext
 📂 app
@@ -54,12 +53,7 @@ Welcome to the **Electronic Store App** repository! This project is a modern, fe
  ┣ 📂 main               # App-level classes (e.g., Application, entry point)
  ┣ 📂 mvi                # Base classes and utilities for MVI pattern
  ┗ 📂 navigation         # Navigation-related code (e.g., NavHost, destinations)
----
-📂 cart
- ┣ 📂 data              # Data sources, repositories, models
- ┣ 📂 domain            # Use cases, business logic
- ┗ 📂 presentation      # ViewModels and Composables
-</details>
+
 ---
 ⚙️ Setup Instructions
 Clone this repository:
