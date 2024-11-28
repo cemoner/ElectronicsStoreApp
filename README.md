@@ -57,8 +57,6 @@ Welcome to the **Electronic Store App** repository! This project is a modern, fe
 ---
 ## ⚙️ Setup Instructions
 
-1## ⚙️ Setup Instructions
-
 1. **Clone this repository**:
    ```bash
    git clone https://github.com/your-username/electronic-store-app.git
