@@ -67,6 +67,7 @@ Welcome to the **Electronic Store App** repository! This project is a modern, fe
 
 ---
 🌟 Images
+<br>
 Authentication: 
 <br>
 ![auth1](https://github.com/user-attachments/assets/85b0679d-dd46-4333-b276-a77b0a1102e0)
