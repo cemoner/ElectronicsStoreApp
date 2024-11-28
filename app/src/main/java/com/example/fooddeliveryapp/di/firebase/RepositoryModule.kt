@@ -1,6 +1,6 @@
 package com.example.fooddeliveryapp.di.firebase
 
-import com.example.fooddeliveryapp.authentication.login.data.repository.FirebaseAuthRepository
+import com.example.fooddeliveryapp.profile.authentication.login.data.repository.FirebaseAuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -14,5 +14,5 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesAuthRepository(auth: FirebaseAuth):FirebaseAuthRepository = FirebaseAuthRepository(auth)
+    fun providesAuthRepository(auth: FirebaseAuth): FirebaseAuthRepository = FirebaseAuthRepository(auth)
 }
