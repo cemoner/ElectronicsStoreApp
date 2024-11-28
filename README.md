@@ -30,7 +30,6 @@ Reactive Programming: Flow and StateFlow for consistent state management.
 
 📂 Project Structure
 plaintext
-Copy code
 📂 app
  ┣ 📂 common             # Shared utilities (e.g., extensions, mappers)
  ┣ 📂 features           # Feature modules
@@ -42,9 +41,6 @@ Copy code
  ┣ 📂 main               # App-level classes (e.g., Application, entry point)
  ┣ 📂 mvi                # Base classes and utilities for MVI pattern
  ┗ 📂 navigation         # Navigation-related code (e.g., NavHost, destinations)
-Feature Layer Structure
-Each feature (e.g., cart, home, authentication) follows this structure:
-
 
 📂 cart
  ┣ 📂 data              # Data sources, repositories, models
