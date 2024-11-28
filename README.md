@@ -55,32 +55,56 @@ Welcome to the **Electronic Store App** repository! This project is a modern, fe
  ┗ 📂 navigation         # Navigation-related code (e.g., NavHost, destinations)
 ```
 ---
-⚙️ Setup Instructions
-Clone this repository:
+## ⚙️ Setup Instructions
 
-bash
-Copy code
-git clone https://github.com/your-username/electronic-store-app.git
-cd electronic-store-app
-Open the project in Android Studio.
+1## ⚙️ Setup Instructions
 
-Sync the Gradle files.
-Run the app on an emulator or connected device.
+1. **Clone this repository**:
+   ```bash
+   git clone https://github.com/your-username/electronic-store-app.git
+   cd electronic-store-app
+2. Open the project in Android Studio.
+3. Sync the Gradle files.
+4. Run the app on an emulator or connected device.
+
 ---
 🌟 Images
 Here are the links to the feature screenshots:
 
-Authentication: Link
-Home: Link
-Product Details: Link
-Cart: Link
-Profile: Link
+Authentication: 
+![auth1](https://github.com/user-attachments/assets/85b0679d-dd46-4333-b276-a77b0a1102e0)
+<br>
+![auth2](https://github.com/user-attachments/assets/8ff3d7af-3ce4-4a64-a7b7-a00454d630e3)
+<br>
+Home: 
+![foto1](https://github.com/user-attachments/assets/9c8c291f-f67e-448c-98b9-1491e91f90d5)
+<br>
+![foto2](https://github.com/user-attachments/assets/4d1c8e12-eb82-4879-8c67-268e0aa9bc53)
+<br>
+
+Product Details:
+![foto3](https://github.com/user-attachments/assets/18aedd35-0be3-4c46-8aa1-2ac3e55333a2)
+<br>
+![foto4](https://github.com/user-attachments/assets/0070944d-93e3-49bc-85e7-ad4badacddf7)
+<br>
+![foto5](https://github.com/user-attachments/assets/dd36326e-38b9-427d-8214-a39bff874dcb)
+<br>
+
+Cart:
+![foto6](https://github.com/user-attachments/assets/5c2365d2-2f73-45e5-b209-1d9066444496)
+<br>
+Profile:
+![profile1](https://github.com/user-attachments/assets/c0b8cda8-cbea-4e0f-98c5-5dc98b610a5a)
 ---
 🚀 Features in Development
 Push Notifications: Stay updated with the latest deals and offers.
+<br>
 ---
+<br>
 👨‍💻 Contributions
-Contributions are welcome! Feel free to submit a pull request or open an issue for improvements or feature requests.
+Contributions are welcome! 
+<br>
+Feel free to submit a pull request or open an issue for improvements or feature requests.
 ---
 🙌 Acknowledgments
 Special thanks to Teknasyon for mentorship and guidance during development.
