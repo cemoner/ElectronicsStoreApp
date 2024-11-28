@@ -86,12 +86,9 @@ Product Details:
 ![foto3](https://github.com/user-attachments/assets/18aedd35-0be3-4c46-8aa1-2ac3e55333a2)
 ![foto5](https://github.com/user-attachments/assets/dd36326e-38b9-427d-8214-a39bff874dcb)
 <br>
-Cart:
+Cart & Profile:
 <br>
 ![foto6](https://github.com/user-attachments/assets/5c2365d2-2f73-45e5-b209-1d9066444496)
-<br>
-Profile:
-<br>
 ![profile1](https://github.com/user-attachments/assets/c0b8cda8-cbea-4e0f-98c5-5dc98b610a5a)
 ---
 🚀 Features in Development
@@ -100,6 +97,7 @@ Push Notifications: Stay updated with the latest deals and offers.
 ---
 <br>
 👨‍💻 Contributions
+<br>
 Contributions are welcome! 
 <br>
 Feel free to submit a pull request or open an issue for improvements or feature requests.
