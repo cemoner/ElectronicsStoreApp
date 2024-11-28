@@ -59,7 +59,7 @@ Welcome to the **Electronic Store App** repository! This project is a modern, fe
  ┣ 📂 data              # Data sources, repositories, models
  ┣ 📂 domain            # Use cases, business logic
  ┗ 📂 presentation      # ViewModels and Composables
-
+</details>
 ---
 ⚙️ Setup Instructions
 Clone this repository:
@@ -74,11 +74,19 @@ Sync the Gradle files.
 Run the app on an emulator or connected device.
 ---
 🌟 Images
-Feature	Screenshot
-Authentication	
-Home	
-Product Details	
-Cart	
-Profile	
+Here are the links to the feature screenshots:
 
-
+Authentication: Link
+Home: Link
+Product Details: Link
+Cart: Link
+Profile: Link
+---
+🚀 Features in Development
+Push Notifications: Stay updated with the latest deals and offers.
+---
+👨‍💻 Contributions
+Contributions are welcome! Feel free to submit a pull request or open an issue for improvements or feature requests.
+---
+🙌 Acknowledgments
+Special thanks to Teknasyon for mentorship and guidance during development.
