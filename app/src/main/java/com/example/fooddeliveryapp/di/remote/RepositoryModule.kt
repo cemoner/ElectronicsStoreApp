@@ -1,40 +1,42 @@
 package com.example.fooddeliveryapp.di.remote
 
-import com.example.fooddeliveryapp.profile.authentication.login.data.datasource.remote.retrofit.RetrofitDataSource as AuthRetrofit
-import com.example.fooddeliveryapp.profile.profile.data.datasource.remote.retrofit.RetrofitDataSource as ProfileRetrofit
-import com.example.fooddeliveryapp.home.data.datasource.remote.retrofit.RetrofitDataSource as HomeRetrofit
-import com.example.fooddeliveryapp.home.data.repository.HomeRepositoryImpl
-import com.example.fooddeliveryapp.home.data.repository.ProductDetailRepositoryImpl
-import com.example.fooddeliveryapp.home.domain.repository.HomeRepository
-import com.example.fooddeliveryapp.home.domain.repository.ProductDetailRepository
-import com.example.fooddeliveryapp.profile.authentication.login.data.repository.AuthenticationRepositoryImpl
-import com.example.fooddeliveryapp.profile.authentication.login.domain.repository.AuthenticationRepository
-import com.example.fooddeliveryapp.profile.profile.data.repository.ProfileRepositoryImpl
-import com.example.fooddeliveryapp.profile.profile.domain.repository.ProfileRepository
+import com.example.fooddeliveryapp.features.cart.data.datasource.remote.CartActionDataSource
+import com.example.fooddeliveryapp.features.cart.data.repository.CartActionRepositoryImpl
+import com.example.fooddeliveryapp.features.cart.domain.repository.CartRepository
+import com.example.fooddeliveryapp.features.home.data.datasource.remote.ProductActionRemoteDataSource
+import com.example.fooddeliveryapp.features.home.data.datasource.remote.ProductDataRemoteDataSource
+import com.example.fooddeliveryapp.features.home.data.repository.ProductActionRepositoryImpl
+import com.example.fooddeliveryapp.features.home.data.repository.ProductDataRepositoryImpl
+import com.example.fooddeliveryapp.features.home.domain.repository.ProductActionRepository
+import com.example.fooddeliveryapp.features.home.domain.repository.ProductDataRepository
+import com.example.fooddeliveryapp.features.profile.authentication.login.data.datasource.remote.AuthRemoteDataSource
+import com.example.fooddeliveryapp.features.profile.authentication.login.data.repository.AuthenticationRepositoryImpl
+import com.example.fooddeliveryapp.features.profile.authentication.login.domain.repository.AuthenticationRepository
+import com.example.fooddeliveryapp.features.profile.profile.data.datasource.remote.UserDataSource
+import com.example.fooddeliveryapp.features.profile.profile.data.repository.UserDataRepositoryImpl
+import com.example.fooddeliveryapp.features.profile.profile.domain.repository.UserDataRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 class RepositoryModule {
 
     @Provides
-    @Singleton
-    fun providesAuthenticationRepository(authRetrofit: AuthRetrofit): AuthenticationRepository =  AuthenticationRepositoryImpl(authRetrofit)
+    fun providesAuthenticationRepository(authRemoteDataSource: AuthRemoteDataSource): AuthenticationRepository =  AuthenticationRepositoryImpl(authRemoteDataSource)
 
     @Provides
-    @Singleton
-    fun providesProfileRepository(profileRetrofit: ProfileRetrofit): ProfileRepository =  ProfileRepositoryImpl(profileRetrofit)
+    fun providesUserRepository(userDataSource: UserDataSource): UserDataRepository =  UserDataRepositoryImpl(userDataSource)
 
     @Provides
-    @Singleton
-    fun providesHomeRepository(homeRetrofit:HomeRetrofit): HomeRepository = HomeRepositoryImpl(homeRetrofit)
+    fun providesProductDataRepository(productDataRemoteDataSource: ProductDataRemoteDataSource): ProductDataRepository = ProductDataRepositoryImpl(productDataRemoteDataSource)
 
     @Provides
-    @Singleton
-    fun providesProductDetailRepository(homeRetrofit:HomeRetrofit): ProductDetailRepository = ProductDetailRepositoryImpl(homeRetrofit)
+    fun providesProductActionRepository(productActionRemoteDataSource: ProductActionRemoteDataSource):ProductActionRepository = ProductActionRepositoryImpl(productActionRemoteDataSource)
+
+    @Provides
+    fun providesCartRepository(cartDataSource: CartActionDataSource): CartRepository = CartActionRepositoryImpl(cartDataSource)
 
 }

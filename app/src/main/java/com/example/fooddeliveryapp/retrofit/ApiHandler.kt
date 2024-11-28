@@ -1,6 +1,5 @@
 package com.example.fooddeliveryapp.retrofit
 
-import android.util.Log
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -10,7 +9,6 @@ interface ApiHandler {
     ): NetworkResult<T> {
         return try {
             val response = execute()
-
 
             if (response.isSuccessful) {
                 NetworkResult.Success(response.code(), response.body()!!)

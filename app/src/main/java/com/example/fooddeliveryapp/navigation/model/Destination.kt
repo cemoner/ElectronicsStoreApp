@@ -1,9 +1,5 @@
 package com.example.fooddeliveryapp.navigation.model
 
-import android.net.Uri
-import android.util.Log
-import com.example.fooddeliveryapp.home.presentation.model.ProductUI
-
 sealed class Destination(protected val route:String,vararg params:String) {
 
     val fullRoute:String = if(params.isEmpty()) route else {
@@ -26,26 +22,11 @@ sealed class Destination(protected val route:String,vararg params:String) {
 
     object ProductDetail : Destination(
         route = "productDetail",
-        "id", "title", "price", "salePrice", "description", "category", "image", "rate"
-    ) {
-        const val ID_KEY = "id"
-        const val TITLE_KEY = "title"
-        const val PRICE_KEY = "price"
-        const val SALE_PRICE_KEY = "salePrice"
-        const val DESCRIPTION_KEY = "description"
-        const val CATEGORY_KEY = "category"
-        const val IMAGE_KEY = "image"
-        const val RATE_KEY = "rate"
+        "productId") {
+        const val PRODUCT_ID_KEY =  "productId"
 
-        operator fun invoke(product: ProductUI): String = route.appendParams(
-            ID_KEY to product.id,
-            TITLE_KEY to Uri.encode(product.title),
-            PRICE_KEY to product.price,
-            SALE_PRICE_KEY to product.salePrice,
-            DESCRIPTION_KEY to Uri.encode(product.description),
-            CATEGORY_KEY to Uri.encode(product.category),
-            IMAGE_KEY to Uri.encode(product.image),
-            RATE_KEY to product.rate
+        operator fun invoke(productId:Int): String = route.appendParams(
+            PRODUCT_ID_KEY to productId,
         )
     }
 

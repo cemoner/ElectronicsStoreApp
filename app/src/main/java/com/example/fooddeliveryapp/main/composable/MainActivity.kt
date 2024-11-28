@@ -17,13 +17,14 @@
     import androidx.hilt.navigation.compose.hiltViewModel
     import androidx.navigation.NavHostController
     import androidx.navigation.compose.rememberNavController
-    import com.example.fooddeliveryapp.home.presentation.composable.homepage.HomePageScreen
-    import com.example.fooddeliveryapp.home.presentation.composable.productdetailpage.ProductDetailPage
+    import com.example.fooddeliveryapp.features.cart.presentation.composable.CartPageScreen
+    import com.example.fooddeliveryapp.features.favorites.presentation.composable.FavoritesPageScreen
+    import com.example.fooddeliveryapp.features.home.presentation.composable.homepage.HomePageScreen
+    import com.example.fooddeliveryapp.features.home.presentation.composable.productdetailpage.ProductDetailPage
     import com.example.fooddeliveryapp.main.contract.MainContract.UiState
     import com.example.fooddeliveryapp.main.contract.MainContract.UiAction
     import com.example.fooddeliveryapp.main.contract.MainContract.SideEffect
     import com.example.fooddeliveryapp.main.viewmodel.MainViewModel
-    import com.example.fooddeliveryapp.mvi.CollectSideEffect
     import com.example.fooddeliveryapp.mvi.unpack
     import com.example.fooddeliveryapp.navigation.model.Destination
     import com.example.fooddeliveryapp.navigation.navigator.NavigationIntent
@@ -31,9 +32,9 @@
     import com.example.fooddeliveryapp.navigation.presentation.composable.NavigationBar
     import com.example.fooddeliveryapp.navigation.presentation.composable.ShoppingCart
     import com.example.fooddeliveryapp.navigation.presentation.composable.composable
-    import com.example.fooddeliveryapp.profile.authentication.login.presentation.composable.LoginScreen
-    import com.example.fooddeliveryapp.profile.authentication.login.presentation.composable.RegisterScreen
-    import com.example.fooddeliveryapp.profile.profile.presentation.composable.ProfileScreen
+    import com.example.fooddeliveryapp.features.profile.authentication.login.presentation.composable.LoginScreen
+    import com.example.fooddeliveryapp.features.profile.authentication.login.presentation.composable.RegisterScreen
+    import com.example.fooddeliveryapp.features.profile.profile.presentation.composable.ProfileScreen
     import com.example.fooddeliveryapp.ui.theme.FoodDeliveryAppTheme
     import dagger.hilt.android.AndroidEntryPoint
     import kotlinx.coroutines.channels.Channel
@@ -92,7 +93,9 @@
         Scaffold(modifier = Modifier.fillMaxSize().systemBarsPadding(),
             floatingActionButtonPosition = FabPosition.End,
             floatingActionButton = {
-                ShoppingCart()
+                if(uiState.showBottomBar){
+                    ShoppingCart()
+                }
             },
             bottomBar = {
                 if(uiState.showBottomBar){
@@ -119,6 +122,11 @@
                     RegisterScreen()
                 }
                 composable(destination = Destination.Favorites){
+                    FavoritesPageScreen()
+                }
+
+                composable(destination = Destination.Cart){
+                    CartPageScreen()
                 }
 
                 composable(destination = Destination.ProductDetail){
