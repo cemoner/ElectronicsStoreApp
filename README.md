@@ -82,6 +82,8 @@ Home:
 <br>
 Product Details:
 <br>
+![product1](https://github.com/user-attachments/assets/a55030db-2a6c-4069-b8f5-2a03a7ff1256)
+![product2](https://github.com/user-attachments/assets/10eae111-692d-4395-8cff-4a5839ece837)
 <br>
 Cart & Profile:
 <br>
