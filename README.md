@@ -28,6 +28,7 @@ Welcome to the **Electronic Store App** repository! This project is a modern, fe
 - **MVI (Model-View-Intent)**: Efficient state management and reduced callback functions.
 
 ### **Libraries & Tools**
+- **Jetpack Compose**: Jetpack Compose for Declarative and Stateful UI
 - **Navigation**: Compose Navigation with custom utilities for modular navigation.
 - **Dependency Injection**: Dagger Hilt for scalable dependency management.
 - **Networking**: Retrofit for API interactions.
