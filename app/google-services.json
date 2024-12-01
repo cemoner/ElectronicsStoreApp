@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "127634446928",
-    "project_id": "fooddeliveryapp-8",
-    "storage_bucket": "fooddeliveryapp-8.appspot.com"
+    "project_number": "958159281356",
+    "project_id": "electronics-store-app-25631",
+    "storage_bucket": "electronics-store-app-25631.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:127634446928:android:00a4d2723e93ea56694f55",
+        "mobilesdk_app_id": "1:958159281356:android:6c22fe5cc0bdb657103669",
         "android_client_info": {
-          "package_name": "com.example.fooddeliveryapp"
+          "package_name": "com.example.electronicsstoreapp"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "127634446928-ourflm2dknprtp2jf7r40hoikk0k52i2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.fooddeliveryapp",
-            "certificate_hash": "21a0e02ba4506afd2f3f0245538015e5677ee1ce"
-          }
-        },
-        {
-          "client_id": "127634446928-j403g5b6oqbavu7tocp59gln91gmn9qb.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAl7OQZmYIPXzqqFH_qxRhQlXH5av0kNRc"
+          "current_key": "AIzaSyAEJv2BCkYwi2u86OHS7WpMw7p4v0GBCzQ"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "127634446928-j403g5b6oqbavu7tocp59gln91gmn9qb.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
