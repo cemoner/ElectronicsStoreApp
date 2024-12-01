@@ -12,6 +12,7 @@ import com.example.electronicsstoreapp.main.util.UserIdSingleton
 import com.example.electronicsstoreapp.mvi.MVI
 import com.example.electronicsstoreapp.mvi.mvi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,7 +52,10 @@ class FavoritesPageViewModel
                             action.productId,
                             ::onCreateToast,
                         )
+                    viewModelScope.launch {
+                        delay(100)
                         getFavorites(StoreNameSingleton.getStoreName(), UserIdSingleton.getUserId())
+                    }
                     }
                 is UiAction.OnProductClicked -> navigateToProductDetail(action.productId,action.productCategory)
             }
