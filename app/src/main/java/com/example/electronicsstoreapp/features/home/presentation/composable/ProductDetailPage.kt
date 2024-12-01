@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.StarHalf
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Button
@@ -310,14 +311,17 @@ fun TopBar(
         actions = {
             IconButton(onClick = { onAction(UiAction.OnFavoritesButtonClicked(uiState.product.id)) }) {
                 Icon(
-                    Icons.Default.Favorite,
+                    imageVector = if (FavoritesSingleton.isFavorite(uiState.product.id)) {
+                        Icons.Default.Favorite
+                    } else {
+                        Icons.Default.FavoriteBorder
+                    },
                     contentDescription = "Favorite",
-                    tint =
-                        if (FavoritesSingleton.isFavorite(uiState.product.id)) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        },
+                    tint = if (FavoritesSingleton.isFavorite(uiState.product.id)) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
                 )
             }
         },
