@@ -20,6 +20,7 @@ sealed interface FavoritesPageContract {
 
         data class OnProductClicked(
             val productId: Int,
+            val productCategory:String
         ) : UiAction
     }
 

@@ -16,16 +16,17 @@ class ProductDataRepositoryImpl
         ApiHandler {
         override suspend fun getProducts(store: String): Result<List<Product>> {
             val result = handleApi { productDataRemoteDataSource.getProducts(store) }
-            when (result) {
+            return when (result) {
                 is NetworkResult.Success -> {
-                    return Result.success(result.data.products.map { it.toDomainModel() })
+                    Result.success(result.data.products.map { it.toDomainModel() })
                 }
 
                 is NetworkResult.Error -> {
-                    return Result.failure(Exception(result.errorMsg))
+                    Result.failure(Exception(result.errorMsg))
                 }
+
                 is NetworkResult.Exception -> {
-                    return Result.failure(result.e)
+                    Result.failure(result.e)
                 }
             }
         }
@@ -35,16 +36,17 @@ class ProductDataRepositoryImpl
             productId: Int,
         ): Result<Product> {
             val result = handleApi { productDataRemoteDataSource.getProductDetail(store, productId) }
-            when (result) {
+            return when (result) {
                 is NetworkResult.Success -> {
-                    return Result.success(result.data.products.toDomainModel())
+                    Result.success(result.data.products.toDomainModel())
                 }
 
                 is NetworkResult.Error -> {
-                    return Result.failure(Exception(result.errorMsg))
+                    Result.failure(Exception(result.errorMsg))
                 }
+
                 is NetworkResult.Exception -> {
-                    return Result.failure(result.e)
+                    Result.failure(result.e)
                 }
             }
         }
@@ -54,13 +56,31 @@ class ProductDataRepositoryImpl
             userId: String,
         ): Result<List<Product>> {
             val result = handleApi { productDataRemoteDataSource.getFavorites(store, userId) }
-            when (result) {
+            return when (result) {
                 is NetworkResult.Success -> {
-                    return Result.success(result.data.products.map { it.toDomainModel() })
+                    Result.success(result.data.products.map { it.toDomainModel() })
                 }
-                is NetworkResult.Error -> return Result.failure(Exception(result.errorMsg))
 
-                is NetworkResult.Exception -> return Result.failure(result.e)
+                is NetworkResult.Error -> Result.failure(Exception(result.errorMsg))
+
+                is NetworkResult.Exception -> Result.failure(result.e)
+            }
+        }
+
+    override suspend fun searchProducts(store: String, query: String): Result<List<Product>> {
+        val result = handleApi { productDataRemoteDataSource.searchProduct(store,query) }
+        return when(result){
+            is NetworkResult.Success -> {
+                Result.success(result.data.products.map { it.toDomainModel() })
+            }
+
+            is NetworkResult.Error -> {
+                Result.failure(Exception(result.errorMsg))
+            }
+
+            is NetworkResult.Exception -> {
+                Result.failure(result.e)
             }
         }
     }
+}

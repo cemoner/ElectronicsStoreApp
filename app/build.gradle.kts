@@ -11,12 +11,12 @@ plugins {
 
 android {
     namespace = "com.example.electronicsstoreapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.electronicsstoreapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -109,6 +109,8 @@ dependencies {
     implementation(libs.google.firebase.analytics)
     implementation(libs.accompanist.pager.v0301)
     implementation(libs.accompanist.pager.indicators.v0301)
+    implementation (libs.material3)
+    implementation ("androidx.compose.material3:material3-window-size-class:1.3.1")
 }
 kapt {
     correctErrorTypes = true

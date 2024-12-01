@@ -25,8 +25,8 @@ import com.example.electronicsstoreapp.features.cart.presentation.composable.Car
 import com.example.electronicsstoreapp.features.home.presentation.composable.FavoritesPageScreen
 import com.example.electronicsstoreapp.features.home.presentation.composable.HomePageScreen
 import com.example.electronicsstoreapp.features.home.presentation.composable.ProductDetailPage
-import com.example.electronicsstoreapp.features.profile.authentication.login.presentation.composable.LoginScreen
-import com.example.electronicsstoreapp.features.profile.authentication.login.presentation.composable.RegisterScreen
+import com.example.electronicsstoreapp.features.profile.authentication.presentation.composable.LoginScreen
+import com.example.electronicsstoreapp.features.profile.authentication.presentation.composable.RegisterScreen
 import com.example.electronicsstoreapp.features.profile.profile.presentation.composable.ProfileScreen
 import com.example.electronicsstoreapp.main.contract.MainContract.SideEffect
 import com.example.electronicsstoreapp.main.contract.MainContract.UiAction

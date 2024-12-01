@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -39,11 +40,11 @@ import com.example.electronicsstoreapp.main.util.FavoritesSingleton
 @Composable
 fun ProductCard(
     product: ProductUI,
-    onProductClicked: (Int) -> Unit,
+    onProductClicked: (Int,String) -> Unit,
     onFavoritesClicked: (Int) -> Unit,
 ) {
     Card(
-        onClick = { onProductClicked(product.id) },
+        onClick = { onProductClicked(product.id,product.category) },
         enabled = true,
         modifier =
             Modifier
@@ -131,15 +132,19 @@ fun ProductCard(
                 modifier = Modifier.align(Alignment.TopEnd),
             ) {
                 Icon(
-                    imageVector = Icons.Default.Favorite,
+                    imageVector = if (FavoritesSingleton.isFavorite(product.id)) {
+                        Icons.Default.Favorite
+                    } else {
+                        Icons.Default.FavoriteBorder
+                    },
                     contentDescription = "Favorite",
-                    tint =
-                        if (FavoritesSingleton.isFavorite(product.id)) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        },
+                    tint = if (FavoritesSingleton.isFavorite(product.id)) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
                 )
+
             }
         }
     }

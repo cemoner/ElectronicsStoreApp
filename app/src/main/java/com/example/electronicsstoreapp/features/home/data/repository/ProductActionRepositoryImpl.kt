@@ -20,19 +20,21 @@ open class ProductActionRepositoryImpl(
         productId: Int,
     ): Result<ActionResult> {
         val result = handleApi { productActionDataSource.addToCart(store, ActionRequest(userId, productId)) }
-        when (result) {
+        return when (result) {
             is NetworkResult.Success -> {
-                return Result.success(
+                Result.success(
                     ActionResult(
                         message = result.data.message,
                     ),
                 )
             }
+
             is NetworkResult.Error -> {
-                return Result.failure(CartOperationException(result.errorMsg!!))
+                Result.failure(CartOperationException(result.errorMsg!!))
             }
+
             is NetworkResult.Exception -> {
-                return Result.failure(result.e)
+                Result.failure(result.e)
             }
         }
     }
@@ -43,19 +45,21 @@ open class ProductActionRepositoryImpl(
         productId: Int,
     ): Result<ActionResult> {
         val result = handleApi { productActionDataSource.addToFavorites(store, ActionRequest(userId, productId)) }
-        when (result) {
+        return when (result) {
             is NetworkResult.Success -> {
-                return Result.success(
+                Result.success(
                     ActionResult(
                         message = result.data.message,
                     ),
                 )
             }
+
             is NetworkResult.Error -> {
-                return Result.failure(FavoritesOperationException(result.errorMsg!!))
+                Result.failure(FavoritesOperationException(result.errorMsg!!))
             }
+
             is NetworkResult.Exception -> {
-                return Result.failure(result.e)
+                Result.failure(result.e)
             }
         }
     }
@@ -66,19 +70,21 @@ open class ProductActionRepositoryImpl(
         productId: Int,
     ): Result<ActionResult> {
         val result = handleApi { productActionDataSource.deleteFromFavorites(store, ActionRequest2(userId, productId)) }
-        when (result) {
+        return when (result) {
             is NetworkResult.Success -> {
-                return Result.success(
+                Result.success(
                     ActionResult(
                         message = result.data.message,
                     ),
                 )
             }
+
             is NetworkResult.Error -> {
-                return Result.failure(FavoritesOperationException(result.errorMsg!!))
+                Result.failure(FavoritesOperationException(result.errorMsg!!))
             }
+
             is NetworkResult.Exception -> {
-                return Result.failure(result.e)
+                Result.failure(result.e)
             }
         }
     }

@@ -13,8 +13,6 @@ sealed interface ProfileContract {
 
         object OnChangePassword : UiAction
 
-        object OnOrderHistory : UiAction
-
         object OnAddressManagement : UiAction
 
         object OnFavorites : UiAction

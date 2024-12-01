@@ -1,5 +1,6 @@
 package com.example.electronicsstoreapp.features.cart.presentation.composable
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,13 +28,12 @@ fun ProductCard(
     onAction: (UiAction) -> Unit,
 ) {
     Card(
-        onClick = { onAction(UiAction.OnProductClicked(product.id)) },
+        onClick = { onAction(UiAction.OnProductClicked(product.id,product.category)) },
         enabled = true,
         modifier = Modifier.fillMaxWidth().padding(8.dp),
         elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
     ) {
-        Row {
+        Row(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
             AsyncImage(
                 model = product.image1,
                 contentDescription = "Product Image",

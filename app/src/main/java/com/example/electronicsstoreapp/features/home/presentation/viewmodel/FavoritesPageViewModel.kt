@@ -44,8 +44,7 @@ class FavoritesPageViewModel
                         ::onCreateToast,
                     )
                 is UiAction.OnBackButtonCLicked -> tryNavigateBack()
-                is UiAction.OnFavoritesButtonClicked ->
-                    {
+                is UiAction.OnFavoritesButtonClicked -> {
                         onFavoritesButtonClicked(
                             StoreNameSingleton.getStoreName(),
                             UserIdSingleton.getUserId(),
@@ -54,7 +53,7 @@ class FavoritesPageViewModel
                         )
                         getFavorites(StoreNameSingleton.getStoreName(), UserIdSingleton.getUserId())
                     }
-                is UiAction.OnProductClicked -> navigateToProductDetail(action.productId)
+                is UiAction.OnProductClicked -> navigateToProductDetail(action.productId,action.productCategory)
             }
         }
 

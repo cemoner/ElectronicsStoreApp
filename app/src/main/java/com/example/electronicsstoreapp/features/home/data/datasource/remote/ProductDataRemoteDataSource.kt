@@ -22,4 +22,9 @@ class ProductDataRemoteDataSource
             store: String,
             userId: String,
         ): Response<MultipleProductsResponse> = productDataApi.getFavorites(store, userId)
+
+        suspend fun searchProduct(
+            store: String,
+            query: String,
+        ): Response<MultipleProductsResponse> = productDataApi.searchProduct(store, query)
     }

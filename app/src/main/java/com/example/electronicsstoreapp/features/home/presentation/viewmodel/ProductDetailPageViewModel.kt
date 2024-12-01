@@ -8,10 +8,14 @@ import com.example.electronicsstoreapp.features.home.domain.usecase.GetProductDe
 import com.example.electronicsstoreapp.features.home.presentation.contract.ProductDetailPageContract.SideEffect
 import com.example.electronicsstoreapp.features.home.presentation.contract.ProductDetailPageContract.UiAction
 import com.example.electronicsstoreapp.features.home.presentation.contract.ProductDetailPageContract.UiState
+import com.example.electronicsstoreapp.features.home.presentation.model.CarouselItem
+import com.example.electronicsstoreapp.main.util.GsonUtils.gson
 import com.example.electronicsstoreapp.main.util.StoreNameSingleton
 import com.example.electronicsstoreapp.main.util.UserIdSingleton
 import com.example.electronicsstoreapp.mvi.MVI
 import com.example.electronicsstoreapp.mvi.mvi
+import com.example.electronicsstoreapp.navigation.model.Destination
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,6 +33,11 @@ class ProductDetailPageViewModel
                 val productId =
                     savedStateHandle.get<String>("productId")?.toIntOrNull()
                         ?: throw IllegalArgumentException("Invalid or missing productId")
+
+                val carouselItems: List<CarouselItem> = savedStateHandle.get<String>(Destination.ProductDetail.CAROUSEL_ITEMS_KEY)?.let { jsonString ->
+                    gson.fromJson(jsonString, object : TypeToken<List<CarouselItem>>() {}.type)
+                } ?: emptyList()
+
                 val productResult =
                     getProductDetailUseCase(StoreNameSingleton.getStoreName(), productId)
                 lateinit var productUI: ProductUI
@@ -39,6 +48,7 @@ class ProductDetailPageViewModel
                             uiState.value.copy(
                                 product = productUI,
                                 images = listOf(productUI.image1, productUI.image1, productUI.image1),
+                                carouselItems = carouselItems
                             ),
                     )
                 }
@@ -69,6 +79,7 @@ class ProductDetailPageViewModel
                 }
 
                 is UiAction.OnBackButtonClicked -> tryNavigateBack()
+                is UiAction.OnProductClicked -> navigateToProductDetail(action.productId,action.productCategory)
             }
         }
 
@@ -95,4 +106,5 @@ private fun initialUiState(): UiState =
                 0.00,
             ),
         emptyList(),
+        emptyList()
     )

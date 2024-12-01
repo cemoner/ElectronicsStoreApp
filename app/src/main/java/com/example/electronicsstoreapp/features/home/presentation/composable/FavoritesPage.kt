@@ -54,31 +54,40 @@ fun FavoritesPageContent(
             }
         }
     }
-
     Scaffold(
         topBar = { TopBar(onAction) },
     ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             if (uiState.products.isEmpty()) {
-                item {
-                    Text(
-                        "Your Favorites List is empty.",
-                        modifier = Modifier.fillMaxSize().padding(12.dp),
-                        fontSize = 25.sp,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-            }
-            items(uiState.products) { product ->
-                ProductCard(
-                    product = product,
-                    onProductClicked = { productId ->
-                        onAction(UiAction.OnProductClicked(productId))
-                    },
-                    onFavoritesClicked = { productId ->
-                        onAction(UiAction.OnFavoritesButtonClicked(productId))
-                    },
+                Text(
+                    "Your Favorites List is empty.",
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(12.dp),
+                    fontSize = 25.sp,
+                    textAlign = TextAlign.Center,
+                    color = Color.Gray
                 )
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(uiState.products) { product ->
+                        ProductCard(
+                            product = product,
+                            onProductClicked = { productId, productCategory ->
+                                onAction(UiAction.OnProductClicked(productId, productCategory))
+                            },
+                            onFavoritesClicked = { productId ->
+                                onAction(UiAction.OnFavoritesButtonClicked(productId))
+                            },
+                        )
+                    }
+                }
             }
         }
     }
@@ -94,7 +103,7 @@ fun TopBar(onAction: (UiAction) -> Unit) {
                 contentAlignment = Alignment.CenterStart,
             ) {
                 Text(
-                    text = "Cart",
+                    text = "Favorites",
                     color = Color.Black,
                     fontSize = 20.sp,
                 )

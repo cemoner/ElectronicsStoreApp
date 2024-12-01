@@ -3,10 +3,9 @@ package com.example.electronicsstoreapp.main.util
 import androidx.compose.runtime.mutableStateListOf
 
 object FavoritesSingleton {
-    // Mutable state list to track favorites
+
     private val _favorites = mutableStateListOf<Int>()
 
-    // Exposed as an immutable list
     val favorites: List<Int>
         get() = _favorites
 

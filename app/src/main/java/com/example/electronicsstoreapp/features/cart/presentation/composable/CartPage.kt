@@ -1,6 +1,7 @@
 package com.example.electronicsstoreapp.features.cart.presentation.composable
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ import com.example.electronicsstoreapp.features.cart.presentation.viewmodel.Cart
 import com.example.electronicsstoreapp.mvi.CollectSideEffect
 import com.example.electronicsstoreapp.mvi.unpack
 import kotlinx.coroutines.flow.Flow
+import java.util.Locale
 
 @Composable
 fun CartPageScreen() {
@@ -67,20 +69,31 @@ fun CartPageContent(
     Scaffold(
         topBar = { TopBar(onAction) },
         bottomBar = { BottomBar(uiState, onAction) },
+        modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             if (uiState.products.isEmpty()) {
-                item {
-                    Text(
-                        "Your cart is empty.",
-                        modifier = Modifier.fillMaxSize().padding(12.dp),
-                        fontSize = 25.sp,
-                        textAlign = TextAlign.Center,
-                    )
+                Text(
+                    "Your cart is empty.",
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(12.dp),
+                    fontSize = 25.sp,
+                    textAlign = TextAlign.Center,
+                    color = Color.Gray
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(uiState.products.size) { index ->
+                        ProductCard(uiState.products[index], onAction)
+                    }
                 }
-            }
-            items(uiState.products.size) {
-                ProductCard(uiState.products[it], onAction)
             }
         }
     }
@@ -129,7 +142,7 @@ fun BottomBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text("Total Price:${uiState.totalPrice} ₺")
+            Text("Total Price: ${String.format(Locale.getDefault(), "%.3f₺", uiState.totalPrice)}")
         }
         Button(
             onClick = { onAction(UiAction.OnBuyClicked) },

@@ -9,6 +9,9 @@ import com.example.electronicsstoreapp.features.cart.domain.usecase.GetCartItems
 import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.SideEffect
 import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.UiAction
 import com.example.electronicsstoreapp.features.cart.presentation.contract.CartPageContract.UiState
+import com.example.electronicsstoreapp.features.home.domain.usecase.SearchProductUseCase
+import com.example.electronicsstoreapp.features.home.presentation.mapper.toCarouselItem
+import com.example.electronicsstoreapp.features.home.presentation.model.CarouselItem
 import com.example.electronicsstoreapp.main.util.IsLoggedInSingleton
 import com.example.electronicsstoreapp.main.util.StoreNameSingleton
 import com.example.electronicsstoreapp.main.util.UserIdSingleton
@@ -27,7 +30,8 @@ class CartPageViewModel
         private val deleteCartItemUseCase: DeleteCartItemUseCase,
         private val getCartItemsUseCase: GetCartItemsUseCase,
         private val clearCartUseCase: ClearCartUseCase,
-        private val appNavigator: AppNavigator,
+        private val searchProductsUseCase: SearchProductUseCase,
+        private val appNavigator: AppNavigator
     ) : ViewModel(),
         MVI<UiState, UiAction, SideEffect> by mvi(initialUiState()) {
         init {
@@ -53,7 +57,7 @@ class CartPageViewModel
                 is UiAction.DeleteFromCart -> onDeleteFromCart(action.productId)
                 is UiAction.OnBuyClicked -> onBuyClicked()
                 is UiAction.BackClicked -> onNavigateBack()
-                is UiAction.OnProductClicked -> onNavigateToProductDetail(action.productId)
+                is UiAction.OnProductClicked -> navigateToProductDetail(action.productId,action.productCategory)
             }
         }
 
@@ -62,14 +66,21 @@ class CartPageViewModel
                 appNavigator.tryNavigateBack()
             }
 
-        private fun onNavigateToProductDetail(productId: Int) =
-            viewModelScope.launch {
+    private fun navigateToProductDetail(productId: Int, productCategory:String) {
+        lateinit var carouselItems:List<CarouselItem>
+        viewModelScope.launch {
+            val searchResult = searchProductsUseCase(StoreNameSingleton.getStoreName(),productCategory)
+            searchResult.onSuccess {
+                val productUI = it.map { it1 -> it1.toUiModel() }.filter { it1 -> it1.id != productId }
+                carouselItems = productUI.map { it.toCarouselItem() }
                 appNavigator.tryNavigateTo(
-                    Destination.ProductDetail(productId),
+                    Destination.ProductDetail(productId,carouselItems),
                     popUpToRoute = null,
                     inclusive = false,
                 )
             }
+        }
+    }
 
         private fun onCreateToast(message: String) {
             viewModelScope.launch {

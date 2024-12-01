@@ -38,7 +38,6 @@ class ProfileViewModel
             when (action) {
                 is UiAction.OnLogoutButtonClicked -> onLogout(Destination.Login())
                 is UiAction.OnChangePassword -> {}
-                is UiAction.OnOrderHistory -> {}
                 is UiAction.OnAddressManagement -> {}
                 is UiAction.OnFavorites -> {
                     tryNavigateTo(Destination.Favorites())

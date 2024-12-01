@@ -40,7 +40,7 @@ class HomePageViewModel
                     onToolBarStateChange()
                 }
                 is UiAction.OnProductClicked -> {
-                    navigateToProductDetail(action.productId)
+                    navigateToProductDetail(action.productId,action.productCategory)
                 }
                 is UiAction.OnFavoritesButtonClicked ->
                     onFavoritesButtonClicked(

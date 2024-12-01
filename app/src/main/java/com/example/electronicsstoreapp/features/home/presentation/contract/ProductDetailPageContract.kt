@@ -1,11 +1,13 @@
 package com.example.electronicsstoreapp.features.home.presentation.contract
 
 import com.example.electronicsstoreapp.common.presentation.model.ProductUI
+import com.example.electronicsstoreapp.features.home.presentation.model.CarouselItem
 
 interface ProductDetailPageContract {
     data class UiState(
         val product: ProductUI,
         val images: List<String>,
+        val carouselItems: List<CarouselItem>,
     )
 
     sealed interface UiAction {
@@ -18,6 +20,11 @@ interface ProductDetailPageContract {
         ) : UiAction
 
         object OnBackButtonClicked : UiAction
+
+        data class OnProductClicked(
+            val productId: Int,
+            val productCategory:String
+        ) : UiAction
     }
 
     sealed interface SideEffect {

@@ -14,7 +14,6 @@ interface HomePageContract {
 
         object Error : UiState
     }
-
     sealed interface UiAction {
         data class OnSearchTextChange(
             val searchText: String,
@@ -28,6 +27,7 @@ interface HomePageContract {
 
         data class OnProductClicked(
             val productId: Int,
+            val productCategory:String
         ) : UiAction
     }
 
@@ -37,7 +37,6 @@ interface HomePageContract {
         ) : SideEffect
     }
 }
-
 sealed interface HomePageToolBarUiState {
     data object DefaultToolBar : HomePageToolBarUiState
 

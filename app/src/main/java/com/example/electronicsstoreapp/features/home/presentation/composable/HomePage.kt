@@ -96,8 +96,8 @@ fun HomePageContent(
                             items(uiState.searchProducts) { product ->
                                 ProductCard(
                                     product = product,
-                                    onProductClicked = { productId ->
-                                        onAction(UiAction.OnProductClicked(productId))
+                                    onProductClicked = { productId,productCategory ->
+                                        onAction(UiAction.OnProductClicked(productId,productCategory))
                                     },
                                     onFavoritesClicked = { productId ->
                                         onAction(UiAction.OnFavoritesButtonClicked(productId))
@@ -166,9 +166,9 @@ fun Modifier.shimmerEffect(): Modifier =
                 Brush.linearGradient(
                     colors =
                         listOf(
-                            MaterialTheme.colorScheme.surface,
+                            MaterialTheme.colorScheme.surfaceBright,
                             MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                            MaterialTheme.colorScheme.surface,
+                            MaterialTheme.colorScheme.secondary,
                         ),
                     start = Offset(startOffSetX, 0f),
                     end = Offset(startOffSetX + size.width.toFloat(), size.height.toFloat()),

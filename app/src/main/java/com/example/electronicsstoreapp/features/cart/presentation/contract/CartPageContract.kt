@@ -19,6 +19,7 @@ sealed interface CartPageContract {
 
         data class OnProductClicked(
             val productId: Int,
+            val productCategory:String
         ) : UiAction
     }
 

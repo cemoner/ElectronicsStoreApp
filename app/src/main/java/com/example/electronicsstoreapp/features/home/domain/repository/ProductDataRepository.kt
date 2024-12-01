@@ -14,4 +14,8 @@ interface ProductDataRepository {
         store: String,
         userId: String,
     ): Result<List<Product>>
+
+    suspend fun searchProducts(
+        store:String,query:String
+    ): Result<List<Product>>
 }

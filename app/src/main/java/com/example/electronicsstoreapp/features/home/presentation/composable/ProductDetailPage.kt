@@ -1,17 +1,19 @@
 package com.example.electronicsstoreapp.features.home.presentation.composable
 
+import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -20,12 +22,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.StarHalf
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,15 +37,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
+import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -57,6 +60,7 @@ import com.example.electronicsstoreapp.common.presentation.model.ProductUI
 import com.example.electronicsstoreapp.features.home.presentation.contract.ProductDetailPageContract.SideEffect
 import com.example.electronicsstoreapp.features.home.presentation.contract.ProductDetailPageContract.UiAction
 import com.example.electronicsstoreapp.features.home.presentation.contract.ProductDetailPageContract.UiState
+import com.example.electronicsstoreapp.features.home.presentation.model.CarouselItem
 import com.example.electronicsstoreapp.features.home.presentation.viewmodel.ProductDetailPageViewModel
 import com.example.electronicsstoreapp.main.util.FavoritesSingleton
 import com.example.electronicsstoreapp.mvi.CollectSideEffect
@@ -64,6 +68,7 @@ import com.example.electronicsstoreapp.mvi.unpack
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import kotlinx.coroutines.flow.Flow
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailPage() {
     val viewModel: ProductDetailPageViewModel = hiltViewModel()
@@ -71,7 +76,7 @@ fun ProductDetailPage() {
     ProductDetailPageContent(uiState, onAction, sideEffect)
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@ExperimentalMaterial3Api
 @Composable
 fun ProductDetailPageContent(
     uiState: UiState,
@@ -79,10 +84,8 @@ fun ProductDetailPageContent(
     sideEffect: Flow<SideEffect>,
 ) {
     val product: ProductUI = uiState.product
-    val screenWidth = LocalConfiguration.current.screenWidthDp
     val context = LocalContext.current
     val pagerState = rememberPagerState(pageCount = { uiState.images.size })
-    val coroutineScope = rememberCoroutineScope()
 
     CollectSideEffect(sideEffect) {
         when (it) {
@@ -218,9 +221,63 @@ fun ProductDetailPageContent(
                     }
                 }
             }
+            item {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth().padding(24.dp)
+                ){
+                    Text("Similar Products")
+                    CarouselContent(
+                        carouselItems = uiState.carouselItems,
+                        onAction = onAction
+                    )
+                }
+
+            }
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CarouselContent(carouselItems:List<CarouselItem>,onAction: (UiAction) -> Unit){
+    if(carouselItems.isNotEmpty()){
+        Box(modifier= Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+            HorizontalMultiBrowseCarousel(
+                state = rememberCarouselState { carouselItems.size },
+                itemSpacing = 12.dp,
+                contentPadding = PaddingValues(start = 12.dp),
+                preferredItemWidth = 250.dp,
+            ) { index ->
+                Card(modifier = Modifier.wrapContentSize(),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(4.dp),
+                    onClick = {onAction(UiAction.OnProductClicked(carouselItems[index].id,carouselItems[index].category))}
+                ){
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(carouselItems[index].image)
+                            .crossfade(true)
+                            .allowHardware(false)
+                            .size(Size.ORIGINAL)
+                            .listener(
+                                onSuccess = { _, _ -> Log.d("Coil", "Image loaded successfully for page: $index") },
+                                onError = { _, throwable -> Log.e("Coil", "Image loading failed", throwable.throwable) }
+                            )
+                            .build(),
+                        contentDescription = "Product Image",
+                        contentScale = ContentScale.FillWidth,
+                        modifier = Modifier.fillMaxWidth(0.8f),
+                    )
+
+                }
+            }
+        }
+    }
+}
+
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

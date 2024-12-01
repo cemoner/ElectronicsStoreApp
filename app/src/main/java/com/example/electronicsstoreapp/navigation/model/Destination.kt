@@ -1,5 +1,8 @@
 package com.example.electronicsstoreapp.navigation.model
 
+import com.example.electronicsstoreapp.features.home.presentation.model.CarouselItem
+import com.example.electronicsstoreapp.main.util.GsonUtils.gson
+
 sealed class Destination(
     protected val route: String,
     vararg params: String,
@@ -31,17 +34,26 @@ sealed class Destination(
 
     object ProductDetail : Destination(
         route = "productDetail",
-        "productId",
+        "productId","carouselItems"
     ) {
         const val PRODUCT_ID_KEY = "productId"
 
-        operator fun invoke(productId: Int): String =
-            route.appendParams(
+        const val CAROUSEL_ITEMS_KEY = "carouselItems"
+
+
+        operator fun invoke(productId: Int,carouselItems:List<CarouselItem>): String {
+            val serializedCarouselItems = gson.toJson(carouselItems)
+
+            val encodedCarouselItems = java.net.URLEncoder.encode(serializedCarouselItems, "UTF-8")
+
+           return route.appendParams(
                 PRODUCT_ID_KEY to productId,
+                CAROUSEL_ITEMS_KEY to encodedCarouselItems,
             )
+        }
     }
 
-    object Profile : Destination("profile", "userId") {
+    data object Profile : Destination("profile", "userId") {
         const val USER_ID_KEY = "userId"
 
         operator fun invoke(userId: String): String =

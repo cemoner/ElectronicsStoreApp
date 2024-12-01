@@ -25,4 +25,10 @@ interface ProductDataApi : API {
         @Header("store") store: String,
         @Query("userId") userId: String,
     ): Response<MultipleProductsResponse>
+
+    @GET("search_product")
+    suspend fun searchProduct(
+        @Header("store") store: String,
+        @Query("query") query: String,
+    ): Response<MultipleProductsResponse>
 }

@@ -52,7 +52,6 @@ fun ProfileContent(
     val buttonNames =
         mapOf(
             "Change Password" to ButtonItem("Change Password", "changePassword", Icons.Default.Password, UiAction.OnChangePassword),
-            "Order History" to ButtonItem("Order History", "orderHistory", Icons.Default.History, UiAction.OnOrderHistory),
             "Address Management" to ButtonItem("Address Management", "addressManagement", Icons.Default.Home, UiAction.OnAddressManagement),
             "Favorites" to ButtonItem("Favorites", "favorites", Icons.Default.Favorite, UiAction.OnFavorites),
             "Logout" to ButtonItem("Logout", "logout", Icons.AutoMirrored.Filled.Logout, UiAction.OnLogoutButtonClicked),
